@@ -793,7 +793,7 @@ return (<div className='p-4 m-2 flex justify-start outline-1 rounded-lg shadow-m
             {doll ? <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 " onClick={() => router.push({ pathname: `${window.location.origin}/doll/DollPage`, query: { imc: imc, encodedImgUrl: encodedImgUrl } })}>Voltar</button> : null}
             <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 " onClick={() => router.push({ pathname: `${window.location.origin}/medidas/EditarMedidas`, query: { imc: imc, editBusto: editBusto, editCintura: editCintura, editQuadril: editQuadril, encodedImgUrl: encodedImgUrl } })}>Editar medidas</button>
              {/* <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 " onClick={()=>router.push({pathname:'/medidas/NotFound', query:{imc:imc, encodedImgUrl:encodedImgUrl}})}>NotFound</button> */}
-             <a className='rounded-lg bg-gray-50 shadow-lg py-2 my-2 text-center' href='/files/fitametrica_OK.pdf' target={"_blank"} rel='noopener noreferrer'>
+             <a className='rounded-lg bg-gray-50 shadow-lg py-2 my-2 text-center' href='/files/fita-metrica-eufloria.pdf' target={"_blank"} rel='noopener noreferrer'>
                Fita Metrica
                 </a>
             </div>
