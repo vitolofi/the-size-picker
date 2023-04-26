@@ -10,7 +10,7 @@ import Imc from "./components/imc/IMC";
 const Home: NextPage = (props:any) => {
   const router:any = useRouter()
 
-  let img:string = router.query.img
+  let img:string = router.query.img 
 
   const [altura,setAltura] = useState<number>(0)
   const [peso,setPeso] = useState<number>(0)
@@ -62,16 +62,18 @@ const Home: NextPage = (props:any) => {
         
         <title>Seu Tamanho - Eufloria</title>
         <meta name="description" content="app to find your size in this store" />
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        {/* <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin=""/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet"></link>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet"></link> */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="">
-      <div className="bg-gray-100 p-4 m-2 flex rounded-sm justify-between drop-shadow-lg items-center">
-        <div></div>
-        <div className="flex items-center">
-          {img? <img className="rounded-md" src={img}/>:null}
+      <div className="bg-gray-100 p-4 m-2 flex rounded-sm justify-between drop-shadow-lg items-center max-w-lg">
+        <div className="flex">
+
+        {/* <div className="flex items-center"> */}
+          {img? <Image alt={img} width={662} height={1000} className="rounded-md"  src={img}/>:null}
+        {/* </div> */}
         </div>
           <div>
             {/* <div className="bg-gray-200 w-52 ml-4 py-4 rounded-md"> */}
