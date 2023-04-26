@@ -1,6 +1,7 @@
 import FaderView from '../components/faderView'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 
 
@@ -31,9 +32,11 @@ export default function DollPage(){
         setDollImgName(`/imgs_lela/0${busto+1}0${cintura+1}0${quadril+1}.jpeg`) 
     }
 
-    return (<div className="p-4 m-2 flex outline-1 rounded-lg shadow-md justify-between items-center">
+    return (<div className="p-4 m-2 flex outline-1 rounded-lg shadow-md justify-between items-center max-w-lg">
         <div className="flex shadow-none mr-2">
-        <img src={dollImgName}></img>
+            <div>
+        <Image width={600} height={1600} priority={true} alt={'a manequin that changes its sizes'} src={dollImgName}/>
+            </div>
         </div>
         <div className='flex'>
         <div className='flex flex-col p-2 bg-gray-100 rounded-lg shadow-sm'>
