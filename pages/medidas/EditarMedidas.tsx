@@ -13,7 +13,7 @@ interface edit {
 
 export default function EditarMedidas() {
   const router = useRouter();
-  
+
   const editBusto = router.query.editBusto;
   const editCintura = router.query.editCintura;
   const editQuadril = router.query.editQuadril;
@@ -140,11 +140,11 @@ export default function EditarMedidas() {
     ) {
       tamanhos.sizeWhole = "XG";
     }
-    console.warn(tamanhos, "tamanhos inside checkMeasures function", {
-      bustoCm,
-      cinturaCm,
-      quadrilCm,
-    });
+    // console.warn(tamanhos, "tamanhos inside checkMeasures function", {
+    //   bustoCm,
+    //   cinturaCm,
+    //   quadrilCm,
+    // });
     setSizeTop(tamanhos.sizeTop);
     setSizeBottom(tamanhos.sizeBottom);
     setSizeWhole(tamanhos.sizeWhole);
@@ -152,13 +152,10 @@ export default function EditarMedidas() {
       setSizeWhole(tamanhos.sizeBottom);
     }
   };
-  useEffect(
-    () => {
-      if(bustoCm && cinturaCm && quadrilCm)
-      checkMeasures(+bustoCm, +cinturaCm, +quadrilCm)
-    },
-    [bustoCm, cinturaCm, quadrilCm,]
-  );
+  useEffect(() => {
+    if (bustoCm && cinturaCm && quadrilCm)
+      checkMeasures(+bustoCm, +cinturaCm, +quadrilCm);
+  }, [bustoCm, cinturaCm, quadrilCm]);
 
   const submitFunc = () => {
     // checkMeasures(bustoCm,cinturaCm,quadrilCm)
@@ -189,23 +186,31 @@ export default function EditarMedidas() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-4 m-2 rounded-sm justify-between items-center max-w-lg">
       <h1>Minhas Medidas</h1>
       <p>Insira os valores exatos</p>
       <div className="flex py-10">
         <div className="mr-1">
           <img src={dollImg} />
         </div>
-        <div className="">
-          <div className="flex">
+        <div className="flex flex-col ml-2">
           <label className="text-lg">
             Busto<span className="text-sm"> (cm)</span>
           </label>
+
+          <label className="text-lg">
+            Cintura<span className="text-sm"> (cm)</span>
+          </label>
+          <label className="text-lg">
+            Quadril<span className="text-sm"> (cm)</span>
+          </label>
+        </div>
+        <div className=" flex pl-3 flex-col">
+          <div className="flex my-4">
             <input
-              className="ml-3"
               type="range"
               min={70}
-              max={180}
+              max={150}
               onChange={(e) => setBustoCm(e.target.value)}
               onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
               value={bustoCm}
@@ -220,10 +225,8 @@ export default function EditarMedidas() {
               value={bustoCm}
             />
           </div>
-          <div>
-            <label className="text-lg">
-              Cintura<span className="text-sm"> (cm)</span>
-            </label>
+
+          <div className="flex my-4">
             <input
               type="range"
               min={50}
@@ -241,10 +244,8 @@ export default function EditarMedidas() {
               value={cinturaCm}
             />
           </div>
-          <div className="mb-4">
-            <label className="text-lg">
-              Quadril<span className="text-sm"> (cm)</span>
-            </label>
+
+          <div className="my-4 flex">
             <input
               type="range"
               min={70}
@@ -262,33 +263,38 @@ export default function EditarMedidas() {
               value={quadrilCm}
             />
           </div>
-          <div className="flex flex-col">
-            <button
-              className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
-              onClick={() => submitFunc()}
-            >
-              Ver Recomedação
-            </button>
-            <button
-              className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
-              onClick={() =>{
-                if(encodedImgUrl){
-                  router.push({
-                    pathname: `${window.location.origin}/${encodeURIComponent(encodedImgUrl as string)}`,
-                    })
-                  }
-                }
+       
+
+        <div className="flex mt-2 flex-col">
+          <button
+            className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
+            onClick={() => submitFunc()}
+          >
+            Ver Recomedação
+          </button>
+          <button
+            className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
+            onClick={() => {
+              if (encodedImgUrl) {
+                router.push({
+                  pathname: `${window.location.origin}/${encodeURIComponent(
+                    encodedImgUrl as string
+                  )}`,
+                });
               }
-            >
-              Reiniciar
-            </button>
-            <button
-              onClick={() =>{
-                if(bustoCm && cinturaCm && quadrilCm){
-                checkMeasures(+bustoCm, +cinturaCm, +quadrilCm)}}}
-            >
-              Console.log
-            </button>
+            }}
+          >
+            Reiniciar
+          </button>
+          <button
+            onClick={() => {
+              if (bustoCm && cinturaCm && quadrilCm) {
+                checkMeasures(+bustoCm, +cinturaCm, +quadrilCm);
+              }
+            }}
+          >
+            Console.log
+          </button>
           </div>
         </div>
       </div>
