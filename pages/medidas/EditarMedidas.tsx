@@ -191,7 +191,7 @@ export default function EditarMedidas() {
       <p>Insira os valores exatos</p>
       <div className="flex py-10">
         <div className="mr-1">
-          <img src={dollImg} />
+          <img alt={dollImg} src={dollImg} />
         </div>
         <div className="flex flex-col ml-2">
           <label className="text-lg">

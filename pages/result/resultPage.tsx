@@ -1,9 +1,8 @@
-import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import SugarBustoSVG from './sugar/SugarBusto'
-
 import SugarCinturaSVG from './sugar/SugarCintura'
 import SugarQuadrilSVG from './sugar/SugarQuadril'
 export default function ResultPage() {
@@ -777,7 +776,7 @@ return (<div className='p-4 m-2 flex justify-start outline-1 rounded-lg shadow-m
              <SugarBustoSVG bustoColor={bustoColor} />
              <SugarCinturaSVG cinturaColor={cinturaColor} />
              <SugarQuadrilSVG quadrilColor={quadrilColor} />
-            <img src='/imgs_lela/030303.jpeg'/>
+            <Image alt={'doll std img'} src='/imgs_lela/030303.jpeg'/>
             </div>
         </div>
         <div className=' w-96 ml-1 pb-6'>
