@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 import Imc from "./components/imc/IMC";
 
+// ajustar o padding dos inputs, talvez aumentar as boxes
+//add framer-motion e animação entre páginas
 
 const Home: NextPage = (props:any) => {
   const router:any = useRouter()
@@ -68,7 +70,7 @@ const Home: NextPage = (props:any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="">
-      <div className="bg-gray-100 p-4 m-2 flex rounded-sm justify-between drop-shadow-lg items-center max-w-lg">
+      <div className="bg-gray-100 p-4 m-2 flex rounded-sm justify-between drop-shadow-lg items-center min-w-max max-w-lg">
         <div className="flex">
 
         {/* <div className="flex items-center"> */}
@@ -107,3 +109,18 @@ export default Home;
   
 </script>
 <iframe id="iframe" width='662' height='600'></iframe> */}
+
+
+
+//newstuff
+// let url = 'https://the-size-picker-costa-vitor-fernandes.vercel.app/'
+//   let productPhoto = encodeURIComponent(document.querySelector('.zoomImg').src)
+//   let ifram = document.createElement("iframe")
+//   ifram.setAttribute('src', url+productPhoto)
+ 
+//   ifram.setAttribute('height', '450')
+//   document.querySelector('.tabs-content').append(ifram);
+
+
+//  red,    orange, green, green, orange, orange, red
+// apertado, justo, levemente justo, ideal, levemente folgado, folgado, largo
