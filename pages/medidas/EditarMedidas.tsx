@@ -2,10 +2,18 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+// ta faltando bustoDescription, cintura Description, quadril Description pra sair daqui e operar as sugarDivs
+
 interface tamanhosObj {
   sizeTop: string;
   sizeBottom: string;
   sizeWhole: string;
+  bustoDescription: string;
+  bustoColor :string;
+  cinturaDescription: string;
+  cinturaColor: string;
+  quadrilDescription: string;
+  quadrilColor:string
 }
 interface edit {
   arg0?: number;
@@ -13,6 +21,13 @@ interface edit {
 
 export default function EditarMedidas() {
   const router = useRouter();
+
+  const [bustoDescription, setBustoDescription] = useState('')
+  const [bustoColor,setBustoColor] = useState('')
+  const [cinturaDescription, setCinturaDescription] = useState('')
+  const [cinturaColor,setCinturaColor] = useState('')
+  const [quadrilDescription, setQuadrilDescription] = useState('')
+  const [quadrilColor,setQuadrilColor] = useState('')
 
   const editBusto = router.query.editBusto;
   const editCintura = router.query.editCintura;
@@ -28,73 +43,224 @@ export default function EditarMedidas() {
   const [sizeBottom, setSizeBottom] = useState("");
   const [sizeWhole, setSizeWhole] = useState("");
 
-  const checkMeasures = (busto: number, cintura: number, quadril: number) => {
+  const checkMeasures = (busto: number, cintura: number, quadril: number,) => {
     const tamanhos: tamanhosObj = {
       sizeTop: "",
       sizeBottom: "",
       sizeWhole: "",
+      bustoDescription: "",
+      bustoColor: "",
+      cinturaDescription: "",
+      cinturaColor:"",
+      quadrilDescription: "",
+      quadrilColor: "",
     };
 
     const PP = {
-      busto: { min: 75, max: 86 },
-      cintura: { min: 65, max: 70 },
-      quadril: { min: 92, max: 98 },
+      busto: { min: 75, med: 80.5, max: 86 },
+      cintura: { min: 65, med: 67.5, max: 70 },
+      quadril: { min: 92, med: 95, max: 98 },
     };
     const P = {
-      busto: { min: 87, max: 96 },
-      cintura: { min: 70, max: 76 },
-      quadril: { min: 99, max: 105 },
+      busto: { min: 87, med: 91.5, max: 96 },
+      cintura: { min: 70, med: 73, max: 76 },
+      quadril: { min: 99, med: 102, max: 105 },
     };
     const M = {
-      busto: { min: 97, max: 102 },
-      cintura: { min: 77, max: 81 },
-      quadril: { min: 106, max: 111 },
+      busto: { min: 97, med: 99.5, max: 102 },
+      cintura: { min: 77, med: 79, max: 81 },
+      quadril: { min: 106, med: 108.5, max: 111 },
     };
     const G = {
-      busto: { min: 103, max: 109 },
-      cintura: { min: 82, max: 87 },
-      quadril: { min: 112, max: 118 },
+      busto: { min: 103, med: 106, max: 109 },
+      cintura: { min: 82, med: 84.5, max: 87 },
+      quadril: { min: 112, med: 115, max: 118 },
     };
     const GG = {
-      busto: { min: 110, max: 119 },
-      cintura: { min: 88, max: 93 },
-      quadril: { min: 119, max: 124 },
+      busto: { min: 110, med: 114.5, max: 119 },
+      cintura: { min: 88, med: 90.5, max: 93 },
+      quadril: { min: 119, med: 121.5, max: 124 },
     };
     const XG = {
-      busto: { min: 120, max: 130 },
-      cintura: { min: 94, max: 99 },
-      quadril: { min: 125, max: 130 },
+      busto: { min: 120, med: 125, max: 130 },
+      cintura: { min: 94, med: 96.5, max: 99 },
+      quadril: { min: 125, med: 127.5, max: 130 },
     };
 
     // Find the appropriate size for the 'sizeTop' based on the bust size
     if (busto >= PP.busto.min && busto <= PP.busto.max) {
       tamanhos.sizeTop = "PP";
+      if (busto > PP.busto.med) {
+        tamanhos.bustoDescription = "Levemente justo";
+        tamanhos.bustoColor = "stroke-green-500"
+      } else{
+
+        tamanhos.bustoDescription = "Levemente Folgado";
+        tamanhos.bustoColor = "stroke-yellow-500";
+      }
     } else if (busto >= P.busto.min && busto <= P.busto.max) {
       tamanhos.sizeTop = "P";
+      if (busto > P.busto.med) {
+        tamanhos.bustoDescription = "Levemente justo";
+        tamanhos.bustoColor = "stroke-green-500"
+      } else{
+        tamanhos.bustoDescription = "Levemente Folgado";
+        tamanhos.bustoColor = "stroke-yellow-500" 
+      }
     } else if (busto >= M.busto.min && busto <= M.busto.max) {
       tamanhos.sizeTop = "M";
+      if (busto > M.busto.med) {
+        tamanhos.bustoDescription = "Levemente justo";
+        tamanhos.bustoColor = "stroke-green-500"
+      } else {tamanhos.bustoDescription = "Levemente Folgado";
+      tamanhos.bustoColor = "stroke-yellow-500"}
     } else if (busto >= G.busto.min && busto <= G.busto.max) {
       tamanhos.sizeTop = "G";
+      if (busto > G.busto.med) {
+        tamanhos.bustoDescription = "Levemente justo";
+        tamanhos.bustoColor = "stroke-green-500"
+      } else {tamanhos.bustoDescription = "Levemente Folgado";
+      tamanhos.bustoColor = "stroke-yellow-500"}
     } else if (busto >= GG.busto.min && busto <= GG.busto.max) {
       tamanhos.sizeTop = "GG";
+      if (busto > GG.busto.med) {
+        tamanhos.bustoDescription = "Levemente justo";
+        tamanhos.bustoColor = "stroke-green-500"
+      } else {tamanhos.bustoDescription = "Levemente Folgado";
+      tamanhos.bustoColor = "stroke-yellow-500"}
     } else if (busto >= XG.busto.min && busto <= XG.busto.max) {
       tamanhos.sizeTop = "XG";
+      if (busto > XG.busto.med) {
+        tamanhos.bustoDescription = "Levemente justo";
+        tamanhos.bustoColor = "stroke-green-500"
+      } else {tamanhos.bustoDescription = "Levemente Folgado";
+      tamanhos.bustoColor = "stroke-yellow-500"}
+    }
+
+
+    //sizeBottom
+    if (quadril >= PP.quadril.min && quadril <= PP.quadril.max) {
+      tamanhos.sizeBottom = "PP";
+      if (quadril > PP.quadril.med) {
+        tamanhos.quadrilDescription = "Levemente justo";
+        tamanhos.quadrilColor = "stroke-green-500"
+      } else{
+
+        tamanhos.quadrilDescription = "Levemente Folgado";
+        tamanhos.quadrilColor = "stroke-yellow-500"
+      }
+    } else if (quadril >= P.quadril.min && quadril <= P.quadril.max) {
+      tamanhos.sizeBottom = "P";
+      if (quadril > P.quadril.med) {
+        tamanhos.quadrilDescription = "Levemente justo";
+        tamanhos.quadrilColor = "stroke-green-500"
+      } else{
+        tamanhos.quadrilDescription = "Levemente Folgado";
+        tamanhos.quadrilColor = "stroke-yellow-500"
+      }
+    } else if (quadril >= M.quadril.min && quadril <= M.quadril.max) {
+      tamanhos.sizeBottom = "M";
+      if (quadril > M.quadril.med) {
+        tamanhos.quadrilDescription = "Levemente justo";
+        tamanhos.quadrilColor = "stroke-green-500"
+      } else {
+
+        tamanhos.quadrilDescription = "Levemente Folgado";
+        tamanhos.quadrilColor = "stroke-yellow-500"
+      } 
+    } else if (quadril >= G.quadril.min && quadril <= G.quadril.max) {
+      tamanhos.sizeBottom = "G";
+      if (quadril > G.quadril.med) {
+        tamanhos.quadrilDescription = "Levemente justo";
+        tamanhos.quadrilColor = "stroke-green-500"
+      } else {
+
+        tamanhos.quadrilDescription = "Levemente Folgado";
+        tamanhos.quadrilColor = "stroke-yellow-500"
+      } 
+    } else if (quadril >= GG.quadril.min && quadril <= GG.quadril.max) {
+      tamanhos.sizeBottom = "GG";
+      if (quadril > GG.quadril.med) {
+        tamanhos.quadrilDescription = "Levemente justo";
+        tamanhos.quadrilColor = "stroke-green-500"
+      } else{
+        tamanhos.quadrilColor = "stroke-yellow-500"
+        tamanhos.quadrilDescription = "Levemente Folgado";
+      } 
+    } else if (quadril >= XG.quadril.min && quadril <= XG.quadril.max) {
+      tamanhos.sizeBottom = "XG";
+      if (quadril > XG.quadril.med) {
+        tamanhos.quadrilDescription = "Levemente justo";
+        tamanhos.quadrilColor = "stroke-green-500"
+      } else {
+      tamanhos.quadrilDescription = "Levemente Folgado";
+      tamanhos.quadrilColor = "stroke-yellow-500"
+      }
+    }
+
+    //cintura sugar stuff
+    if (cintura >= PP.cintura.min && cintura <= PP.cintura.max) {
+      if (cintura > PP.cintura.med) {
+        tamanhos.cinturaDescription = "Levemente justo";
+        tamanhos.cinturaColor = "stroke-green-500"
+      } else{
+
+        tamanhos.cinturaDescription = "Levemente Folgado";
+        tamanhos.cinturaColor = 'stroke-yellow-500'
+      } 
+    } else if (cintura >= P.cintura.min && cintura <= P.cintura.max) {
+      if (cintura > P.cintura.med) {
+        tamanhos.cinturaDescription = "Levemente justo";
+        tamanhos.cinturaColor = "stroke-green-500"
+      } else {
+      tamanhos.cinturaDescription = "Levemente Folgado";
+      tamanhos.cinturaColor = 'stroke-yellow-500'
+      }
+    } else if (cintura >= M.cintura.min && cintura <= M.cintura.max) {
+      if (cintura > M.cintura.med) {
+        tamanhos.cinturaDescription = "Levemente justo";
+        tamanhos.cinturaColor = "stroke-green-500"
+      } else {
+
+        tamanhos.cinturaColor = 'stroke-yellow-500'
+      tamanhos.cinturaDescription = "Levemente Folgado";
+    }
+      } else if (cintura >= G.cintura.min && cintura <= G.cintura.max) {
+      if (cintura > G.cintura.med) {
+        tamanhos.cinturaDescription = "Levemente justo";
+        tamanhos.cinturaColor = "stroke-green-500"
+      } else {tamanhos.cinturaDescription = "Levemente Folgado";
+      tamanhos.cinturaColor = 'stroke-yellow-500'}
+    } else if (cintura >= GG.cintura.min && cintura <= GG.cintura.max) {
+      if (cintura > GG.cintura.med) {
+        tamanhos.cinturaDescription = "Levemente justo";
+        tamanhos.cinturaColor = "stroke-green-500"
+      } else {
+        tamanhos.cinturaDescription = "Levemente Folgado";
+        tamanhos.cinturaColor = 'stroke-yellow-500'
+      }
+    } else if (cintura >= XG.cintura.min && cintura <= XG.cintura.max) {
+      if (cintura > XG.cintura.med) {
+        tamanhos.cinturaDescription = "Levemente justo";
+        tamanhos.cinturaColor = "stroke-green-500"
+      } else {tamanhos.cinturaDescription = "Levemente Folgado";
+      tamanhos.cinturaColor = 'stroke-yellow-500'}
     }
 
     // Find the appropriate size for the 'sizeBottom' based on the hip size
-    if (quadril >= PP.quadril.min && quadril <= PP.quadril.max) {
-      tamanhos.sizeBottom = "PP";
-    } else if (quadril >= P.quadril.min && quadril <= P.quadril.max) {
-      tamanhos.sizeBottom = "P";
-    } else if (quadril >= M.quadril.min && quadril <= M.quadril.max) {
-      tamanhos.sizeBottom = "M";
-    } else if (quadril >= G.quadril.min && quadril <= G.quadril.max) {
-      tamanhos.sizeBottom = "G";
-    } else if (quadril >= GG.quadril.min && quadril <= GG.quadril.max) {
-      tamanhos.sizeBottom = "GG";
-    } else if (quadril >= XG.quadril.min && quadril <= XG.quadril.max) {
-      tamanhos.sizeBottom = "XG";
-    }
+    // if (quadril >= PP.quadril.min && quadril <= PP.quadril.max) {
+    //   tamanhos.sizeBottom = "PP";
+    // } else if (quadril >= P.quadril.min && quadril <= P.quadril.max) {
+    //   tamanhos.sizeBottom = "P";
+    // } else if (quadril >= M.quadril.min && quadril <= M.quadril.max) {
+    //   tamanhos.sizeBottom = "M";
+    // } else if (quadril >= G.quadril.min && quadril <= G.quadril.max) {
+    //   tamanhos.sizeBottom = "G";
+    // } else if (quadril >= GG.quadril.min && quadril <= GG.quadril.max) {
+    //   tamanhos.sizeBottom = "GG";
+    // } else if (quadril >= XG.quadril.min && quadril <= XG.quadril.max) {
+    //   tamanhos.sizeBottom = "XG";
+    // }
 
     // Find the appropriate size for the 'sizeWhole' based on the bust and hip sizes
     if (
@@ -148,6 +314,12 @@ export default function EditarMedidas() {
     setSizeTop(tamanhos.sizeTop);
     setSizeBottom(tamanhos.sizeBottom);
     setSizeWhole(tamanhos.sizeWhole);
+    setBustoDescription(tamanhos.bustoDescription)
+    setBustoColor(tamanhos.bustoColor)
+    setCinturaDescription(tamanhos.cinturaDescription)
+    setCinturaColor(tamanhos.cinturaColor)
+    setQuadrilDescription(tamanhos.quadrilDescription)
+    setQuadrilColor(tamanhos.quadrilColor)
     if (!tamanhos.sizeWhole) {
       setSizeWhole(tamanhos.sizeBottom);
     }
@@ -160,7 +332,7 @@ export default function EditarMedidas() {
   const submitFunc = () => {
     // checkMeasures(bustoCm,cinturaCm,quadrilCm)
 
-    if (sizeWhole) {
+    if (sizeWhole && sizeTop && sizeBottom && bustoDescription && cinturaDescription && quadrilDescription ) {
       console.log("we had a valid sizeWhole");
 
       router.push({
@@ -174,6 +346,12 @@ export default function EditarMedidas() {
           bustoCm: bustoCm,
           cinturaCm: cinturaCm,
           quadrilCm: quadrilCm,
+          bustoDescription:bustoDescription,
+          bustoColor: bustoColor , 
+          cinturaDescription:cinturaDescription,
+          cinturaColor: cinturaColor, 
+          quadrilDescription:quadrilDescription,
+          quadrilColor: quadrilColor,
         },
       });
     } else {
@@ -263,30 +441,37 @@ export default function EditarMedidas() {
               value={quadrilCm}
             />
           </div>
-       
 
-        <div className="flex mt-2 flex-col">
-          <button
-            className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
-            onClick={() => submitFunc()}
-          >
-            Ver Recomedação
-          </button>
-          <button
-            className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
-            onClick={() => {
-              if (encodedImgUrl) {
-                router.push({
-                  pathname: `${window.location.origin}/${encodeURIComponent(
-                    encodedImgUrl as string
-                  )}`,
-                });
-              }
-            }}
-          >
-            Reiniciar
-          </button>
-          <button
+          <div className="flex mt-2 flex-col">
+            <button
+              className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
+              onClick={() => submitFunc()}
+            >
+              Ver Recomedação
+            </button>
+            <button
+              className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
+              onClick={() => {
+                if (encodedImgUrl) {
+                  router.push({
+                    pathname: `${window.location.origin}/${encodeURIComponent(
+                      encodedImgUrl as string
+                    )}`,
+                  });
+                }
+              }}
+            >
+              Reiniciar
+            </button>
+            <a
+              className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 text-center"
+              href="/files/fita-metrica-eufloria.pdf"
+              target={"_blank"}
+              rel="noopener noreferrer"
+            >
+              Fita Metrica
+            </a>
+            {/* <button
             onClick={() => {
               if (bustoCm && cinturaCm && quadrilCm) {
                 checkMeasures(+bustoCm, +cinturaCm, +quadrilCm);
@@ -294,7 +479,7 @@ export default function EditarMedidas() {
             }}
           >
             Console.log
-          </button>
+          </button> */}
           </div>
         </div>
       </div>

@@ -2,9 +2,9 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import SugarBustoSVG from './sugar/SugarBusto'
-import SugarCinturaSVG from './sugar/SugarCintura'
-import SugarQuadrilSVG from './sugar/SugarQuadril'
+import SugarBustoSVG from '../components/sugar/SugarBusto'
+import SugarCinturaSVG from '../components/sugar/SugarCintura'
+import SugarQuadrilSVG from '../components/sugar/SugarQuadril'
 export default function ResultPage() {
     const router = useRouter()
 
@@ -51,14 +51,14 @@ export default function ResultPage() {
 
         //exactMeasures
         if (edit && router.query.sizeTop && router.query.sizeBottom && router.query.sizeWhole) {
-            setter(router.query.sizeTop as string, router.query.sizeBottom as string, router.query.sizeWhole as string)
+            setter(router.query.sizeTop as string, router.query.sizeBottom as string, router.query.sizeWhole as string, router.query.bustoDescription as string, router.query.bustoColor as string, router.query.cinturaDescription as string, router.query.cinturaColor as string, router.query.quadrilDescription as string, router.query.quadrilColor as string)
         }
 
         // console.log(sizeTop,sizeBottom,sizeWhole,' olha o log dos sizes')
 
-    }, [doll])
+    }, [doll,imc,busto,cintura,edit,router.query])
 
-    const setter = (sizeTop: string, sizeBottom: string, sizeWhole: string) => {
+    const setter = (sizeTop: string, sizeBottom: string, sizeWhole: string, bustoDesc:string, bustoColorEdit:string, cinturaDesc:string, cinturaColorEdit:string, quadrilDesc:string, quadrilColorEdit:string) => {
         console.log('inside setter', { sizeTop, sizeBottom, sizeWhole })
         setSizeTop(sizeTop);
         setSizeBottom(sizeBottom);
@@ -66,15 +66,15 @@ export default function ResultPage() {
         setEditBusto(bustoCm as string)
         setEditCintura(cinturaCm as string)
         setEditQuadril(quadrilCm as string)
+        setBustoDescription(bustoDesc)
+        setBustoColor(bustoColorEdit)
+        setCinturaDescription(cinturaDesc)
+        setCinturaColor(cinturaColorEdit)
+        setQuadrilDescription(quadrilDesc)
+        setQuadrilColor(quadrilColorEdit)
     }
 
-    // const chooseSizeExact = (imc,bustoCm,cinturaCm,quadrilCm) => {
-    //     if(imc<14 || imc>35.5){
-    //         return router.push({pathname:'/medidas/NotFound', query:{encodedImgUrl:encodedImgUrl}})
-    //         //go to the Nao encontramos seu tamanho por favor -> Editar Medidas
-    //         }
 
-    // }
 
     const allSizes = ['PP', 'P', 'M', 'G', 'GG', 'XG']
 
@@ -104,66 +104,66 @@ export default function ResultPage() {
                 console.warn('busto is definately ==0')
                 //folgado
                 setBustoDescription('Folgado')
-                setBustoColor('bg-red-500')
+                setBustoColor('stroke-red-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(PP.busto.min)
             }
             if (busto == 1) {
                 //levemente folgado
                 setBustoDescription('Levemente folgado')
-                setBustoColor('bg-orange-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(PP.busto.min + 1)
             }
             if (busto == 2) {
                 //levemente justo
                 setBustoDescription('Levemente justo')
-                setBustoColor('bg-green-400')
+                setBustoColor('stroke-green-400')
                 setSizeTop(defaultSize as string)
-                setEditBusto(PP.busto.med)
+                setEditBusto(PP.busto.med+1)
             }
             if (busto == 3) {
                 //justo
                 setBustoDescription('Justo')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-green-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(PP.busto.max)
             }
             if (busto == 4) {
                 //folgado
                 setBustoDescription('Levemente Folgado')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(sizePlusOne as string)
                 setEditBusto(P.busto.min)
             }
             if (cintura == 0) {
                 setCinturaDescription('Folgado')
-                setCinturaColor('bg-red-500')
+                setCinturaColor('stroke-red-500')
                 setEditCintura(PP.cintura.min)
             }
             if (cintura == 1) {
                 setCinturaDescription('Levemente folgado')
-                setCinturaColor('bg-orange-500')
+                setCinturaColor('stroke-yellow-500')
                 setEditCintura(PP.cintura.min + 1)
             }
             if (cintura == 2) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-400')
-                setEditCintura(PP.cintura.med)
+                setCinturaColor('stroke-green-400')
+                setEditCintura(PP.cintura.med+1)
             }
             if (cintura == 3) {
                 setCinturaDescription('Justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(PP.cintura.max)
             }
             if (cintura == 4) {
                 setCinturaDescription('Justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(P.cintura.min)
             }
             if (quadril == 0) {
                 setQuadrilDescription('Folgado')
-                setQuadrilColor('bg-red-500')
+                setQuadrilColor('stroke-red-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(PP.quadril.min)
@@ -171,22 +171,22 @@ export default function ResultPage() {
 
             if (quadril == 1) {
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(PP.quadril.min + 1)
             }
             if (quadril == 2) {
                 setQuadrilDescription('Levemente justo')
-                setQuadrilColor('bg-green-400')
+                setQuadrilColor('stroke-green-400')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
-                setEditQuadril(PP.quadril.med)
+                setEditQuadril(PP.quadril.med+1)
             }
 
             if (quadril == 3) {
                 setQuadrilDescription('Justo')
-                setQuadrilColor('bg-green-500')
+                setQuadrilColor('stroke-green-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(PP.quadril.max)
@@ -194,7 +194,7 @@ export default function ResultPage() {
             if (quadril == 4) {
                 //folgado
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(sizePlusOne as string)
                 setSizeWhole(sizePlusOne as string)
                 setEditQuadril(P.quadril.min)
@@ -209,66 +209,66 @@ export default function ResultPage() {
             if (busto == 0) {
                 //folgado
                 setBustoDescription('Folgado')
-                setBustoColor('bg-red-500')
+                setBustoColor('stroke-red-500')
                 setSizeTop(sizeMinusOne as string)
                 setEditBusto(PP.busto.max)
             }
             if (busto == 1) {
                 //levemente folgado
                 setBustoDescription('Levemente folgado')
-                setBustoColor('bg-orange-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(P.busto.min)
             }
             if (busto == 2) {
                 //levemente justo
                 setBustoDescription('Levemente justo')
-                setBustoColor('bg-green-400')
+                setBustoColor('stroke-green-400')
                 setSizeTop(defaultSize as string)
-                setEditBusto(P.busto.med)
+                setEditBusto(P.busto.med+1)
             }
             if (busto == 3) {
                 //justo
                 setBustoDescription('Justo')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-green-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(P.busto.max)
             }
             if (busto == 4) {
                 //folgado
                 setBustoDescription('Levemente Folgado')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(sizePlusOne as string)
                 setEditBusto(M.busto.min)
             }
             if (cintura == 0) {
                 setCinturaDescription('Folgado')
-                setCinturaColor('bg-red-500')
+                setCinturaColor('stroke-red-500')
                 setEditCintura(PP.cintura.max)
             }
             if (cintura == 1) {
                 setCinturaDescription('Levemente folgado')
-                setCinturaColor('bg-orange-500')
+                setCinturaColor('stroke-yellow-500')
                 setEditCintura(P.cintura.min)
             }
             if (cintura == 2) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-400')
-                setEditCintura(P.cintura.med)
+                setCinturaColor('stroke-green-400')
+                setEditCintura(P.cintura.med+1)
             }
             if (cintura == 3) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(P.cintura.max)
             }
             if (cintura == 4) {
                 setCinturaDescription('Justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(M.cintura.min)
             }
             if (quadril == 0) {
                 setQuadrilDescription('Folgado')
-                setQuadrilColor('bg-red-500')
+                setQuadrilColor('stroke-red-500')
                 setSizeBottom(sizeMinusOne as string)
                 setSizeWhole(sizeMinusOne as string)
                 setEditQuadril(PP.quadril.max)
@@ -276,22 +276,22 @@ export default function ResultPage() {
 
             if (quadril == 1) {
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(P.quadril.min)
             }
             if (quadril == 2) {
                 setQuadrilDescription('Levemente justo')
-                setQuadrilColor('bg-green-400')
+                setQuadrilColor('stroke-green-400')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
-                setEditQuadril(P.quadril.med)
+                setEditQuadril(P.quadril.med+1)
             }
 
             if (quadril == 3) {
                 setQuadrilDescription('Justo')
-                setQuadrilColor('bg-green-500')
+                setQuadrilColor('stroke-green-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(P.quadril.max)
@@ -299,7 +299,7 @@ export default function ResultPage() {
             if (quadril == 4) {
                 //folgado
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(sizePlusOne as string)
                 setSizeWhole(sizePlusOne as string)
                 setEditQuadril(M.quadril.min)
@@ -314,66 +314,66 @@ export default function ResultPage() {
             if (busto == 0) {
                 //folgado
                 setBustoDescription('Folgado')
-                setBustoColor('bg-red-500')
+                setBustoColor('stroke-red-500')
                 setSizeTop(sizeMinusOne as string)
                 setEditBusto(P.busto.max)
             }
             if (busto == 1) {
                 //levemente folgado
                 setBustoDescription('Levemente folgado')
-                setBustoColor('bg-orange-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(M.busto.min)
             }
             if (busto == 2) {
                 //levemente justo
                 setBustoDescription('Levemente justo')
-                setBustoColor('bg-green-400')
+                setBustoColor('stroke-green-400')
                 setSizeTop(defaultSize as string)
-                setEditBusto(M.busto.med)
+                setEditBusto(M.busto.med+1)
             }
             if (busto == 3) {
                 //justo
                 setBustoDescription('Justo')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-green-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(M.busto.max)
             }
             if (busto == 4) {
                 //folgado
                 setBustoDescription('Levemente Folgado')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(sizePlusOne as string)
                 setEditBusto(G.busto.min)
             }
             if (cintura == 0) {
                 setCinturaDescription('Folgado')
-                setCinturaColor('bg-red-500')
+                setCinturaColor('stroke-red-500')
                 setEditCintura(P.cintura.max)
             }
             if (cintura == 1) {
                 setCinturaDescription('Levemente folgado')
-                setCinturaColor('bg-orange-500')
+                setCinturaColor('stroke-yellow-500')
                 setEditCintura(M.cintura.min)
             }
             if (cintura == 2) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-400')
-                setEditCintura(M.cintura.med)
+                setCinturaColor('stroke-green-400')
+                setEditCintura(M.cintura.med+1)
             }
             if (cintura == 3) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(M.cintura.max)
             }
             if (cintura == 4) {
                 setCinturaDescription('Justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(G.cintura.min)
             }
             if (quadril == 0) {
                 setQuadrilDescription('Folgado')
-                setQuadrilColor('bg-red-500')
+                setQuadrilColor('stroke-red-500')
                 setSizeBottom(sizeMinusOne as string)
                 setSizeWhole(sizeMinusOne as string)
                 setEditQuadril(P.quadril.max)
@@ -381,22 +381,22 @@ export default function ResultPage() {
 
             if (quadril == 1) {
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(M.quadril.min)
             }
             if (quadril == 2) {
                 setQuadrilDescription('Levemente justo')
-                setQuadrilColor('bg-green-400')
+                setQuadrilColor('stroke-green-400')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
-                setEditQuadril(M.quadril.med)
+                setEditQuadril(M.quadril.med+1)
             }
 
             if (quadril == 3) {
                 setQuadrilDescription('Justo')
-                setQuadrilColor('bg-green-500')
+                setQuadrilColor('stroke-green-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(M.quadril.max)
@@ -404,7 +404,7 @@ export default function ResultPage() {
             if (quadril == 4) {
                 //folgado
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(sizePlusOne as string)
                 setSizeWhole(sizePlusOne as string)
                 setEditQuadril(G.quadril.min)
@@ -419,66 +419,66 @@ export default function ResultPage() {
             if (busto == 0) {
                 //folgado
                 setBustoDescription('Folgado')
-                setBustoColor('bg-red-500')
+                setBustoColor('stroke-red-500')
                 setSizeTop(sizeMinusOne as string)
                 setEditBusto(M.busto.max)
             }
             if (busto == 1) {
                 //levemente folgado
                 setBustoDescription('Levemente folgado')
-                setBustoColor('bg-orange-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(G.busto.min)
             }
             if (busto == 2) {
                 //levemente justo
                 setBustoDescription('Levemente justo')
-                setBustoColor('bg-green-400')
+                setBustoColor('stroke-green-400')
                 setSizeTop(defaultSize as string)
-                setEditBusto(G.busto.med)
+                setEditBusto(G.busto.med+1)
             }
             if (busto == 3) {
                 //justo
                 setBustoDescription('Justo')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-green-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(G.busto.max)
             }
             if (busto == 4) {
                 //folgado
                 setBustoDescription('Levemente Folgado')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(sizePlusOne as string)
                 setEditBusto(GG.busto.min)
             }
             if (cintura == 0) {
                 setCinturaDescription('Folgado')
-                setCinturaColor('bg-red-500')
+                setCinturaColor('stroke-red-500')
                 setEditCintura(M.cintura.max)
             }
             if (cintura == 1) {
                 setCinturaDescription('Levemente folgado')
-                setCinturaColor('bg-orange-500')
+                setCinturaColor('stroke-yellow-500')
                 setEditCintura(G.cintura.min)
             }
             if (cintura == 2) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-400')
-                setEditCintura(G.cintura.med)
+                setCinturaColor('stroke-green-400')
+                setEditCintura(G.cintura.med+1)
             }
             if (cintura == 3) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(G.cintura.max)
             }
             if (cintura == 4) {
                 setCinturaDescription('Justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(GG.cintura.min)
             }
             if (quadril == 0) {
                 setQuadrilDescription('Folgado')
-                setQuadrilColor('bg-red-500')
+                setQuadrilColor('stroke-red-500')
                 setSizeBottom(sizeMinusOne as string)
                 setSizeWhole(sizeMinusOne as string)
                 setEditQuadril(M.quadril.max)
@@ -486,22 +486,22 @@ export default function ResultPage() {
 
             if (quadril == 1) {
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(G.quadril.min)
             }
             if (quadril == 2) {
                 setQuadrilDescription('Levemente justo')
-                setQuadrilColor('bg-green-400')
+                setQuadrilColor('stroke-green-400')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
-                setEditQuadril(G.quadril.med)
+                setEditQuadril(G.quadril.med+1)
             }
 
             if (quadril == 3) {
                 setQuadrilDescription('Justo')
-                setQuadrilColor('bg-green-500')
+                setQuadrilColor('stroke-green-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(G.quadril.max)
@@ -509,7 +509,7 @@ export default function ResultPage() {
             if (quadril == 4) {
                 //folgado
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(sizePlusOne as string)
                 setSizeWhole(sizePlusOne as string)
                 setEditQuadril(GG.quadril.min)
@@ -524,66 +524,66 @@ export default function ResultPage() {
             if (busto == 0) {
                 //folgado
                 setBustoDescription('Folgado')
-                setBustoColor('bg-red-500')
+                setBustoColor('stroke-red-500')
                 setSizeTop(sizeMinusOne as string)
                 setEditBusto(G.busto.max)
             }
             if (busto == 1) {
                 //levemente folgado
                 setBustoDescription('Levemente folgado')
-                setBustoColor('bg-orange-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(GG.busto.min)
             }
             if (busto == 2) {
                 //levemente justo
                 setBustoDescription('Levemente justo')
-                setBustoColor('bg-green-400')
+                setBustoColor('stroke-green-400')
                 setSizeTop(defaultSize as string)
-                setEditBusto(GG.busto.med)
+                setEditBusto(GG.busto.med+1)
             }
             if (busto == 3) {
                 //justo
                 setBustoDescription('Justo')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-green-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(GG.busto.max)
             }
             if (busto == 4) {
                 //folgado
                 setBustoDescription('Levemente Folgado')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(sizePlusOne as string)
                 setEditBusto(XG.busto.min)
             }
             if (cintura == 0) {
                 setCinturaDescription('Folgado')
-                setCinturaColor('bg-red-500')
+                setCinturaColor('stroke-red-500')
                 setEditCintura(G.cintura.max)
             }
             if (cintura == 1) {
                 setCinturaDescription('Levemente folgado')
-                setCinturaColor('bg-orange-500')
+                setCinturaColor('stroke-yellow-500')
                 setEditCintura(GG.cintura.min)
             }
             if (cintura == 2) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-400')
-                setEditCintura(GG.cintura.med)
+                setCinturaColor('stroke-green-400')
+                setEditCintura(GG.cintura.med+1)
             }
             if (cintura == 3) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(GG.cintura.max)
             }
             if (cintura == 4) {
                 setCinturaDescription('Justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(XG.cintura.min)
             }
             if (quadril == 0) {
                 setQuadrilDescription('Folgado')
-                setQuadrilColor('bg-red-500')
+                setQuadrilColor('stroke-red-500')
                 setSizeBottom(sizeMinusOne as string)
                 setSizeWhole(sizeMinusOne as string)
                 setEditQuadril(G.quadril.max)
@@ -591,22 +591,22 @@ export default function ResultPage() {
 
             if (quadril == 1) {
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(GG.quadril.min)
             }
             if (quadril == 2) {
                 setQuadrilDescription('Levemente justo')
-                setQuadrilColor('bg-green-400')
+                setQuadrilColor('stroke-green-400')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
-                setEditQuadril(GG.quadril.med)
+                setEditQuadril(GG.quadril.med+1)
             }
 
             if (quadril == 3) {
                 setQuadrilDescription('Justo')
-                setQuadrilColor('bg-green-500')
+                setQuadrilColor('stroke-green-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(GG.quadril.max)
@@ -614,7 +614,7 @@ export default function ResultPage() {
             if (quadril == 4) {
                 //folgado
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(sizePlusOne as string)
                 setSizeWhole(sizePlusOne as string)
                 setEditQuadril(XG.quadril.min)
@@ -629,66 +629,66 @@ export default function ResultPage() {
             if (busto == 0) {
                 //folgado
                 setBustoDescription('Folgado')
-                setBustoColor('bg-red-500')
+                setBustoColor('stroke-red-500')
                 setSizeTop(sizeMinusOne as string)
                 setEditBusto(GG.busto.max)
             }
             if (busto == 1) {
                 //levemente folgado
                 setBustoDescription('Levemente folgado')
-                setBustoColor('bg-orange-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(XG.busto.min)
             }
             if (busto == 2) {
                 //levemente justo
                 setBustoDescription('Levemente justo')
-                setBustoColor('bg-green-400')
+                setBustoColor('stroke-green-400')
                 setSizeTop(defaultSize as string)
-                setEditBusto(XG.busto.med)
+                setEditBusto(XG.busto.med+1)
             }
             if (busto == 3) {
                 //justo
                 setBustoDescription('Justo')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-green-500')
                 setSizeTop(defaultSize as string)
                 setEditBusto(XG.busto.max - 1)
             }
             if (busto == 4) {
                 //folgado
                 setBustoDescription('Levemente Folgado')
-                setBustoColor('bg-green-500')
+                setBustoColor('stroke-yellow-500')
                 setSizeTop(sizePlusOne as string)
                 setEditBusto(XG.busto.max)
             }
             if (cintura == 0) {
                 setCinturaDescription('Folgado')
-                setCinturaColor('bg-red-500')
+                setCinturaColor('stroke-red-500')
                 setEditCintura(GG.cintura.max)
             }
             if (cintura == 1) {
                 setCinturaDescription('Levemente folgado')
-                setCinturaColor('bg-orange-500')
+                setCinturaColor('stroke-yellow-500')
                 setEditCintura(XG.cintura.min)
             }
             if (cintura == 2) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-400')
-                setEditCintura(XG.cintura.med)
+                setCinturaColor('stroke-green-400')
+                setEditCintura(XG.cintura.med+1)
             }
             if (cintura == 3) {
                 setCinturaDescription('Levemente justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(XG.cintura.max - 1)
             }
             if (cintura == 4) {
                 setCinturaDescription('Justo')
-                setCinturaColor('bg-green-500')
+                setCinturaColor('stroke-green-500')
                 setEditCintura(XG.cintura.max)
             }
             if (quadril == 0) {
                 setQuadrilDescription('Folgado')
-                setQuadrilColor('bg-red-500')
+                setQuadrilColor('stroke-red-500')
                 setSizeBottom(sizeMinusOne as string)
                 setSizeWhole(sizeMinusOne as string)
                 setEditQuadril(GG.quadril.max)
@@ -696,22 +696,22 @@ export default function ResultPage() {
 
             if (quadril == 1) {
                 setQuadrilDescription('Levemente folgado')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(XG.quadril.min)
             }
             if (quadril == 2) {
                 setQuadrilDescription('Levemente justo')
-                setQuadrilColor('bg-green-400')
+                setQuadrilColor('stroke-green-400')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
-                setEditQuadril(XG.quadril.med)
+                setEditQuadril(XG.quadril.med+1)
             }
 
             if (quadril == 3) {
                 setQuadrilDescription('Justo')
-                setQuadrilColor('bg-green-500')
+                setQuadrilColor('stroke-green-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(XG.quadril.max - 1)
@@ -719,7 +719,7 @@ export default function ResultPage() {
             if (quadril == 4) {
                 //folgado
                 setQuadrilDescription('Justo')
-                setQuadrilColor('bg-orange-500')
+                setQuadrilColor('stroke-yellow-500')
                 setSizeBottom(defaultSize as string)
                 setSizeWhole(defaultSize as string)
                 setEditQuadril(XG.quadril.max)
@@ -732,43 +732,7 @@ export default function ResultPage() {
         // }
     }
     console.log(router.query, 'router query')
-    // console.log(size,' this is size state')
 
-//     return (<div className='flex flex-col p-4 m-2 outline-1 rounded-lg shadow-md justify-between max-w-lg'>
-        
-// <div className='px-2'>
-//         <div className='flex w-60'>
-            
-//             <SugarBustoSVG bustoColor={bustoColor} />
-//             <SugarCinturaSVG cinturaColor={cinturaColor} />
-//             <SugarQuadrilSVG quadrilColor={quadrilColor} />
-//             <img src={'/imgs_lela/030303.jpeg'}>
-//             </img>
-//             <div className='flex flex-col ml-8 bg-green-100'><p>sugar stuff</p>
-//             <div className='flex items-center'>
-
-//             <h1 className="text-gray-800 font-medium text-xl">
-//                 Sua melhor opção de tamanho para tops ou blusas : {sizeTop}, shorts e calças {sizeBottom}, vestidos etc {sizeWhole}
-//             </h1>
-//         </div>
-//             <div className='mt-3'>{bustoDescription}</div>
-//             <div className='mt-8'>{cinturaDescription}</div>
-//             <div className='mt-10'>{quadrilDescription}</div>
-            
-//         {/* aqui vai o esquema largo/justo */}
-//             <div className='flex flex-col justify-start mt-8'>
-//             <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 " onClick={() => router.push({ pathname: `${window.location.origin}/${encodeURIComponent(encodedImgUrl as string)}` })}>Reiniciar</button>
-//             {doll ? <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 " onClick={() => router.push({ pathname: `${window.location.origin}/doll/DollPage`, query: { imc: imc, encodedImgUrl: encodedImgUrl } })}>Voltar</button> : null}
-//             <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 " onClick={() => router.push({ pathname: `${window.location.origin}/medidas/EditarMedidas`, query: { imc: imc, editBusto: editBusto, editCintura: editCintura, editQuadril: editQuadril, encodedImgUrl: encodedImgUrl } })}>Editar medidas</button>
-//             {/* <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 " onClick={()=>router.push({pathname:'/medidas/NotFound', query:{imc:imc, encodedImgUrl:encodedImgUrl}})}>NotFound</button> */}
-//             {/* <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 " >Fita Metrica</button> */}
-//             </div>
-//         </div>
-
-// </div>
-// </div>
-//     </div>)
-// }
 return (<div className='p-4 m-2 flex justify-start outline-1 rounded-lg shadow-md items-center max-w-lg'>
         <div className=' px-2'>
             <div className='max-w-xs'> 
@@ -776,7 +740,7 @@ return (<div className='p-4 m-2 flex justify-start outline-1 rounded-lg shadow-m
              <SugarBustoSVG bustoColor={bustoColor} />
              <SugarCinturaSVG cinturaColor={cinturaColor} />
              <SugarQuadrilSVG quadrilColor={quadrilColor} />
-            <Image alt={'doll std img'} src='/imgs_lela/030303.jpeg'/>
+            <img alt={'doll std img'} src='/imgs_lela/030303.jpeg'/>
             </div>
         </div>
         <div className=' w-96 ml-1 pb-6'>

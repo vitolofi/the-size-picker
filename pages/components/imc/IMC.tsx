@@ -46,7 +46,7 @@ export default function Imc(props: { img: string }){
 
     
     return (
-        <div className="bg-gray-200 delay-1000 transition-opacity duration-200 w-52 ml-4 py-4 rounded-md">
+        <div className="bg-gray-200 w-52 ml-4 py-4 rounded-md">
        
     <div className="flex flex-col">
 
