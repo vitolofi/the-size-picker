@@ -68,7 +68,6 @@ export default function ResultPage() {
         }
     }
 
-
         //exactMeasures
         if (edit){
             if(router.query.sizeTop){        

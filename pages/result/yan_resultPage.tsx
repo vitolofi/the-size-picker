@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import SugarCinturaSVG from "../components/sugar/SugarCintura"
 import SugarBustoSVG from "../components/sugar/SugarBusto"
 import SugarQuadrilSVG from "../components/sugar/SugarQuadril"
-import SizeFactory from "../components/SizeFactory"
+import SizeFactory from "../components/OtherSizesFactory"
 export default function ResultPage() {
     const router = useRouter()
 

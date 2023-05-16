@@ -1,8 +1,5 @@
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-
-// ta faltando bustoDescription, cintura Description, quadril Description pra sair daqui e operar as sugarDivs
 
 interface tamanhosObj {
   sizeTop: string;
@@ -29,10 +26,11 @@ export default function EditarMedidas() {
   const [quadrilDescription, setQuadrilDescription] = useState('')
   const [quadrilColor,setQuadrilColor] = useState('')
 
-  const editBusto = router.query.editBusto;
-  const editCintura = router.query.editCintura;
-  const editQuadril = router.query.editQuadril;
-  const encodedImgUrl = router.query.encodedImgUrl;
+  const editBusto = Number(router.query.editBusto);
+  const editCintura = Number(router.query.editCintura);
+  const editQuadril = Number(router.query.editQuadril);
+  const encodedImgUrl = String(router.query.encodedImgUrl);
+  const categoria = String(router.query.categoria)
 
   const [bustoCm, setBustoCm] = useState(editBusto);
   const [cinturaCm, setCinturaCm] = useState(editCintura);
@@ -42,6 +40,18 @@ export default function EditarMedidas() {
   const [sizeTop, setSizeTop] = useState("");
   const [sizeBottom, setSizeBottom] = useState("");
   const [sizeWhole, setSizeWhole] = useState("");
+
+  const allSizesNames = ['PP', 'P', 'M', 'G', 'GG', 'XG']
+  const allDescriptions = ['Largo', 'Folgado', 'Levemente folgado', 'Ideal', 'Levemente Justo', 'Justo', 'Apertado']
+  const allColors = ['stroke-red-500', 'stroke-yellow-500', 'stroke-green-300', 'stroke-green-500','stroke-green-300', 'stroke-yellow-500','stroke-red-500']
+
+  const PP = { busto: { min: 75, med: 80.5, max: 86 }, cintura: { min: 65, med: 67.5, max: 70 }, quadril: { min: 92, med: 95, max: 98 } }
+  const P = { busto: { min: 87, med: 91.5, max: 96 }, cintura: { min: 70, med: 73, max: 76 }, quadril: { min: 99, med: 102, max: 105 } }
+  const M = { busto: { min: 97, med: 99.5, max: 102 }, cintura: { min: 77, med: 79, max: 81 }, quadril: { min: 106, med: 108.5, max: 111 } }
+  const G = { busto: { min: 103, med: 106, max: 109 }, cintura: { min: 82, med: 84.5, max: 87 }, quadril: { min: 112, med: 115, max: 118 } }
+  const GG = { busto: { min: 110, med: 114.5, max: 119 }, cintura: { min: 88, med: 90.5, max: 93 }, quadril: { min: 119, med: 121.5, max: 124 } }
+  const XG = { busto: { min: 120, med: 125, max: 130 }, cintura: { min: 94, med: 96.5, max: 99 }, quadril: { min: 125, med: 127.5, max: 130 } }
+  const allSizes = [PP,P,M,G,GG,XG]
 
   const checkMeasures = (busto: number, cintura: number, quadril: number,) => {
     const tamanhos: tamanhosObj = {
@@ -352,13 +362,14 @@ export default function EditarMedidas() {
           cinturaColor: cinturaColor, 
           quadrilDescription:quadrilDescription,
           quadrilColor: quadrilColor,
+          categoria:categoria
         },
       });
     } else {
       console.log("we dont have a valid sizeWhole");
       router.push({
         pathname: "/medidas/NotFound",
-        query: { encodedImgUrl: encodedImgUrl },
+        query: { encodedImgUrl: encodedImgUrl, categoria:categoria },
       });
     }
   };
@@ -389,7 +400,7 @@ export default function EditarMedidas() {
               type="range"
               min={70}
               max={150}
-              onChange={(e) => setBustoCm(e.target.value)}
+              onChange={(e) => setBustoCm(Number(e.target.value))}
               onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
               value={bustoCm}
             />
@@ -398,7 +409,7 @@ export default function EditarMedidas() {
               type="number"
               min={70}
               max={170}
-              onChange={(e) => setBustoCm(e.target.value)}
+              onChange={(e) => setBustoCm(Number(e.target.value))}
               onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
               value={bustoCm}
             />
@@ -409,7 +420,7 @@ export default function EditarMedidas() {
               type="range"
               min={50}
               max={160}
-              onChange={(e) => setCinturaCm(e.target.value)}
+              onChange={(e) => setCinturaCm(Number(e.target.value))}
               onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
               value={cinturaCm}
             />
@@ -417,7 +428,7 @@ export default function EditarMedidas() {
               type="number"
               min={50}
               max={160}
-              onChange={(e) => setCinturaCm(e.target.value)}
+              onChange={(e) => setCinturaCm(Number(e.target.value))}
               onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
               value={cinturaCm}
             />
@@ -428,7 +439,7 @@ export default function EditarMedidas() {
               type="range"
               min={70}
               max={151}
-              onChange={(e) => setQuadrilCm(e.target.value)}
+              onChange={(e) => setQuadrilCm(Number(e.target.value))}
               onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
               value={quadrilCm}
             />
@@ -436,7 +447,7 @@ export default function EditarMedidas() {
               type="number"
               min={70}
               max={151}
-              onChange={(e) => setQuadrilCm(e.target.value)}
+              onChange={(e) => setQuadrilCm(Number(e.target.value))}
               onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
               value={quadrilCm}
             />
@@ -455,8 +466,8 @@ export default function EditarMedidas() {
                 if (encodedImgUrl) {
                   router.push({
                     pathname: `${window.location.origin}/${encodeURIComponent(
-                      encodedImgUrl as string
-                    )}`,
+                      encodedImgUrl
+                    )}`, query:{categoria:categoria}
                   });
                 }
               }}
