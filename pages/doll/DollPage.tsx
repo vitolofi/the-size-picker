@@ -17,13 +17,12 @@ export default function DollPage(){
    
     const router = useRouter()
     const imc = router.query.imc
+    const categoria = router.query.categoria
     const encodedImgUrl = router.query.encodedImgUrl
     console.log('imc inside doll page', imc)
     console.log(encodedImgUrl, 'encoded inside doll page')
 
-    // useEffect(()=>{
-    //     checkIMC(imc)
-    // })
+
     useEffect(()=>{
         changeDollImg(busto,cintura,quadril)
     },[busto,cintura,quadril])
@@ -43,13 +42,14 @@ export default function DollPage(){
         <h1 className="text-gray-800 pl-3 pt-5 pb-5 font-medium text-xl">
             Descubra Seu Tamanho
         </h1>
-        <FaderView title='Busto' faderValue={busto} setFaderValue={(a:any)=>setBusto(a)}
+        {/* we can do some logic here to define what can i pass through */}
+        <FaderView title='Busto' faderValue={busto} setFaderValue={(a:any)=>setBusto(a)} 
         ></FaderView>
         <FaderView title='Cintura' faderValue={cintura} setFaderValue={(b:any)=>setCintura(b)}
         ></FaderView>
         <FaderView title='Quadril' faderValue={quadril} setFaderValue={(c:any)=>setQuadril(c)}
         ></FaderView>
-        <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-4 mt-10 " onClick={()=>router.push({pathname:'/result/resultPage', query:{dollImg:dollImgName, encodedImgUrl:encodedImgUrl,doll:true, imc:imc, busto:busto, cintura:cintura, quadril:quadril}})}>PRÓXIMO</button>
+        <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-4 mt-10 " onClick={()=>router.push({pathname:'/result/refactor_resultPage', query:{dollImg:dollImgName, encodedImgUrl:encodedImgUrl,doll:true, imc:imc, busto:busto, cintura:cintura, quadril:quadril, categoria:categoria}})}>PRÓXIMO</button>
 
     </div>
             

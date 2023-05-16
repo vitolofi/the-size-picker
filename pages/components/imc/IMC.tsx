@@ -5,6 +5,7 @@ import { useEffect, useState} from 'react'
 export default function Imc(props: { img: string }){
 
     const router = useRouter()
+    const categoria = router.query.categoria
     const [altura,setAltura] = useState<number>(0)
     const [peso,setPeso] = useState<number>(0)
     const [idade,setIdade] = useState<number>(0)
@@ -12,7 +13,6 @@ export default function Imc(props: { img: string }){
     const [colorAnimation, setColorAnimation] = useState<string>('bg-gray-300')
 
     useEffect(()=>{
-        // console.log(altura,'altura',peso,'peso',idade,'idade')
         if(altura === 0 || peso === 0 || idade === 0) return
            else setColorAnimation('bg-gray-50')
     },[altura,peso,idade])
@@ -41,7 +41,7 @@ export default function Imc(props: { img: string }){
         if(altura > alturaMax || peso > pesoMax || idade >idadeMax){
             return void setColorAnimation('bg-gray-200 animate-pulse')
         }
-        else return void router.push({pathname:'/doll/DollPage', query:{imc:imcCalc(altura, peso), idade:idade, encodedImgUrl:props.img}})
+        else return void router.push({pathname:'/doll/DollPage', query:{imc:imcCalc(altura, peso), idade:idade, encodedImgUrl:props.img, categoria:categoria}})
       }
 
     
@@ -56,7 +56,7 @@ export default function Imc(props: { img: string }){
         <div className="flex flex-col pl-6 my-6 pb-2">
                 
         <label>Altura(cm)</label>
-        <input className="py-1 w-32" min={100} max={220} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{
+        <input className="py-1 px-2 w-32" min={100} max={220} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{
             const stringer = e.target.value
             const num = +stringer
             // testar alturas e peso provaveis
@@ -65,7 +65,7 @@ export default function Imc(props: { img: string }){
             } 
         }}></input>
         <label>Peso(kg)</label>
-        <input className="py-1 w-32" min={40} max={250} type='text' pattern='\d*' maxLength={3} onChange={(e)=> {
+        <input className="py-1 px-2 w-32" min={40} max={250} type='text' pattern='\d*' maxLength={3} onChange={(e)=> {
             const stringer = e.target.value
             const num = +stringer
             if(num<pesoMax && num>pesoMin){
@@ -73,7 +73,7 @@ export default function Imc(props: { img: string }){
             } 
             }}></input>
         <label>Idade</label>
-        <input className="py-1 w-32" min={16} max={120} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{
+        <input className="py-1 px-2 w-32" min={16} max={120} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{
             const stringer = e.target.value
             const num = +stringer
             if(num<idadeMax && num>idadeMin){
@@ -89,4 +89,4 @@ export default function Imc(props: { img: string }){
         </div>
         </div>)
 }
-// redirecta pra pagina do boneco 3d
+
