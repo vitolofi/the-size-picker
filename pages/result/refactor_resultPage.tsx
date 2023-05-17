@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { ReactElement, SetStateAction, useEffect,useState } from "react"
+import {useEffect,useState } from "react"
 import OtherSizesFactory from '../components/OtherSizesFactory'
 import SugarBustoSVG from '../components/sugar/SugarBusto'
 import SugarCinturaSVG from '../components/sugar/SugarCintura'
@@ -34,10 +34,6 @@ export default function refactor_ResultPage(){
     const [editQuadril, setEditQuadril] = useState<string | number>()
     const [quadrilColor, setQuadrilColor] = useState<string>('')
     
-    // const bustoEdit = Number(router.query.busto)
-    // const cinturaEdit = Number(router.query.cintura)
-    // const quadrilEdit = Number(router.query.quadril)
-    
   
     const imc = Number(router.query.imc)
     const bustoDoll = Number(router.query.busto)
@@ -49,7 +45,7 @@ export default function refactor_ResultPage(){
 
 
     const allPossibleCategorias = ['Camisa', 'Calça', 'Vestidos']
-    const size = [sizeTop,sizeBottom,sizeWhole]
+    const sizes = [sizeTop,sizeBottom,sizeWhole]
     const functionsDollObj = [(imc: number,busto: number,cintura: number,quadril: number)=> chooseBestCamisaDoll(imc,busto,cintura,quadril), (imc: number,busto: number,cintura: number,quadril: number)=> chooseBestCalçaDoll(imc,busto,cintura,quadril), (imc: number,busto: number,cintura: number,quadril: number)=>chooseBestVestidoDoll(imc,busto,cintura,quadril) ]
     
 
@@ -66,7 +62,17 @@ export default function refactor_ResultPage(){
     const XG = { busto: { min: 120, med: 125, max: 130 }, cintura: { min: 94, med: 96.5, max: 99 }, quadril: { min: 125, med: 127.5, max: 130 } }
     const allSizes = [PP,P,M,G,GG,XG]
     
-   
+    const factoryInfo = {
+        sizeTop,
+        sizeBottom,
+        sizeWhole,
+        bustoDescription:allDescriptions.indexOf(bustoDescription),
+        cinturaDescription:allDescriptions.indexOf(cinturaDescription),
+        quadrilDescription:allDescriptions.indexOf(quadrilDescription),
+        editBusto,
+        editCintura,
+        editQuadril,
+    }
     const imcCheck = (imc:number) =>{
         if (imc < 14 || imc > 35.5) {
             router.push({ pathname: '/medidas/NotFound', query: { encodedImgUrl: encodedImgUrl } })
@@ -460,27 +466,25 @@ export default function refactor_ResultPage(){
        })
     }
     //doll
+    const fromEditSetter = (sizeTop:string,sizeBottom:string,sizeWhole:string,bustoCm:number,cinturaCm:number,quadrilCm:number,bustoDescription:string,bustoColor:string,cinturaDescription:string,cinturaColor:string,quadrilDescription:string,quadrilColor:string) =>{
 
-    const fromEditSetter = () =>{
+        setSizeTop(sizeTop);
+        setSizeBottom(sizeBottom);
+        setSizeWhole(sizeWhole);
 
-        setSizeTop(String(router.query.sizeTop));
-        setSizeBottom(String(router.query.sizeBottom));
-        setSizeWhole(String(router.query.sizeWhole));
+        // console.log('router query inside the setter', router.query)
 
-        console.log('router query inside the setter', router.query)
+        setEditBusto(bustoCm)
+        setEditCintura(cinturaCm)
+        setEditQuadril(quadrilCm)
 
-        setEditBusto(Number(router.query.bustoCm))
-        setEditCintura(Number(router.query.cinturaCm))
-        setEditQuadril(Number(router.query.quadrilCm))
-
-        setBustoDescription(String(router.query.bustoDescription))
-        setBustoColor(String(router.query.bustoColor))
-        setCinturaDescription(String(router.query.cinturaDescription))
-        setCinturaColor(String(router.query.cinturaColor))
-        setQuadrilDescription(String(router.query.quadrilDescription))
-        setQuadrilColor(String(router.query.quadrilColor))
+        setBustoDescription(bustoDescription)
+        setBustoColor(bustoColor)
+        setCinturaDescription(cinturaDescription)
+        setCinturaColor(cinturaColor)
+        setQuadrilDescription(quadrilDescription)
+        setQuadrilColor(quadrilColor)
     }
-
     const resultMasterReturn =  (categoria: string, doll:any, edit:any) =>{
     if(categoria && doll || edit){
         // console.log('router loads', doll,'dollvalue', )
@@ -496,7 +500,7 @@ export default function refactor_ResultPage(){
             
         }
         if(edit){
-            fromEditSetter();
+            fromEditSetter(String(router.query.sizeTop),String(router.query.sizeBottom),String(router.query.sizeWhole),Number(router.query.bustoCm),Number(router.query.cinturaCm),Number(router.query.quadrilCm),String(router.query.bustoDescription),String(router.query.bustoColor),String(router.query.cinturaDescription),String(router.query.cinturaColor),String(router.query.quadrilDescription),String(router.query.quadrilColor));
         }
     }
     else return null
@@ -504,17 +508,17 @@ export default function refactor_ResultPage(){
 
 
     
-}
+    }
 
 useEffect(()=>{
     resultMasterReturn(categoria,doll,edit)
-})
+},[])
 if(!router.isFallback){
     return (<div className='p-4 m-2 flex justify-start outline-1 rounded-lg shadow-md items-center max-w-lg'>
     <div className=' px-2'>
         <div className='max-w-xs'> 
         coisa a imagen
-{/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}
+        {/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}
          {sizeTop || sizeWhole? <SugarBustoSVG bustoColor={bustoColor} /> :null} 
          <SugarCinturaSVG cinturaColor={cinturaColor} />
          <SugarQuadrilSVG quadrilColor={quadrilColor} />
@@ -522,7 +526,7 @@ if(!router.isFallback){
 
         <img alt={'doll std img'} src='/imgs_lela/030303.jpeg'/>
 
-        <OtherSizesFactory></OtherSizesFactory>
+        <OtherSizesFactory baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactory>
         </div>
     </div>
     <div className=' w-96 ml-1 pb-6'>
