@@ -4,6 +4,9 @@ import OtherSizesFactory from '../components/OtherSizesFactory'
 import SugarBustoSVG from '../components/sugar/SugarBusto'
 import SugarCinturaSVG from '../components/sugar/SugarCintura'
 import SugarQuadrilSVG from '../components/sugar/SugarQuadril'
+import ChangeSizeButtons from "../components/ChangeSizeButtons"
+
+
 export default function refactor_ResultPage(){
 
 
@@ -26,15 +29,19 @@ export default function refactor_ResultPage(){
     
     const [bustoDescription, setBustoDescription] = useState<string>('')
     const [bustoColor, setBustoColor] = useState<string>('')
-    const [editBusto, setEditBusto] = useState<string | number>()
+    const [editBusto, setEditBusto] = useState<string | number>('')
     const [cinturaDescription, setCinturaDescription] = useState<string>('')
-    const [editCintura, setEditCintura] = useState<string | number>()
+    const [editCintura, setEditCintura] = useState<string | number>('')
     const [cinturaColor, setCinturaColor] = useState<string>('')
     const [quadrilDescription, setQuadrilDescription] = useState<string>('')
-    const [editQuadril, setEditQuadril] = useState<string | number>()
+    const [editQuadril, setEditQuadril] = useState<string | number>('')
     const [quadrilColor, setQuadrilColor] = useState<string>('')
     
   
+
+    const [factoryResultState,setFactoryResultState] = useState<any[]>()    
+
+
     const imc = Number(router.query.imc)
     const bustoDoll = Number(router.query.busto)
     const cinturaDoll = Number(router.query.cintura)
@@ -45,10 +52,10 @@ export default function refactor_ResultPage(){
 
 
     const allPossibleCategorias = ['Camisa', 'Calça', 'Vestidos']
+    const resultNameCategorias = ['sizeTop', 'sizeBottom', 'sizeWhole']
     const sizes = [sizeTop,sizeBottom,sizeWhole]
     const functionsDollObj = [(imc: number,busto: number,cintura: number,quadril: number)=> chooseBestCamisaDoll(imc,busto,cintura,quadril), (imc: number,busto: number,cintura: number,quadril: number)=> chooseBestCalçaDoll(imc,busto,cintura,quadril), (imc: number,busto: number,cintura: number,quadril: number)=>chooseBestVestidoDoll(imc,busto,cintura,quadril) ]
     
-
     const imcRanges = [14,20,23.5,28.7,30,32.5,35.5]
     const allSizesNames = ['PP', 'P', 'M', 'G', 'GG', 'XG']
     const allDescriptions = ['Largo', 'Folgado', 'Levemente folgado', 'Ideal', 'Levemente Justo', 'Justo', 'Apertado']
@@ -66,12 +73,15 @@ export default function refactor_ResultPage(){
         sizeTop,
         sizeBottom,
         sizeWhole,
-        bustoDescription:allDescriptions.indexOf(bustoDescription),
-        cinturaDescription:allDescriptions.indexOf(cinturaDescription),
-        quadrilDescription:allDescriptions.indexOf(quadrilDescription),
         editBusto,
         editCintura,
         editQuadril,
+        bustoDescription:allDescriptions.indexOf(bustoDescription),
+        bustoColor:allDescriptions.indexOf(bustoDescription),
+        cinturaDescription:allDescriptions.indexOf(cinturaDescription),
+        cinturaColor:allDescriptions.indexOf(cinturaDescription),
+        quadrilDescription:allDescriptions.indexOf(quadrilDescription),
+        quadrilColor:allDescriptions.indexOf(quadrilDescription),
     }
     const imcCheck = (imc:number) =>{
         if (imc < 14 || imc > 35.5) {
@@ -112,7 +122,8 @@ export default function refactor_ResultPage(){
             return
         }
 
-        imcRanges.forEach((v,i,arr)=>{
+        imcRanges.forEach((v,i,imcRanges)=>{
+            if(i===imcRanges.length)return
              //PP
          if(i===0){
             // console.log('your size is PP')
@@ -125,7 +136,7 @@ export default function refactor_ResultPage(){
              const sizePlusOne = allSizesNames[blockValue + 1]
             //  console.warn('is 0?')
             //  console.warn(busto, typeof busto,' busto log warn')
-             
+        
              if (busto>0 && busto<4) {
                  setBustoDescription(allDescriptions[busto+1])
                  setBustoColor(allColors[busto+1])
@@ -146,7 +157,7 @@ export default function refactor_ResultPage(){
                 return        
          }
          //XG
-         if(i==arr.length){
+         if(i===imcRanges.length-1 && imc>imcRanges[i] && imc<imcRanges[i+1]){
             const blockValue = i
             const defaultSize = allSizesNames[blockValue]
             const sizeMinusOne = allSizesNames[blockValue - 1]
@@ -173,9 +184,10 @@ export default function refactor_ResultPage(){
             
         }
         //P ao GG
-        if(i!==arr.length && i!==0){
+        if(i!==imcRanges.length && i!==imcRanges.length-1  && i!==0){
             //P ao GG
-            if(imc>arr[i] && imc<arr[i+1]){
+            if(imc>imcRanges[i] && imc<imcRanges[i+1]){
+                
                 const blockValue = i
                 const defaultSize = allSizesNames[blockValue]
                 const sizePlusOne = allSizesNames[blockValue + 1]
@@ -485,7 +497,7 @@ export default function refactor_ResultPage(){
         setQuadrilDescription(quadrilDescription)
         setQuadrilColor(quadrilColor)
     }
-    const resultMasterReturn =  (categoria: string, doll:any, edit:any) =>{
+    const resultMasterReturn = (categoria: string, doll:any, edit:any) =>{
     if(categoria && doll || edit){
         // console.log('router loads', doll,'dollvalue', )
         if(doll){
@@ -494,7 +506,7 @@ export default function refactor_ResultPage(){
                 if(categoria===v){
                     console.log(categoria,'categoria is equal' ,v )
                     functionsDollObj[i](imc,bustoDoll,cinturaDoll,quadrilDoll)
-                    // return true
+                  
                 }
             })
             
@@ -513,6 +525,94 @@ export default function refactor_ResultPage(){
 useEffect(()=>{
     resultMasterReturn(categoria,doll,edit)
 },[])
+
+const factory = () =>{
+    if(sizeTop|| sizeBottom || sizeWhole){
+
+        const factoryResult:any[] = []
+        allSizesNames.forEach((v,i,arr)=>[
+            factoryResult[i] = {}
+        ])
+        
+    let originalSize  = ''
+    allPossibleCategorias.forEach((v,i,arr)=>{
+        if(categoria===v){
+            originalSize = sizes[i]
+            console.log(allSizesNames.indexOf(sizes[i]), 'indexofsizes[i')
+            // const a =  Object.values(factoryInfo)
+            factoryResult[allSizesNames.indexOf(sizes[i])] = factoryInfo 
+
+        }
+    })
+    console.log(factoryResult,'this is factory restul')
+    //ate aqui conseguimos passar pro index correto a opção inicialmente fabricada
+    
+    factoryResult.forEach((v,i,arr)=>{
+        if(i !== allSizesNames.indexOf(originalSize)){
+            const baseSize = Object.assign({},factoryResult[allSizesNames.indexOf(originalSize)])
+            
+            // console.log('this is baseSize', baseSize)
+            
+            const sizeDifference = i-allSizesNames.indexOf(originalSize)
+            // console.log('this is the size difference?', sizeDifference)
+            
+            
+            baseSize.bustoDescription = baseSize.bustoDescription-sizeDifference*2 
+            baseSize.cinturaDescription = baseSize.cinturaDescription-sizeDifference*2 
+            baseSize.quadrilDescription = baseSize.quadrilDescription-sizeDifference*2 
+            allPossibleCategorias.forEach((v,index,arr)=>{
+                if(categoria===v){
+                    baseSize[resultNameCategorias[index]] = allSizesNames[i]
+                }
+            })
+            
+            for (const key in baseSize) {
+                if (baseSize.hasOwnProperty(key)) {
+                    //   console.log(`${key}: ${baseSize[key]}`);
+                    if(baseSize[key] && baseSize[key]>=7 && baseSize[key]<16){
+                        baseSize[key]=6
+                    }
+                    if(baseSize[key] && baseSize[key]<0){
+                        baseSize[key]=0
+                    }
+                    // console.log(`${key}: ${baseSize[key]}`);
+                }
+              }
+            //   console.log('after the bugfix with the indexes of description and color, now baseSize is like this')
+              const indexOfFutureSize = i
+              baseSize.editBusto = allSizes[indexOfFutureSize].busto.med
+              baseSize.editCintura = allSizes[indexOfFutureSize].cintura.med
+              baseSize.editQuadril = allSizes[indexOfFutureSize].quadril.med
+            //   console.log(baseSize, indexOfFutureSize,'indexofnextsize')
+            const result = [baseSize.sizeTop,baseSize.sizeBottom,baseSize.sizeWhole,baseSize.editBusto,baseSize.editCintura,baseSize.editQuadril,allDescriptions[baseSize.bustoDescription], allColors[baseSize.bustoDescription], allDescriptions[baseSize.cinturaDescription], allColors[baseSize.cinturaDescription], allDescriptions[baseSize.quadrilDescription],allColors[baseSize.quadrilDescription]]
+            console.log(result, 'log of result inside loop')
+            factoryResult[i] = result
+        }
+    })
+    // const originalValues = Object.values(factoryInfo)
+    console.log(factoryResult,'this is factory restul')
+    factoryResult[allSizesNames.indexOf(originalSize)] = [factoryInfo.sizeTop,factoryInfo.sizeBottom,factoryInfo.sizeWhole, factoryInfo.editBusto,factoryInfo.editCintura,factoryInfo.editQuadril, allDescriptions[factoryInfo.bustoDescription], allColors[factoryInfo.bustoDescription], allDescriptions[factoryInfo.cinturaDescription], allColors[factoryInfo.cinturaDescription], allDescriptions[factoryInfo.quadrilDescription],allColors[factoryInfo.quadrilDescription]]
+    console.log(factoryResult,'this is factory restul after orignial value changes')
+    setFactoryResultState(Object.assign({},factoryResult))
+    
+
+}
+}
+
+useEffect(()=>{
+if(!factoryResultState)
+    factory()
+})
+
+const changeSize = (index:number) =>{
+    if(factoryResultState && Array.isArray(factoryResultState[index])){
+        console.log('going to be this>', factoryResultState[index], 'at index', index)
+        
+        fromEditSetter(...factoryResultState[index])
+    }
+}
+
+
 if(!router.isFallback){
     return (<div className='p-4 m-2 flex justify-start outline-1 rounded-lg shadow-md items-center max-w-lg'>
     <div className=' px-2'>
@@ -525,8 +625,8 @@ if(!router.isFallback){
          {/* configurar isso pra ser gerado tbm */}
 
         <img alt={'doll std img'} src='/imgs_lela/030303.jpeg'/>
-
-        <OtherSizesFactory baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactory>
+        <ChangeSizeButtons baseSize={{sizeTop,sizeBottom,sizeWhole}} changeSize={(i:number)=>changeSize(i)}></ChangeSizeButtons>
+        {/* <OtherSizesFactoryR baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactoryR> */}
         </div>
     </div>
     <div className=' w-96 ml-1 pb-6'>
