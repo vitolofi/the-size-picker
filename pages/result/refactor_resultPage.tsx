@@ -1,6 +1,5 @@
 import { useRouter } from "next/router"
 import {useEffect,useState } from "react"
-import OtherSizesFactory from '../components/OtherSizesFactory'
 import SugarBustoSVG from '../components/sugar/SugarBusto'
 import SugarCinturaSVG from '../components/sugar/SugarCintura'
 import SugarQuadrilSVG from '../components/sugar/SugarQuadril'
@@ -39,7 +38,8 @@ export default function refactor_ResultPage(){
     
   
 
-    const [factoryResultState,setFactoryResultState] = useState<any[]>()    
+    const [factoryResultState,setFactoryResultState] = useState<any>()    
+
 
 
     const imc = Number(router.query.imc)
@@ -123,9 +123,9 @@ export default function refactor_ResultPage(){
         }
 
         imcRanges.forEach((v,i,imcRanges)=>{
-            if(i===imcRanges.length)return
+            if(i===imcRanges.length && i ===imcRanges.length-1)return
              //PP
-         if(i===0){
+         if(i===0 && imc>imcRanges[i] && imc<imcRanges[i+1]){
             // console.log('your size is PP')
              const bustos = [allSizes[i].busto.min, allSizes[i].busto.min+1, allSizes[i].busto.med+1, allSizes[i].busto.max, allSizes[i+1].busto.min]
              const quadris = [allSizes[i].quadril.min, allSizes[i].quadril.min+1, allSizes[i].quadril.med+1, allSizes[i].quadril.max, allSizes[i+1].quadril.min]
@@ -157,7 +157,7 @@ export default function refactor_ResultPage(){
                 return        
          }
          //XG
-         if(i===imcRanges.length-1 && imc>imcRanges[i] && imc<imcRanges[i+1]){
+         if(i===imcRanges.length-2 && imc>imcRanges[i] && imc<imcRanges[i+1]){
             const blockValue = i
             const defaultSize = allSizesNames[blockValue]
             const sizeMinusOne = allSizesNames[blockValue - 1]
@@ -168,7 +168,6 @@ export default function refactor_ResultPage(){
                 return setSizeMinusOne(sizeMinusOne, bustos[busto], cinturas[cintura], quadris[quadril])
             }
             if (busto >= 1 && busto<=4) {
-                //levemente folgado
                 setBustoDescription(allDescriptions[busto+1])
                 setBustoColor(allColors[busto+1])
                 setSizeTop(defaultSize)
@@ -184,7 +183,7 @@ export default function refactor_ResultPage(){
             
         }
         //P ao GG
-        if(i!==imcRanges.length && i!==imcRanges.length-1  && i!==0){
+        if(i!==imcRanges.length-1 && i!==imcRanges.length-2  && i!==0){
             //P ao GG
             if(imc>imcRanges[i] && imc<imcRanges[i+1]){
                 
@@ -589,7 +588,7 @@ const factory = () =>{
             factoryResult[i] = result
         }
     })
-    // const originalValues = Object.values(factoryInfo)
+    //wiping the original object to an
     console.log(factoryResult,'this is factory restul')
     factoryResult[allSizesNames.indexOf(originalSize)] = [factoryInfo.sizeTop,factoryInfo.sizeBottom,factoryInfo.sizeWhole, factoryInfo.editBusto,factoryInfo.editCintura,factoryInfo.editQuadril, allDescriptions[factoryInfo.bustoDescription], allColors[factoryInfo.bustoDescription], allDescriptions[factoryInfo.cinturaDescription], allColors[factoryInfo.cinturaDescription], allDescriptions[factoryInfo.quadrilDescription],allColors[factoryInfo.quadrilDescription]]
     console.log(factoryResult,'this is factory restul after orignial value changes')
@@ -607,7 +606,6 @@ if(!factoryResultState)
 const changeSize = (index:number) =>{
     if(factoryResultState && Array.isArray(factoryResultState[index])){
         console.log('going to be this>', factoryResultState[index], 'at index', index)
-        
         fromEditSetter(...factoryResultState[index])
     }
 }
