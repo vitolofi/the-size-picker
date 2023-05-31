@@ -1,20 +1,22 @@
 
 import {useRouter} from 'next/router'
 import { useEffect, useState} from 'react'
+import { roboto } from '@/pages'
 
-export default function Imc(props: { img: string }){
-
+export default function Imc(props: { img: string}){
+    
     const router = useRouter()
     const categoria = router.query.categoria
     const [altura,setAltura] = useState<number>(0)
     const [peso,setPeso] = useState<number>(0)
     const [idade,setIdade] = useState<number>(0)
 
-    const [colorAnimation, setColorAnimation] = useState<string>('bg-gray-300')
+    const [colorAnimation, setColorAnimation] = useState<string>('bg-white text-black')
 
     useEffect(()=>{
-        if(altura === 0 || peso === 0 || idade === 0) return
-           else setColorAnimation('bg-gray-50')
+        console.log(altura,peso,idade)
+        if(altura > alturaMax || peso > pesoMax || idade >idadeMax || altura<alturaMin || peso<pesoMin || idade<idadeMin) return setColorAnimation('bg-white animation-bounce text-black')
+           else setColorAnimation('bg-black animation-bounce text-white')
     },[altura,peso,idade])
 
     const imcCalc = (alt:number, p:number) =>{
@@ -30,62 +32,51 @@ export default function Imc(props: { img: string }){
     const alturaMax = 250
     const pesoMin = 40
     const pesoMax = 300
-    const idadeMin = 15
+    const idadeMin = 14
     const idadeMax = 118
 
       const submitFunction = () =>{
         console.log(altura,peso,idade)
-       if(altura === 0 || peso === 0 || idade === 0){
-        return void setColorAnimation('bg-gray-200 animate-pulse')
+        if(altura === 0 || peso === 0 || idade === 0){
+        return  setColorAnimation('bg-red-500 animate-pulse')
         }
-        if(altura > alturaMax || peso > pesoMax || idade >idadeMax){
-            return void setColorAnimation('bg-gray-200 animate-pulse')
+        else if(altura > alturaMax || peso > pesoMax || idade >idadeMax || altura<alturaMin || peso<pesoMin || idade<idadeMin){
+            return setColorAnimation('bg-red-500 animate-pulse')
         }
-        else return void router.push({pathname:'/doll/DollPage', query:{imc:imcCalc(altura, peso), idade:idade, encodedImgUrl:props.img, categoria:categoria}})
+        else{
+            setColorAnimation('bg-black animate-pulse')
+            return router.push({pathname:'/doll/DollPage', query:{imc:imcCalc(altura, peso), idade:idade, encodedImgUrl:props.img, categoria:categoria}})        } 
       }
 
     
     return (
-        <div className="bg-gray-200 w-52 ml-4 py-4 rounded-md">
+        <div className={`${roboto.className} bg-white w-[19rem] ml-4  rounded-md shadow-ms`}>
        
     <div className="flex flex-col">
-
-        <h1 className="text-gray-800 pl-3 py-2 font-medium text-xl">
+        <p className={` text-[1.7rem] text-center text-black py-5`}>
             Descubra Seu Tamanho
-        </h1>
-        <div className="flex flex-col pl-6 my-6 pb-2">
+        </p>
+        <p className="pl-5 text-black">Preencha os dados e te mostraremos como a roupa pode ficar no seu corpo</p>
+        <div className="flex flex-col pl-6 my-2">
                 
-        <label>Altura(cm)</label>
-        <input className="py-1 px-2 w-32" min={100} max={220} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{
-            const stringer = e.target.value
-            const num = +stringer
-            // testar alturas e peso provaveis
-            if(num<alturaMax && num>alturaMin){
-                setAltura(num) 
-            } 
+        <label className='text-black'>Altura(cm)</label>
+        <input className="py-1 px-2 w-32 bg-gray-100 text-black" min={100} max={220} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{
+            setAltura(Number(e.target.value))
         }}></input>
-        <label>Peso(kg)</label>
-        <input className="py-1 px-2 w-32" min={40} max={250} type='text' pattern='\d*' maxLength={3} onChange={(e)=> {
-            const stringer = e.target.value
-            const num = +stringer
-            if(num<pesoMax && num>pesoMin){
-                setPeso(num)
-            } 
+        <label className='text-black'>Peso(kg)</label>
+        <input className="py-1 px-2 w-32 bg-gray-100 text-black" min={40} max={250} type='text' pattern='\d*' maxLength={3} onChange={(e)=> {
+            setPeso(Number(e.target.value))
             }}></input>
-        <label>Idade</label>
-        <input className="py-1 px-2 w-32" min={16} max={120} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{
-            const stringer = e.target.value
-            const num = +stringer
-            if(num<idadeMax && num>idadeMin){
-                setIdade(num)
-            }
+        <label className='text-black'>Idade</label>
+        <input className="py-1 px-2 w-32 bg-gray-100 text-black" min={16} max={120} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{
+            setIdade(Number(e.target.value))
             }}></input>
         {/* <div>A idade influencia no formato do corpo</div> */}
             </div>
             
     </div>
-        <div className="flex flex-col justify-center">
-        <input type={"submit"} className={`rounded-lg delay-500 transition-all duration-1000 ${colorAnimation} shadow-lg py-2 my-2 mx-4 cursor-pointer`} onClick={()=>submitFunction()} value="Próximo"/>
+        <div className="flex flex-col justify-center bg-green">
+        <input type={"submit"} className={`rounded-lg delay-500 transition-all duration-1000 ${colorAnimation} shadow-xl py-2 mx-6 my-5 cursor-pointer`} onClick={()=>submitFunction()} value="Próximo"/>
         </div>
         </div>)
 }

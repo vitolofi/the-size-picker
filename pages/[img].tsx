@@ -26,11 +26,11 @@ const Home: NextPage = (props:any) => {
         <meta name="description" content="app to find your size in this store" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="">
-      <div className="bg-gray-100 p-4 m-2 flex rounded-sm justify-between drop-shadow-lg items-center min-w-max max-w-lg">
+      <main>
+      <div className="bg-gray-100 p-4  flex rounded-sm justify-between drop-shadow-lg items-center min-w-max max-w-lg">
         {/* maybe this div needs a max-width */}
-        <div className="flex max-w-sm">
-          {img? <Image alt={img} width={662} height={1000} className="rounded-md"  src={img}/>:null}
+        <div className="flex max-w-[16rem]">
+          {img? <Image alt={img} width={662} height={1000} className="rounded-md" src={img}/>:null}
         </div>
           <div>
             {/* this should change name */}
