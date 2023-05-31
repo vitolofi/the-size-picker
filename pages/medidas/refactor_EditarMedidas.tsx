@@ -1,21 +1,6 @@
 import { useEffect,useState } from "react";
 import { useRouter } from "next/router";
 
-// interface tamanhosObj {
-//   sizeTop: string;
-//   sizeBottom: string;
-//   sizeWhole: string;
-//   bustoDescription: string;
-//   bustoColor :string;
-//   cinturaDescription: string;
-//   cinturaColor: string;
-//   quadrilDescription: string;
-//   quadrilColor:string
-// }
-// interface edit {
-//   arg0?: number;
-// }
-
 export default function EditarMedidas() {
   const router = useRouter();
 
@@ -259,7 +244,6 @@ export default function EditarMedidas() {
   }, [bustoCm, cinturaCm, quadrilCm]);
 
   const submitFunc = () => {
-    // checkMeasures(bustoCm,cinturaCm,quadrilCm)
 
     if (sizeWhole || sizeTop || sizeBottom && (bustoDescription && cinturaDescription && quadrilDescription)) {
       console.log("submitting", {sizeTop,sizeWhole,sizeBottom, bustoDescription,cinturaDescription,quadrilDescription,cinturaColor});

@@ -125,7 +125,7 @@ export default function refactor_ResultPage(){
         imcRanges.forEach((v,i,imcRanges)=>{
             if(i===imcRanges.length && i ===imcRanges.length-1)return
              //PP
-         if(i===0 && imc>imcRanges[i] && imc<imcRanges[i+1]){
+            if(i===0 && imc>imcRanges[i] && imc<imcRanges[i+1]){
             // console.log('your size is PP')
              const bustos = [allSizes[i].busto.min, allSizes[i].busto.min+1, allSizes[i].busto.med+1, allSizes[i].busto.max, allSizes[i+1].busto.min]
              const quadris = [allSizes[i].quadril.min, allSizes[i].quadril.min+1, allSizes[i].quadril.med+1, allSizes[i].quadril.max, allSizes[i+1].quadril.min]
@@ -250,8 +250,9 @@ export default function refactor_ResultPage(){
         }
 
         imcRanges.forEach((v,i,arr)=>{
+            if(i===imcRanges.length && i ===imcRanges.length-1)return
             //PP
-        if(i===0){
+        if(i===0 && imc>imcRanges[i] && imc<imcRanges[i+1]){
            console.log('your size is PP')
             const bustos = [allSizes[i].busto.min, allSizes[i].busto.min+1, allSizes[i].busto.med+1, allSizes[i].busto.max, allSizes[i+1].busto.min]
             const quadris = [allSizes[i].quadril.min, allSizes[i].quadril.min+1, allSizes[i].quadril.med+1, allSizes[i].quadril.max, allSizes[i+1].quadril.min]
@@ -283,7 +284,7 @@ export default function refactor_ResultPage(){
        
         }
         //XG
-        if(i==arr.length){
+        if(i===imcRanges.length-2 && imc>imcRanges[i] && imc<imcRanges[i+1]){
            const blockValue = i
            const defaultSize = allSizesNames[blockValue]
            const sizeMinusOne = allSizesNames[blockValue - 1]
@@ -313,7 +314,7 @@ export default function refactor_ResultPage(){
            
        }
        //P ao GG
-       if(i!==arr.length && i!==0){
+       if(i!==imcRanges.length-1 && i!==imcRanges.length-2  && i!==0){
            if(imc>arr[i] && imc<arr[i+1]){
                const blockValue = i
                const defaultSize = allSizesNames[blockValue]
@@ -379,8 +380,9 @@ export default function refactor_ResultPage(){
         }
 
         imcRanges.forEach((v,i,arr)=>{
+            if(i===imcRanges.length && i ===imcRanges.length-1)return
             //PP
-        if(i===0){
+           if(i===0 && imc>imcRanges[i] && imc<imcRanges[i+1]){
            console.log('your size is PP')
             const bustos = [allSizes[i].busto.min, allSizes[i].busto.min+1, allSizes[i].busto.med+1, allSizes[i].busto.max, allSizes[i+1].busto.min]
             const quadris = [allSizes[i].quadril.min, allSizes[i].quadril.min+1, allSizes[i].quadril.med+1, allSizes[i].quadril.max, allSizes[i+1].quadril.min]
@@ -395,7 +397,7 @@ export default function refactor_ResultPage(){
             if (quadril>=0 && quadril<4) {
                 setQuadrilDescription(allDescriptions[quadril+1])
                 setQuadrilColor(allColors[quadril+1])
-                setSizeBottom(defaultSize)
+                setSizeWhole(defaultSize)
                 setEditQuadril(quadris[blockValue+quadril])
             }
        
@@ -412,7 +414,7 @@ export default function refactor_ResultPage(){
        
         }
         //XG
-        if(i==arr.length){
+        if(i===imcRanges.length-2 && imc>imcRanges[i] && imc<imcRanges[i+1]){
            const blockValue = i
            const defaultSize = allSizesNames[blockValue]
            const sizeMinusOne = allSizesNames[blockValue - 1]
@@ -426,7 +428,7 @@ export default function refactor_ResultPage(){
                //levemente folgado
                setQuadrilDescription(allDescriptions[quadril+1])
                setQuadrilColor(allColors[quadril+1])
-               setSizeBottom(defaultSize)
+               setSizeWhole(defaultSize)
                setEditQuadril(quadris[quadril])
            }
            
@@ -442,7 +444,7 @@ export default function refactor_ResultPage(){
            
        }
        //P ao GG
-       if(i!==arr.length && i!==0){
+       if(i!==imcRanges.length-1 && i!==imcRanges.length-2  && i!==0){
            if(imc>arr[i] && imc<arr[i+1]){
                const blockValue = i
                const defaultSize = allSizesNames[blockValue]
@@ -458,7 +460,7 @@ export default function refactor_ResultPage(){
                    //levemente folgado
                    setQuadrilDescription(allDescriptions[busto+1])
                    setQuadrilColor(allColors[busto+1])
-                   setSizeBottom(defaultSize)
+                   setSizeWhole(defaultSize)
                    setEditQuadril(bustos[busto])
                }           
                if (quadril == 4) {
@@ -477,6 +479,8 @@ export default function refactor_ResultPage(){
        })
     }
     //doll
+
+
     const fromEditSetter = (sizeTop:string,sizeBottom:string,sizeWhole:string,bustoCm:number,cinturaCm:number,quadrilCm:number,bustoDescription:string,bustoColor:string,cinturaDescription:string,cinturaColor:string,quadrilDescription:string,quadrilColor:string) =>{
 
         setSizeTop(sizeTop);
@@ -496,6 +500,8 @@ export default function refactor_ResultPage(){
         setQuadrilDescription(quadrilDescription)
         setQuadrilColor(quadrilColor)
     }
+
+
     const resultMasterReturn = (categoria: string, doll:any, edit:any) =>{
     if(categoria && doll || edit){
         // console.log('router loads', doll,'dollvalue', )
@@ -606,7 +612,7 @@ if(!factoryResultState)
 const changeSize = (index:number) =>{
     if(factoryResultState && Array.isArray(factoryResultState[index])){
         console.log('going to be this>', factoryResultState[index], 'at index', index)
-        fromEditSetter(...factoryResultState[index])
+        fromEditSetter(...factoryResultState[index] as [string,string,string,number,number,number,string,string,string,string,string,string])
     }
 }
 
