@@ -14,7 +14,7 @@ export default function Imc(props: { img: string}){
     const [colorAnimation, setColorAnimation] = useState<string>('bg-white text-black')
 
     useEffect(()=>{
-        console.log(altura,peso,idade)
+        // console.log(altura,peso,idade)
         if(altura > alturaMax || peso > pesoMax || idade >idadeMax || altura<alturaMin || peso<pesoMin || idade<idadeMin) return setColorAnimation('bg-white animation-bounce text-black')
            else setColorAnimation('bg-black animation-bounce text-white')
     },[altura,peso,idade])
@@ -24,7 +24,7 @@ export default function Imc(props: { img: string}){
         const CmtoM = alt/100
         const altResult = CmtoM*CmtoM
         const result = p/altResult
-        console.log('o resultado do imc calc é', result)
+        // console.log('o resultado do imc calc é', result)
         return result
       }
 
@@ -50,14 +50,14 @@ export default function Imc(props: { img: string}){
 
     
     return (
-        <div className={`${roboto.className} bg-white w-[19rem] ml-4  rounded-md shadow-ms`}>
+        <div className={`${roboto.className} bg-white max-w-[100%] ml-4 flex flex-col rounded-lg outline-3 shadow-xl`}>
        
     <div className="flex flex-col">
-        <p className={` text-[1.7rem] text-center text-black py-5`}>
-            Descubra Seu Tamanho
+        <p className={` text-[1.7rem] text-center text-black py-5 px-2`}>
+            Bem vindo ao Provador Virtual
         </p>
-        <p className="pl-5 text-black">Preencha os dados e te mostraremos como a roupa pode ficar no seu corpo</p>
-        <div className="flex flex-col pl-6 my-2">
+        <p className="px-5 text-black">Preencha os dados e te mostraremos como essa roupa veste no seu corpo</p>
+        <div className="flex flex-col px-6 my-2">
                 
         <label className='text-black'>Altura(cm)</label>
         <input className="py-1 px-2 w-32 bg-gray-100 text-black" min={100} max={220} type='text' pattern='\d*' maxLength={3} onChange={(e)=>{

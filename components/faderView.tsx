@@ -1,7 +1,7 @@
 
 
 import { useEffect, useState } from "react"
-import {roboto} from '..'
+import {roboto} from '../pages'
 
 export default function FaderView(props:any){
    
@@ -53,7 +53,7 @@ export default function FaderView(props:any){
         <h1 className="p-2 text-black">{props.title}</h1>
     <hr className="relative ml-[85px] mr-[89px] top-[29px] shadow-md border-black"></hr>
 
-    <div className="flex justify-around p-2 bg-white rounded-md shadow-md">
+    <div className="flex justify-around p-2 bg-gray-100 rounded-md shadow-md">
     <div className="absolute">
         <div id="thumb" className={buttonAnimation}></div>
         </div>

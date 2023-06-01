@@ -1,9 +1,9 @@
 import { useRouter } from "next/router"
 import {useEffect,useState } from "react"
-import SugarBustoSVG from '../components/sugar/SugarBusto'
-import SugarCinturaSVG from '../components/sugar/SugarCintura'
-import SugarQuadrilSVG from '../components/sugar/SugarQuadril'
-import ChangeSizeButtons from "../components/ChangeSizeButtons"
+import SugarBustoSVG from '../../components/sugar/SugarBusto'
+import SugarCinturaSVG from '../../components/sugar/SugarCintura'
+import SugarQuadrilSVG from '../../components/sugar/SugarQuadril'
+import ChangeSizeButtons from "../../components/ChangeSizeButtons"
 import { roboto } from ".."
 
 export default function ResultPage(){
@@ -59,7 +59,7 @@ export default function ResultPage(){
     const imcRanges = [14,20,23.5,28.7,30,32.5,35.5]
     const allSizesNames = ['PP', 'P', 'M', 'G', 'GG', 'XG']
     const allDescriptions = ['Largo', 'Folgado', 'Levemente folgado', 'Ideal', 'Levemente Justo', 'Justo', 'Apertado']
-    const allColors = ['stroke-red-500', 'stroke-yellow-500', 'stroke-green-300', 'stroke-green-500','stroke-green-300', 'stroke-yellow-500','stroke-red-500']
+    const allColors = ['-red-500', '-yellow-500', '-green-300', '-green-500','-green-300', '-yellow-500','-red-500']
 
     const PP = { busto: { min: 75, med: 80.5, max: 86 }, cintura: { min: 65, med: 67.5, max: 70 }, quadril: { min: 92, med: 95, max: 98 } }
     const P = { busto: { min: 87, med: 91.5, max: 96 }, cintura: { min: 70, med: 73, max: 76 }, quadril: { min: 99, med: 102, max: 105 } }
@@ -94,7 +94,7 @@ export default function ResultPage(){
     const chooseBestCamisaDoll = (imc:number,busto:number,cintura:number,quadril:number) =>{
         
         imcCheck(imc)
-        console.log('inside chooseBestCamisa')
+        // console.log('inside chooseBestCamisa')
         const setSizePlusOne = (sizePlusOne:string,apxBusto:number,apxCintura:number,apxQuadril:number) =>{
             setBustoDescription(allDescriptions[busto-2])
             setBustoColor(allColors[busto-2])
@@ -109,6 +109,7 @@ export default function ResultPage(){
             return
         }
         const setSizeMinusOne = (sizeMinusOne:string,apxBusto:number,apxCintura:number,apxQuadril:number) =>{
+            // console.warn('trying to set sizeMinus One')
             setBustoDescription(allDescriptions[busto+5])
             setBustoColor(allColors[busto+5])
             setEditBusto(apxBusto)
@@ -137,7 +138,7 @@ export default function ResultPage(){
             //  console.warn('is 0?')
             //  console.warn(busto, typeof busto,' busto log warn')
         
-             if (busto>0 && busto<4) {
+             if (busto>=0 && busto<4) {
                  setBustoDescription(allDescriptions[busto+1])
                  setBustoColor(allColors[busto+1])
                  setSizeTop(defaultSize)
@@ -223,6 +224,7 @@ export default function ResultPage(){
 
     }
     const chooseBestCalçaDoll = (imc:number,busto:number,cintura:number,quadril:number) =>{   
+        console.warn('inside chooseBestCalça')
         imcCheck(imc)
         const setSizePlusOne = (sizePlusOne:string,apxBusto:number,apxCintura:number,apxQuadril:number) =>{
             setBustoDescription(allDescriptions[busto-2])
@@ -253,7 +255,7 @@ export default function ResultPage(){
             if(i===imcRanges.length && i ===imcRanges.length-1)return
             //PP
         if(i===0 && imc>imcRanges[i] && imc<imcRanges[i+1]){
-           console.log('your size is PP')
+        //    console.log('your size is PP')
             const bustos = [allSizes[i].busto.min, allSizes[i].busto.min+1, allSizes[i].busto.med+1, allSizes[i].busto.max, allSizes[i+1].busto.min]
             const quadris = [allSizes[i].quadril.min, allSizes[i].quadril.min+1, allSizes[i].quadril.med+1, allSizes[i].quadril.max, allSizes[i+1].quadril.min]
             const cinturas = [allSizes[i].cintura.min, allSizes[i].cintura.min+1, allSizes[i].cintura.med+1, allSizes[i].cintura.max, allSizes[i+1].cintura.min]
@@ -383,7 +385,7 @@ export default function ResultPage(){
             if(i===imcRanges.length && i ===imcRanges.length-1)return
             //PP
            if(i===0 && imc>imcRanges[i] && imc<imcRanges[i+1]){
-           console.log('your size is PP')
+        //    console.log('your size is PP')
             const bustos = [allSizes[i].busto.min, allSizes[i].busto.min+1, allSizes[i].busto.med+1, allSizes[i].busto.max, allSizes[i+1].busto.min]
             const quadris = [allSizes[i].quadril.min, allSizes[i].quadril.min+1, allSizes[i].quadril.med+1, allSizes[i].quadril.max, allSizes[i+1].quadril.min]
             const cinturas = [allSizes[i].cintura.min, allSizes[i].cintura.min+1, allSizes[i].cintura.med+1, allSizes[i].cintura.max, allSizes[i+1].cintura.min]
@@ -509,7 +511,7 @@ export default function ResultPage(){
             // console.log('doll is true')
             allPossibleCategorias.map((v,i,arr)=>{
                 if(categoria===v){
-                    console.log(categoria,'categoria is equal' ,v )
+                    // console.log(categoria,'categoria is equal' ,v )
                     functionsDollObj[i](imc,bustoDoll,cinturaDoll,quadrilDoll)
                   
                 }
@@ -543,13 +545,13 @@ const factory = () =>{
     allPossibleCategorias.forEach((v,i,arr)=>{
         if(categoria===v){
             originalSize = sizes[i]
-            console.log(allSizesNames.indexOf(sizes[i]), 'indexofsizes[i')
+            // console.log(allSizesNames.indexOf(sizes[i]), 'indexofsizes[i')
             // const a =  Object.values(factoryInfo)
             factoryResult[allSizesNames.indexOf(sizes[i])] = factoryInfo 
 
         }
     })
-    console.log(factoryResult,'this is factory restul')
+    // console.log(factoryResult,'this is factory restul')
     //ate aqui conseguimos passar pro index correto a opção inicialmente fabricada
     
     factoryResult.forEach((v,i,arr)=>{
@@ -590,14 +592,14 @@ const factory = () =>{
               baseSize.editQuadril = allSizes[indexOfFutureSize].quadril.med
             //   console.log(baseSize, indexOfFutureSize,'indexofnextsize')
             const result = [baseSize.sizeTop,baseSize.sizeBottom,baseSize.sizeWhole,baseSize.editBusto,baseSize.editCintura,baseSize.editQuadril,allDescriptions[baseSize.bustoDescription], allColors[baseSize.bustoDescription], allDescriptions[baseSize.cinturaDescription], allColors[baseSize.cinturaDescription], allDescriptions[baseSize.quadrilDescription],allColors[baseSize.quadrilDescription]]
-            console.log(result, 'log of result inside loop')
+            // console.log(result, 'log of result inside loop')
             factoryResult[i] = result
         }
     })
     //wiping the original object to an
-    console.log(factoryResult,'this is factory restul')
+    // console.log(factoryResult,'this is factory restul')
     factoryResult[allSizesNames.indexOf(originalSize)] = [factoryInfo.sizeTop,factoryInfo.sizeBottom,factoryInfo.sizeWhole, factoryInfo.editBusto,factoryInfo.editCintura,factoryInfo.editQuadril, allDescriptions[factoryInfo.bustoDescription], allColors[factoryInfo.bustoDescription], allDescriptions[factoryInfo.cinturaDescription], allColors[factoryInfo.cinturaDescription], allDescriptions[factoryInfo.quadrilDescription],allColors[factoryInfo.quadrilDescription]]
-    console.log(factoryResult,'this is factory restul after orignial value changes')
+    // console.log(factoryResult,'this is factory restul after orignial value changes')
     setFactoryResultState(Object.assign({},factoryResult))
     
 
@@ -611,40 +613,53 @@ if(!factoryResultState)
 
 const changeSize = (index:number) =>{
     if(factoryResultState && Array.isArray(factoryResultState[index])){
-        console.log('going to be this>', factoryResultState[index], 'at index', index)
+        // console.log('going to be this>', factoryResultState[index], 'at index', index)
         fromEditSetter(...factoryResultState[index] as [string,string,string,number,number,number,string,string,string,string,string,string])
     }
 }
-
+// console.log({bustoColor,cinturaColor,quadrilColor,sizeTop,sizeWhole,sizeBottom})
 
 if(!router.isFallback){
-    return (<div className={` ${roboto.className} bg-white flex justify-start outline-1 rounded-lg shadow-md items-center`}>
 
-        <div className='max-w-[19rem] min-w-[19rem] self-start'>
+// console.log({bustoColor,cinturaColor,quadrilColor,sizeTop,sizeWhole,sizeBottom}, 'entrou')
+    return (<div className={` ${roboto.className} p-1 flex justify-start outline-1 bg-white rounded-lg shadow-md items-center`}>
+
+        <div className='max-w-[19rem] min-w-[19rem] bg-white  self-start'>
         {/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}
-         {sizeTop || sizeWhole? <SugarBustoSVG bustoColor={bustoColor} /> :null} 
-         <SugarCinturaSVG cinturaColor={cinturaColor} />
-         <SugarQuadrilSVG quadrilColor={quadrilColor} />
+        {bustoColor || cinturaColor || quadrilColor  ? <>
+        <SugarBustoSVG bustoColor={bustoColor} description={bustoDescription} /> 
+         <SugarCinturaSVG cinturaColor={cinturaColor}  description={cinturaDescription} />
+         <SugarQuadrilSVG quadrilColor={quadrilColor} description={quadrilDescription} /> 
+        </>
+         : 
+         null}
+
          {/* configurar isso pra ser gerado tbm */}
 
-        <img alt={'doll std img'} className="object-cover object-top h-[26rem] w-96" src='/imgs_lela/030303.jpeg'/>
+        <img alt={'doll std img'} className="object-cover object-top h-[32rem] w-96" src='/imgs_lela/030303.jpeg'/>
         <ChangeSizeButtons baseSize={{sizeTop,sizeBottom,sizeWhole}} changeSize={(i:number)=>changeSize(i)}></ChangeSizeButtons>
         {/* <OtherSizesFactoryR baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactoryR> */}
 
     </div>
-    <div className=''>
-        <h1 className='text-gray-800 font font-medium text-xl py-4'> Sua opção de {categoria} é {sizeTop || sizeBottom || sizeWhole}</h1>
+    <div className='flex flex-col bg-white shadow-2xl rounded-xl px-4 py-4 justify-between my-2 '>
+        <h1 className='text-gray-800 font font-medium text-3xl py-22'> Você está provando {categoria} tamanho: 
+        <div className='flex justify-center'>
+        <p className="flex bg-black rounded-lg self-center p-2 my-5 max-w-[50%] text-white">{sizeTop || sizeBottom || sizeWhole}</p>
+        </div>
         
-        {sizeTop || sizeWhole?<div className='mt-16 text-black'>Busto:{bustoDescription}</div> :<div className="mt-10">-</div>} 
+        </h1>
+        
+        {/* {sizeTop || sizeWhole?<div className='mt-16 text-black'>Busto:{bustoDescription}</div> :<div className="mt-10">-</div>} 
         <div className='mt-8 text-black'>Cintura:{cinturaDescription}</div>
-        <div className='mt-16 text-black'>Quadril:{quadrilDescription}</div>
+        <div className='mt-16 text-black'>Quadril:{quadrilDescription}</div> */}
 
-    <div className='flex flex-col justify-start mt-8'>
-         <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2 " onClick={() => router.push({ pathname: `${window.location.origin}/${encodeURIComponent(encodedImgUrl)}`, query:{categoria:categoria}})}>Reiniciar</button>
-        {doll ? <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2 " onClick={() => router.push({ pathname: `${window.location.origin}/doll/DollPage`, query: { imc: imc, encodedImgUrl: encodedImgUrl, categoria:categoria } })}>Voltar</button> : null}
-        <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2 " onClick={() => {router.push({ pathname: `${window.location.origin}/medidas/EditarMedidas`, query: { imc: imc, editBusto: editBusto, editCintura: editCintura, editQuadril: editQuadril, encodedImgUrl: encodedImgUrl, categoria:categoria } }) ; console.log({editBusto,editCintura,editQuadril})}}>Editar medidas</button>
+    <div className='flex flex-col justify-start mt-0'>
+         <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2  " onClick={() => router.push({ pathname: `${window.location.origin}/${encodeURIComponent(encodedImgUrl)}`, query:{categoria:categoria}})}>Reiniciar</button>
+        {doll ? <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2  " onClick={() => router.push({ pathname: `${window.location.origin}/doll/DollPage`, query: { imc: imc, encodedImgUrl: encodedImgUrl, categoria:categoria } })}>Voltar</button> : null}
+        {doll? <p className="text-xs text-black pt-10">Ficou em dúvida? Com a nossa fita métrica é possível ser ainda mais assertivo ! Clique nos botões abaixo e experimente !</p>:null}
+        <button className="rounded-lg bg-black text-white shadow-lg py-2 my-2  " onClick={() => {router.push({ pathname: `${window.location.origin}/medidas/EditarMedidas`, query: { imc: imc, editBusto: editBusto, editCintura: editCintura, editQuadril: editQuadril, encodedImgUrl: encodedImgUrl, categoria:categoria}})}}>Inserir Medidas Exatas</button>
          {/* <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2 " onClick={()=>router.push({pathname:'/medidas/NotFound', query:{imc:imc, encodedImgUrl:encodedImgUrl}})}>NotFound</button> */}
-         <a className='rounded-lg bg-white text-black shadow-lg py-2 my-2 text-center' href='/files/fita-metrica-eufloria.pdf' target={"_blank"} rel='noopener noreferrer'>
+         <a className='rounded-lg bg-white text-black shadow-lg py-2 my-2 text-center ' href='/files/fita-metrica-eufloria.pdf' target={"_blank"} rel='noopener noreferrer'>
            Fita Metrica
             </a>
         </div>
