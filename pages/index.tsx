@@ -7,8 +7,10 @@ export const roboto = Roboto({ subsets:['latin'], weight:'100'})
 export default function Home() { 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24`}
-    >
+      className={`w-[100%] items-center justify-between p-24`}>
+
+
+     
     <div className={`${roboto.className} text-[3rem]`}>THE SIZE PICKER</div> 
       <div className={`${roboto.className} mb-20`}> This one Works ! with size factory!</div>
 
@@ -33,6 +35,7 @@ export default function Home() {
 <path className={`stroke-yellow-500 shadow-lg outline-1 opacity-25`} d="M1 14L59 20H129L210.198 15.0904C227.703 14.0319 245.092 11.5362 262.188 7.62847L271.5 5.5" strokeWidth="10"/>
 </svg>
       </div>
+       
     </main>
   )
 }
