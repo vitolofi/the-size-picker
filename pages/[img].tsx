@@ -30,7 +30,7 @@ const Home: NextPage = (props:any) => {
       <div className="bg-gray-50 p-4 flex rounded-sm justify-between  items-center ">
         {/* maybe this div needs a max-width */}
         <div className="flex max-w-[50%]">
-          {img? <Image alt={img} width={662} height={1000} className="rounded-md" src={img}/>:null}
+          {img? <Image loader={()=>img} priority unoptimized alt={img} width={662} height={1000} className="rounded-md" src={img}/>:null}
         </div>
           <div>
             {/* this should change name */}
