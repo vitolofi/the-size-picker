@@ -279,21 +279,21 @@ export default function EditarMedidas() {
       <h1 className="text-black text-center text-3xl mt-4 px-6">Insira suas medidas exatas para uma experiência ainda mais concreta !</h1>
 
       <div className="flex flex-col bg-white">
-        <div className="flex justify-center">
-          <div>
-            <div className="min-w-[13rem] max-w-[13rem]">
-              <Image width={200} height={200} alt={dollImg} src={dollImg} />
+        <div className="flex items-center  justify-center">
+          <div className=" flex w-[100%] p-1">
+            <div className="w-[100%] m-1">
+              <Image width={400} height={400} alt={dollImg} src={dollImg} />
             </div>
           </div>
 
-          <div className="flex justify-center bg-white shadow-xl rounded-lg flex-col m-6 mx-12 p-2">
-            <div className="m-4">
+          <div className="flex justify-center items-center bg-white shadow-xl rounded-lg flex-col m-6  p-2">
+            <div className="inline-block  min-w-fit m-4">
               <label className="text-lg text-black my-3">
                 Busto<span className="text-sm text-black ml-3">(cm)</span>
               </label>
               <input
                 type="range"
-                className="mx-5"
+                className="mx-4 max-w-[7rem]"
                 min={70}
                 max={150}
                 onChange={(e) => setBustoCm(Number(e.target.value))}
@@ -316,7 +316,7 @@ export default function EditarMedidas() {
               </label>
               <input
                 type="range"
-                className="mx-5"
+                className=" mx-4 max-w-[7rem]"
                 min={50}
                 max={160}
                 onChange={(e) => setCinturaCm(Number(e.target.value))}
@@ -339,7 +339,7 @@ export default function EditarMedidas() {
               </label>
               <input
                 type="range"
-                className="mx-5"
+                className=" mx-4 max-w-[7rem]"
                 min={70}
                 max={151}
                 onChange={(e) => setQuadrilCm(Number(e.target.value))}
@@ -357,42 +357,43 @@ export default function EditarMedidas() {
               />
 
             </div>
+            <div className="flex flex-col justify-center bg-white mx-10 my-2">
+
+<button
+  className=" rounded-lg bg-white text-black py-2 shadow-lg "
+  onClick={() => submitFunc()}
+>
+  Ver Recomedação
+</button>
+<p className="text-black text-center text-xs mx-5 pt-1">Não sabe suas medidas? A gente te ajuda ! Clicando no botão abaixo voce pode imprimir e usar nossa fita métrica </p>
+<a
+className="rounded-lg bg-black text-white shadow-xl py-2 my-2 text-center"
+href="/files/fita-metrica-eufloria.pdf"
+target={"_blank"}
+rel="noopener noreferrer"
+>
+Fita Metrica
+</a>
+<button
+  className="rounded-lg bg-white text-black my-2 py-2 shadow-lg "
+  onClick={() => {
+    if (encodedImgUrl) {
+      router.push({
+        pathname: `${window.location.origin}/${encodeURIComponent(
+          encodedImgUrl
+        )}`, query: { categoria: categoria }
+      });
+    }
+  }}
+>
+  Reiniciar
+</button>
+</div>
 
 
           </div>
         </div>
-        <div className="flex flex-col justify-center bg-white mx-20 my-2">
 
-          <button
-            className=" rounded-lg bg-white text-black py-2 shadow-lg "
-            onClick={() => submitFunc()}
-          >
-            Ver Recomedação
-          </button>
-          <p className="text-black text-center text-xs mx-5 pt-1">Não sabe suas medidas? A gente te ajuda ! Clicando no botão abaixo voce pode imprimir e usar nossa fita métrica </p>
-      <a
-        className="rounded-lg bg-black text-white shadow-xl py-2 my-2 text-center"
-        href="/files/fita-metrica-eufloria.pdf"
-        target={"_blank"}
-        rel="noopener noreferrer"
-      >
-        Fita Metrica
-      </a>
-          <button
-            className="rounded-lg bg-white text-black my-2 py-2 shadow-lg "
-            onClick={() => {
-              if (encodedImgUrl) {
-                router.push({
-                  pathname: `${window.location.origin}/${encodeURIComponent(
-                    encodedImgUrl
-                  )}`, query: { categoria: categoria }
-                });
-              }
-            }}
-          >
-            Reiniciar
-          </button>
-        </div>
       </div>
 
 

@@ -485,7 +485,7 @@ export default function ResultPage(){
 
 
     const fromEditSetter = (sizeTop:string,sizeBottom:string,sizeWhole:string,bustoCm:number,cinturaCm:number,quadrilCm:number,bustoDescription:string,bustoColor:string,cinturaDescription:string,cinturaColor:string,quadrilDescription:string,quadrilColor:string) =>{
-
+        console.log('edit setter starts')
         setSizeTop(sizeTop);
         setSizeBottom(sizeBottom);
         setSizeWhole(sizeWhole);
@@ -532,7 +532,7 @@ export default function ResultPage(){
 
 useEffect(()=>{
     resultMasterReturn(categoria,doll,edit)
-},)
+},[])
 
 const factory = () =>{
     if(sizeTop|| sizeBottom || sizeWhole){
@@ -600,7 +600,7 @@ const factory = () =>{
     //wiping the original object to an
     // console.log(factoryResult,'this is factory restul')
     factoryResult[allSizesNames.indexOf(originalSize)] = [factoryInfo.sizeTop,factoryInfo.sizeBottom,factoryInfo.sizeWhole, factoryInfo.editBusto,factoryInfo.editCintura,factoryInfo.editQuadril, allDescriptions[factoryInfo.bustoDescription], allColors[factoryInfo.bustoDescription], allDescriptions[factoryInfo.cinturaDescription], allColors[factoryInfo.cinturaDescription], allDescriptions[factoryInfo.quadrilDescription],allColors[factoryInfo.quadrilDescription]]
-    // console.log(factoryResult,'this is factory restul after orignial value changes')
+    console.log(factoryResult,'this is factory restul after orignial value changes')
     setFactoryResultState(Object.assign({},factoryResult))
     
 
@@ -610,7 +610,7 @@ const factory = () =>{
 useEffect(()=>{
 if(!factoryResultState)
     factory()
-})
+},[])
 
 const changeSize = (index:number) =>{
     if(factoryResultState && Array.isArray(factoryResultState[index])){
