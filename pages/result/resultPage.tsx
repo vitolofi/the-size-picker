@@ -610,7 +610,7 @@ const factory = () =>{
 useEffect(()=>{
 if(!factoryResultState)
     factory()
-},[])
+})
 
 const changeSize = (index:number) =>{
     if(factoryResultState && Array.isArray(factoryResultState[index])){
