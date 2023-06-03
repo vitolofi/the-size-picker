@@ -44,7 +44,7 @@ export default function FaderView(props:any){
     
     useEffect(()=>{
         animateThumb(0,faderVal)
-    },[])
+    })
     
 
         return(

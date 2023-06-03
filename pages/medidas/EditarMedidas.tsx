@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { roboto } from '..'
+import Image from 'next/image'
 export default function EditarMedidas() {
   const router = useRouter();
 
@@ -236,12 +237,11 @@ export default function EditarMedidas() {
     })
   }
   useEffect(() => {
-
-    checkMeasures();
+      checkMeasures();
   }, [bustoCm, cinturaCm, quadrilCm]);
 
   const submitFunc = () => {
-
+    
     if (sizeWhole || sizeTop || sizeBottom && (bustoDescription && cinturaDescription && quadrilDescription)) {
       console.log("submitting", { sizeTop, sizeWhole, sizeBottom, bustoDescription, cinturaDescription, quadrilDescription, cinturaColor });
 
@@ -282,7 +282,7 @@ export default function EditarMedidas() {
         <div className="flex justify-center">
           <div>
             <div className="min-w-[13rem] max-w-[13rem]">
-              <img alt={dollImg} src={dollImg} />
+              <Image width={200} height={200} alt={dollImg} src={dollImg} />
             </div>
           </div>
 

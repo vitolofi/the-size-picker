@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
 import {useEffect,useState } from "react"
+import Image from 'next/image'
 import SugarBustoSVG from '../../components/sugar/SugarBusto'
 import SugarCinturaSVG from '../../components/sugar/SugarCintura'
 import SugarQuadrilSVG from '../../components/sugar/SugarQuadril'
@@ -531,7 +532,7 @@ export default function ResultPage(){
 
 useEffect(()=>{
     resultMasterReturn(categoria,doll,edit)
-},[])
+},)
 
 const factory = () =>{
     if(sizeTop|| sizeBottom || sizeWhole){
@@ -636,7 +637,7 @@ if(!router.isFallback){
 
          {/* configurar isso pra ser gerado tbm */}
 
-        <img alt={'doll std img'} className="object-cover object-top h-[32rem] w-96" src='/imgs_lela/030303.jpeg'/>
+        <Image width={200} height={200}  alt={'doll std img'} className="object-cover object-top h-[32rem] w-96" src='/imgs_lela/030303.jpeg'/>
         <ChangeSizeButtons baseSize={{sizeTop,sizeBottom,sizeWhole}} changeSize={(i:number)=>changeSize(i)}></ChangeSizeButtons>
         {/* <OtherSizesFactoryR baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactoryR> */}
 
