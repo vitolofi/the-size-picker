@@ -50,9 +50,12 @@ export default Home;
 //console.log(    encodeURIComponent(document.querySelector('.zoomImg').src))
 //<iframe src="http://localhost:3000/https%3A%2F%2Fimages.tcdn.com.br%2Fimg%2Fimg_prod%2F1133807%2Fcamisao_nada_basico_preto_409_1_4ea43f5cad399b6da0f8d6bc5d9a58a0_20230404150510.jpg" width="662" height="600"></iframe>
 {/* <script>
-  let url = 'https://the-size-picker-costa-vitor-fernandes.vercel.app/'
+  let urlLocal = 'http://localhost:3000/'
+  let ulrDev = 'https://the-size-picker-costa-vitor-fernandes.vercel.app/'
+  let url = 'https://the-size-picker.vercel.app/'
   let productPhoto = encodeURIComponent(document.querySelector('.zoomImg').src)
-  let categoria = "?categoria=Camisa"
+  let categoria = '?categoria='
+  let cedilha = '%C3%A7'
   let ifram = document.createElement("iframe")
   ifram.setAttribute('src', url+productPhoto+categoria)
   ifram.setAttribute('width', '100%')
@@ -60,24 +63,4 @@ export default Home;
   document.querySelector('.tabs-content').append(ifram);
   
 </script>
-<iframe id="iframe" width='662' height='600'></iframe> */}
-
-
-
-//newstuff
-// let url = 'https://the-size-picker-costa-vitor-fernandes.vercel.app/'
-//   let productPhoto = encodeURIComponent(document.querySelector('.zoomImg').src)
-//   let ifram = document.createElement("iframe")
-//   ifram.setAttribute('src', url+productPhoto)
- 
-//   ifram.setAttribute('height', '450')
-//   document.querySelector('.tabs-content').append(ifram);
-
-
-//  red,    orange, green, green, orange, orange, red
-// apertado, justo, levemente justo, ideal, levemente folgado, folgado, largo
-
-
-  //calça vai dar problema, entao tem que passar como encodeURIComponent('ç')
-
-  //console.log(window.location.pathname.split("/")) to get categoria
+*/}

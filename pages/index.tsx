@@ -19,10 +19,10 @@ export default function Home() {
 
 
       <div>color testing
-        <div className='bg-green-300'>green300</div>
+        <div className='bg-green-300'>Camisa ta top</div>
         <div className='bg-green-500'>green500</div>
-        <div className='bg-red-500'>red</div>
-        <div className='bg-yellow-500'>yellow</div>
+        <div className='bg-red-500'>editar medidas mobile ta ruim</div>
+        <div className='bg-yellow-500'>ajustar as main divs</div>
         <div>
 
         <svg className='relative left-20' width="140" height="25" viewBox="0 0 273 25" fill="none" xmlns="http://www.w3.org/2000/svg"  >

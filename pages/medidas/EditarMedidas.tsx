@@ -216,11 +216,183 @@ export default function EditarMedidas() {
     })
   }
   const setCalçaEdit = () => {
+    allSizes.forEach((size, sizeIndex, allSizes) => {
+      if (quadrilCm >= size.quadril.min && quadrilCm <= size.quadril.max && quadrilCm > cinturaCm) {
+        const stepQ = ((size.quadril.max - size.quadril.min) / 4)
+        const oneQ = (size.quadril.min + stepQ)
+        const twoQ = (size.quadril.min + stepQ + stepQ)
+        const quadrilRanges = [size.quadril.min, oneQ, twoQ, size.quadril.max]
+        quadrilRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
+              console.log('this entered the range of quadril', arr[i], quadrilCm, arr[i + 1])
+              setSizeBottom(allSizesNames[sizeIndex])
+              setQuadrilDescription(allDescriptions[i + 2])
+              setQuadrilColor(allColors[i + 2])
+            }
+          }
+        })
+        //then set the other stuff   
+        const stepC = Math.floor((size.cintura.max - size.cintura.min) / 4)
+        const oneC = Math.floor(size.cintura.min + stepC)
+        const twoC = Math.floor(size.cintura.min + stepC + stepC)
+        const cinturaRanges = [size.cintura.min, oneC, twoC, size.cintura.max]
+        cinturaRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing cintura:', cinturaCm)
+            if (cinturaCm <= size.cintura.min && cinturaCm >= size.cintura.min - 6) {
+              console.log('cintura size should be loose. index now', i)
+              setCinturaDescription(allDescriptions[1])
+              setCinturaColor(allColors[1])
+              return
+            }
+            if (cinturaCm < size.cintura.min - 6) return eraseStates()
+
+            if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
+              console.log('inside a valid range of cintura')
+              setCinturaDescription(allDescriptions[i + 2])
+              setCinturaColor(allColors[i + 2])
+              return
+            }
+            if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
+              console.log('cintura size description should be tight apertado')
+              setCinturaDescription(allDescriptions[6])
+              setCinturaColor(allColors[6])
+              return
+            }
+            if (cinturaCm > size.cintura.max + 6) return eraseStates()
+
+          }
+        })
+        const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
+        const oneB = Math.floor(size.busto.min + stepC)
+        const twoB = Math.floor(size.busto.min + stepC + stepC)
+        const bustoRanges = [size.busto.min, oneC, twoC, size.busto.max]
+        bustoRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing busto:', bustoCm)
+            if (bustoCm <= size.busto.min && bustoCm >= size.busto.min - 6) {
+              console.log('busto size should be loose. index now', i)
+              setBustoDescription(allDescriptions[1])
+              setBustoColor(allColors[1])
+              return
+            }
+            if (bustoCm < size.busto.min - 6) return eraseStates()
+
+            if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
+              console.log('inside a valid range of busto')
+              setBustoDescription(allDescriptions[i + 2])
+              setBustoColor(allColors[i + 2])
+              return
+            }
+            if (bustoCm > size.busto.max && bustoCm <= size.busto.max + 6) {
+              console.log('busto size description should be tight apertado')
+              setBustoDescription(allDescriptions[6])
+              setBustoColor(allColors[6])
+              return
+            }
+            if (bustoCm > size.busto.max + 6) return eraseStates()
+
+          }
+        })
 
 
+
+      }
+      if (quadrilCm < cinturaCm) {
+        return console.warn('quadriCm<cinturaCM')
+      }
+    })
 
   }
   const setVestidoEdit = () => {
+    allSizes.forEach((size, sizeIndex, allSizes) => {
+      if (quadrilCm >= size.quadril.min && quadrilCm <= size.quadril.max && quadrilCm > cinturaCm) {
+        const stepQ = ((size.quadril.max - size.quadril.min) / 4)
+        const oneQ = (size.quadril.min + stepQ)
+        const twoQ = (size.quadril.min + stepQ + stepQ)
+        const quadrilRanges = [size.quadril.min, oneQ, twoQ, size.quadril.max]
+        quadrilRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
+              console.log('this entered the range of quadril', arr[i], quadrilCm, arr[i + 1])
+              setSizeWhole(allSizesNames[sizeIndex])
+              setQuadrilDescription(allDescriptions[i + 2])
+              setQuadrilColor(allColors[i + 2])
+            }
+          }
+        })
+        //then set the other stuff   
+        const stepC = Math.floor((size.cintura.max - size.cintura.min) / 4)
+        const oneC = Math.floor(size.cintura.min + stepC)
+        const twoC = Math.floor(size.cintura.min + stepC + stepC)
+        const cinturaRanges = [size.cintura.min, oneC, twoC, size.cintura.max]
+        cinturaRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing cintura:', cinturaCm)
+            if (cinturaCm <= size.cintura.min && cinturaCm >= size.cintura.min - 6) {
+              console.log('cintura size should be loose. index now', i)
+              setCinturaDescription(allDescriptions[1])
+              setCinturaColor(allColors[1])
+              return
+            }
+            if (cinturaCm < size.cintura.min - 6) return eraseStates()
+
+            if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
+              console.log('inside a valid range of cintura')
+              setCinturaDescription(allDescriptions[i + 2])
+              setCinturaColor(allColors[i + 2])
+              return
+            }
+            if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
+              console.log('cintura size description should be tight apertado')
+              setCinturaDescription(allDescriptions[6])
+              setCinturaColor(allColors[6])
+              return
+            }
+            if (cinturaCm > size.cintura.max + 6) return eraseStates()
+
+          }
+        })
+        const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
+        const oneB = Math.floor(size.busto.min + stepC)
+        const twoB = Math.floor(size.busto.min + stepC + stepC)
+        const bustoRanges = [size.busto.min, oneC, twoC, size.busto.max]
+        bustoRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing busto:', bustoCm)
+            if (bustoCm <= size.busto.min && bustoCm >= size.busto.min - 6) {
+              console.log('busto size should be loose. index now', i)
+              setBustoDescription(allDescriptions[1])
+              setBustoColor(allColors[1])
+              return
+            }
+            if (bustoCm < size.busto.min - 6) return eraseStates()
+
+            if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
+              console.log('inside a valid range of busto')
+              setBustoDescription(allDescriptions[i + 2])
+              setBustoColor(allColors[i + 2])
+              return
+            }
+            if (bustoCm > size.busto.max && bustoCm <= size.busto.max + 6) {
+              console.log('busto size description should be tight apertado')
+              setBustoDescription(allDescriptions[6])
+              setBustoColor(allColors[6])
+              return
+            }
+            if (bustoCm > size.busto.max + 6) return eraseStates()
+
+          }
+        })
+
+
+
+      }
+      if (quadrilCm < cinturaCm) {
+        return console.warn('quadriCm<cinturaCM')
+      }
+    })
 
 
 
@@ -237,11 +409,11 @@ export default function EditarMedidas() {
     })
   }
   useEffect(() => {
-      checkMeasures();
+    checkMeasures();
   }, [bustoCm, cinturaCm, quadrilCm]);
 
   const submitFunc = () => {
-    
+
     if (sizeWhole || sizeTop || sizeBottom && (bustoDescription && cinturaDescription && quadrilDescription)) {
       console.log("submitting", { sizeTop, sizeWhole, sizeBottom, bustoDescription, cinturaDescription, quadrilDescription, cinturaColor });
 
@@ -287,7 +459,7 @@ export default function EditarMedidas() {
           </div>
 
           <div className="flex justify-center items-center bg-white shadow-xl rounded-lg flex-col m-6  p-2">
-            <div className="inline-block  min-w-fit m-4">
+          {categoria!=='Calça'?<div className="inline-block  min-w-fit m-4">
               <label className="text-lg text-black my-3">
                 Busto<span className="text-sm text-black ml-3">(cm)</span>
               </label>
@@ -309,7 +481,7 @@ export default function EditarMedidas() {
                 onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
                 value={bustoCm}
               />
-            </div>
+            </div> : null}
             <div className="m-4">
               <label className="text-lg text-black my-3">
                 Cintura<span className="text-sm text-black"> (cm)</span>
@@ -359,153 +531,42 @@ export default function EditarMedidas() {
             </div>
             <div className="flex flex-col justify-center bg-white mx-10 my-2">
 
-<button
-  className=" rounded-lg bg-white text-black py-2 shadow-lg "
-  onClick={() => submitFunc()}
->
-  Ver Recomedação
-</button>
-<p className="text-black text-center text-xs mx-5 pt-1">Não sabe suas medidas? A gente te ajuda ! Clicando no botão abaixo voce pode imprimir e usar nossa fita métrica </p>
-<a
-className="rounded-lg bg-black text-white shadow-xl py-2 my-2 text-center"
-href="/files/fita-metrica-eufloria.pdf"
-target={"_blank"}
-rel="noopener noreferrer"
->
-Fita Metrica
-</a>
-<button
-  className="rounded-lg bg-white text-black my-2 py-2 shadow-lg "
-  onClick={() => {
-    if (encodedImgUrl) {
-      router.push({
-        pathname: `${window.location.origin}/${encodeURIComponent(
-          encodedImgUrl
-        )}`, query: { categoria: categoria }
-      });
-    }
-  }}
->
-  Reiniciar
-</button>
-</div>
+              <button
+                className=" rounded-lg bg-white text-black py-2 shadow-lg "
+                onClick={() => submitFunc()}
+              >
+                Ver Recomedação
+              </button>
+              <p className="text-black text-center text-xs mx-5 pt-1">Não sabe suas medidas? A gente te ajuda ! Clicando no botão abaixo voce pode imprimir e usar nossa fita métrica </p>
+              <a
+                className="rounded-lg bg-black text-white shadow-xl py-2 my-2 text-center"
+                href="/files/fita-metrica-eufloria.pdf"
+                target={"_blank"}
+                rel="noopener noreferrer"
+              >
+                Fita Metrica
+              </a>
+              <button
+                className="rounded-lg bg-white text-black my-2 py-2 shadow-lg "
+                onClick={() => {
+                  if (encodedImgUrl) {
+                    router.push({
+                      pathname: `${window.location.origin}/${encodeURIComponent(
+                        encodedImgUrl
+                      )}`, query: { categoria: categoria }
+                    });
+                  }
+                }}
+              >
+                Reiniciar
+              </button>
+            </div>
 
 
           </div>
         </div>
 
       </div>
-
-
-
-      {/* <div className="flex flex-col py-5 bg-green-500 rounded-md shadow-md">
-        <div className="min-w-[11rem] max-w-[11rem]">
-          <img alt={dollImg} src={dollImg} />
-        </div>
-        <div className="flex flex-col bg-red-200">
-          <label className="text-lg text-black my-3">
-            Busto<span className="text-sm text-black"> (cm)</span>
-          </label>
-        <div> 
-
-          <label className="text-lg text-black my-3">
-            Cintura<span className="text-sm text-black"> (cm)</span>
-          </label>
-          <label className="text-lg text-black my-3">
-            Quadril<span className="text-sm text-black"> (cm)</span>
-          </label>
-        </div>
-        <div className="flex pl-3 flex-col mt-2 bg-white">
-          <div className="flex my-3">
-            <input
-              type="range"
-
-              min={70}
-              max={150}
-              onChange={(e) => setBustoCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
-              value={bustoCm}
-            />
-            <input
-              className="text-black pl-2 max-w-[3.125rem]"
-              type="number"
-              min={70}
-              max={170}
-              onChange={(e) => setBustoCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
-              value={bustoCm}
-            />
-          </div>
-
-          <div className="flex my-3 ">
-            <input
-              type="range"
-
-              min={50}
-              max={160}
-              onChange={(e) => setCinturaCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
-              value={cinturaCm}
-            />
-            <input
-              type="number"
-              className="text-black pl-2 max-w-[3.125rem]"
-              min={50}
-              max={160}
-              onChange={(e) => setCinturaCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
-              value={cinturaCm}
-            />
-          </div>
-
-          <div className="my-3 flex">
-            <input
-              type="range"
-              min={70}
-              max={151}
-              onChange={(e) => setQuadrilCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
-              value={quadrilCm}
-            />
-            <input
-              type="number"
-              className="text-black pl-2 max-w-[3.125rem]"
-              min={70}
-              max={151}
-              onChange={(e) => setQuadrilCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
-              value={quadrilCm}
-            />
-          </div>
-
-        </div>
-          <div className="flex flex-col mx-4 bg-red-500">
-
-            <button
-              className="m-2 rounded-lg bg-white text-black  py-2 shadow-lg "
-              onClick={() => submitFunc()}
-            >
-              Ver Recomedação
-            </button>
-            <button
-              className="m-2 rounded-lg bg-white text-black py-2 shadow-lg "
-              onClick={() => {
-                if (encodedImgUrl) {
-                  router.push({
-                    pathname: `${window.location.origin}/${encodeURIComponent(
-                      encodedImgUrl
-                    )}`, query: { categoria: categoria }
-                  });
-                }
-              }}
-            >
-              Reiniciar
-            </button>
-          </div>
-
-      </div>
-      </div> */}
-
     </div>
 
   </div>

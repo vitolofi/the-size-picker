@@ -628,7 +628,7 @@ if(!router.isFallback){
         <div className='max-w-[19rem] min-w-[19rem] bg-white  self-start'>
         {/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}
         {bustoColor || cinturaColor || quadrilColor  ? <>
-        <SugarBustoSVG bustoColor={bustoColor} description={bustoDescription} /> 
+        {sizeTop || sizeWhole ? <SugarBustoSVG bustoColor={bustoColor} description={bustoDescription} /> : null}
          <SugarCinturaSVG cinturaColor={cinturaColor}  description={cinturaDescription} />
          <SugarQuadrilSVG quadrilColor={quadrilColor} description={quadrilDescription} /> 
         </>

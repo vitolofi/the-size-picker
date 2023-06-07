@@ -46,8 +46,10 @@ export default function DollPage(){
         </h1>
         <p className='text-sm text-black px-3 pb-5'>Esta será uma representação aproximada do seu corpo, ajuste se necessário</p>
         {/* we can do some logic here to define what can i pass through */}
+        {categoria!=='Calça'?
         <FaderView title='Busto' faderValue={busto} setFaderValue={(a:any)=>setBusto(a)} 
-        ></FaderView>
+        ></FaderView> : null
+        }
         <FaderView title='Cintura' faderValue={cintura} setFaderValue={(b:any)=>setCintura(b)}
         ></FaderView>
         <FaderView title='Quadril' faderValue={quadril} setFaderValue={(c:any)=>setQuadril(c)}
