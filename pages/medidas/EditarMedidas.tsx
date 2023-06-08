@@ -454,7 +454,7 @@ export default function EditarMedidas() {
         <div className="flex items-center  justify-center">
           <div className=" flex w-[100%] p-1">
             <div className="w-[100%] m-1">
-              <Image width={400} height={400} alt={dollImg} src={dollImg} />
+              <Image width={400} height={400} unoptimized alt={dollImg} src={dollImg} />
             </div>
           </div>
 
