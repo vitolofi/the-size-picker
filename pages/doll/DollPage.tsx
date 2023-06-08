@@ -35,7 +35,7 @@ export default function DollPage(){
     return (<main className={`${roboto.className} flex w-[100%] rounded-lg items-center bg-white`}>
         <div className="flex justify-center w-[100%] shadow-none ">
             <div className='flex min-w-[13rem] justify-center max-w-[39%]'>
-        <Image width={600} height={1600} unoptimized priority={true} alt={'a manequin that changes its sizes'} src={dollImgName}/>
+        <img alt={'a manequin that changes its sizes'} src={dollImgName}/>
             </div>
     
         </div>
