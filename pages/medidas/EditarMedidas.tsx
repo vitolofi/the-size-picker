@@ -1,30 +1,16 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
-interface tamanhosObj {
-  sizeTop: string;
-  sizeBottom: string;
-  sizeWhole: string;
-  bustoDescription: string;
-  bustoColor :string;
-  cinturaDescription: string;
-  cinturaColor: string;
-  quadrilDescription: string;
-  quadrilColor:string
-}
-interface edit {
-  arg0?: number;
-}
-
+import { roboto } from '..'
+import Image from 'next/image'
 export default function EditarMedidas() {
   const router = useRouter();
 
   const [bustoDescription, setBustoDescription] = useState('')
-  const [bustoColor,setBustoColor] = useState('')
+  const [bustoColor, setBustoColor] = useState('')
   const [cinturaDescription, setCinturaDescription] = useState('')
-  const [cinturaColor,setCinturaColor] = useState('')
+  const [cinturaColor, setCinturaColor] = useState('')
   const [quadrilDescription, setQuadrilDescription] = useState('')
-  const [quadrilColor,setQuadrilColor] = useState('')
+  const [quadrilColor, setQuadrilColor] = useState('')
 
   const editBusto = Number(router.query.editBusto);
   const editCintura = Number(router.query.editCintura);
@@ -41,9 +27,10 @@ export default function EditarMedidas() {
   const [sizeBottom, setSizeBottom] = useState("");
   const [sizeWhole, setSizeWhole] = useState("");
 
+  const allPossibleCategorias = ['Camisa', 'Calça', 'Vestidos']
   const allSizesNames = ['PP', 'P', 'M', 'G', 'GG', 'XG']
   const allDescriptions = ['Largo', 'Folgado', 'Levemente folgado', 'Ideal', 'Levemente Justo', 'Justo', 'Apertado']
-  const allColors = ['stroke-red-500', 'stroke-yellow-500', 'stroke-green-300', 'stroke-green-500','stroke-green-300', 'stroke-yellow-500','stroke-red-500']
+  const allColors = ['-red-500', '-yellow-500', '-green-300', '-green-500', '-green-300', '-yellow-500', '-red-500']
 
   const PP = { busto: { min: 75, med: 80.5, max: 86 }, cintura: { min: 65, med: 67.5, max: 70 }, quadril: { min: 92, med: 95, max: 98 } }
   const P = { busto: { min: 87, med: 91.5, max: 96 }, cintura: { min: 70, med: 73, max: 76 }, quadril: { min: 99, med: 102, max: 105 } }
@@ -51,299 +38,384 @@ export default function EditarMedidas() {
   const G = { busto: { min: 103, med: 106, max: 109 }, cintura: { min: 82, med: 84.5, max: 87 }, quadril: { min: 112, med: 115, max: 118 } }
   const GG = { busto: { min: 110, med: 114.5, max: 119 }, cintura: { min: 88, med: 90.5, max: 93 }, quadril: { min: 119, med: 121.5, max: 124 } }
   const XG = { busto: { min: 120, med: 125, max: 130 }, cintura: { min: 94, med: 96.5, max: 99 }, quadril: { min: 125, med: 127.5, max: 130 } }
-  const allSizes = [PP,P,M,G,GG,XG]
+  const allSizes = [PP, P, M, G, GG, XG]
 
-  const checkMeasures = (busto: number, cintura: number, quadril: number,) => {
-    const tamanhos: tamanhosObj = {
-      sizeTop: "",
-      sizeBottom: "",
-      sizeWhole: "",
-      bustoDescription: "",
-      bustoColor: "",
-      cinturaDescription: "",
-      cinturaColor:"",
-      quadrilDescription: "",
-      quadrilColor: "",
-    };
+  const eraseStates = () => {
+    setSizeTop('')
+    setSizeBottom('')
+    setSizeWhole('')
+    setBustoColor('')
+    setBustoDescription('')
+    setCinturaColor('')
+    setCinturaDescription('')
+    setQuadrilColor('')
+    setQuadrilDescription('')
+  }
 
-    const PP = {
-      busto: { min: 75, med: 80.5, max: 86 },
-      cintura: { min: 65, med: 67.5, max: 70 },
-      quadril: { min: 92, med: 95, max: 98 },
-    };
-    const P = {
-      busto: { min: 87, med: 91.5, max: 96 },
-      cintura: { min: 70, med: 73, max: 76 },
-      quadril: { min: 99, med: 102, max: 105 },
-    };
-    const M = {
-      busto: { min: 97, med: 99.5, max: 102 },
-      cintura: { min: 77, med: 79, max: 81 },
-      quadril: { min: 106, med: 108.5, max: 111 },
-    };
-    const G = {
-      busto: { min: 103, med: 106, max: 109 },
-      cintura: { min: 82, med: 84.5, max: 87 },
-      quadril: { min: 112, med: 115, max: 118 },
-    };
-    const GG = {
-      busto: { min: 110, med: 114.5, max: 119 },
-      cintura: { min: 88, med: 90.5, max: 93 },
-      quadril: { min: 119, med: 121.5, max: 124 },
-    };
-    const XG = {
-      busto: { min: 120, med: 125, max: 130 },
-      cintura: { min: 94, med: 96.5, max: 99 },
-      quadril: { min: 125, med: 127.5, max: 130 },
-    };
 
-    // Find the appropriate size for the 'sizeTop' based on the bust size
-    if (busto >= PP.busto.min && busto <= PP.busto.max) {
-      tamanhos.sizeTop = "PP";
-      if (busto > PP.busto.med) {
-        tamanhos.bustoDescription = "Levemente justo";
-        tamanhos.bustoColor = "stroke-green-500"
-      } else{
+  const setCamisaEdit = () => {
+    allSizes.forEach((size, sizeIndex, allSizes) => {
+      if (bustoCm >= size.busto.min && bustoCm <= size.busto.max && bustoCm > cinturaCm) {
+        const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
+        const oneB = Math.floor(size.busto.min + stepB)
+        const twoB = Math.floor(size.busto.min + stepB + stepB)
+        const bustoRanges = [size.busto.min, oneB, twoB, size.busto.max]
+        bustoRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
+              console.log('this entered the range of busto', arr[i], bustoCm, arr[i + 1])
+              setSizeTop(allSizesNames[sizeIndex])
+              setBustoDescription(allDescriptions[i + 2])
+              setBustoColor(allColors[i + 2])
+            }
+          }
+        })
+        console.log('setting cintura and quadril inside camisa')
+        //then set the other stuff   
+        const stepC = Math.floor((size.cintura.max - size.cintura.min) / 4)
+        const oneC = Math.floor(size.cintura.min + stepC)
+        const twoC = Math.floor(size.cintura.min + stepC + stepC)
+        const cinturaRanges = [size.cintura.min, oneC, twoC, size.cintura.max]
+        cinturaRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing cintura:', cinturaCm)
+            if (cinturaCm <= size.cintura.min && cinturaCm >= size.cintura.min - 6) {
+              console.log('cintura size should be loose. index now', i)
+              setCinturaDescription(allDescriptions[1])
+              setCinturaColor(allColors[1])
+              return
+            }
+            if (cinturaCm < size.cintura.min - 6) return eraseStates()
 
-        tamanhos.bustoDescription = "Levemente Folgado";
-        tamanhos.bustoColor = "stroke-yellow-500";
+            if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
+              console.log('inside a valid range of cintura')
+              setCinturaDescription(allDescriptions[i + 2])
+              setCinturaColor(allColors[i + 2])
+              return
+            }
+            if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
+              console.log('cintura size description should be tight apertado')
+              setCinturaDescription(allDescriptions[6])
+              setCinturaColor(allColors[6])
+              return
+            }
+            if (cinturaCm > size.cintura.max + 6) return eraseStates()
+
+          }
+        })
+
+        const stepQ = ((size.quadril.max - size.quadril.min) / 4)
+        const oneQ = (size.quadril.min + stepQ)
+        const twoQ = (size.quadril.min + stepQ + stepQ)
+        const quadrilRanges = [size.quadril.min, oneQ, twoQ, size.quadril.max]
+        quadrilRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            if (quadrilCm <= size.quadril.min && quadrilCm >= size.quadril.min - 6) {
+              console.log('quadril size should be loose.')
+              setQuadrilDescription(allDescriptions[1])
+              setQuadrilColor(allColors[1])
+              return
+            }
+            if (quadrilCm < size.quadril.min - 7) return eraseStates()
+            if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
+              console.log('inside a valid range of quadril')
+              setQuadrilDescription(allDescriptions[i + 2])
+              setQuadrilColor(allColors[i + 2])
+              return
+            }
+            if (quadrilCm > size.quadril.max && quadrilCm <= size.quadril.max + 6) {
+              console.log('quadril size description should be tight apertado')
+              setQuadrilDescription(allDescriptions[6])
+              setQuadrilColor(allColors[6])
+              return
+            }
+            if (quadrilCm > size.quadril.max + 7) return eraseStates()
+          }
+        })
+
       }
-    } else if (busto >= P.busto.min && busto <= P.busto.max) {
-      tamanhos.sizeTop = "P";
-      if (busto > P.busto.med) {
-        tamanhos.bustoDescription = "Levemente justo";
-        tamanhos.bustoColor = "stroke-green-500"
-      } else{
-        tamanhos.bustoDescription = "Levemente Folgado";
-        tamanhos.bustoColor = "stroke-yellow-500" 
+      if (cinturaCm > bustoCm) {
+        console.warn('cintura is bigger than busto')
+        if (sizeIndex + 1 < allSizes.length) {
+          //console.log('i have a valid next size')
+          if (cinturaCm < allSizes[sizeIndex + 1].cintura.max && quadrilCm < allSizes[sizeIndex + 1].quadril.max) {
+            // console.log('cintura is valid in next size')
+            //this block is about finding the appropriate busto, set it to next size, drop-2 descriptions in busto and quadril
+            //then set cintura as usual
+            const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
+            const oneB = Math.floor(size.busto.min + stepB)
+            const twoB = Math.floor(size.busto.min + stepB + stepB)
+            const bustoRanges = [size.busto.min, oneB, twoB, size.busto.max]
+            bustoRanges.forEach((v, i, arr) => {
+              if (i !== arr.length) {
+                //console.log('im about to define the correct(sizeMinusOne of) busto)
+                if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
+                  console.log('this entered the range of busto', arr[i], bustoCm, arr[i + 1])
+                  setSizeTop(allSizesNames[sizeIndex + 1])
+                  setBustoDescription(allDescriptions[i])
+                  setBustoColor(allColors[i])
+
+                  //setting cintura normal on next size
+
+                  const stepC = Math.floor((allSizes[sizeIndex + 1].cintura.max - allSizes[sizeIndex + 1].cintura.min) / 4)
+                  const oneC = Math.floor(allSizes[sizeIndex + 1].cintura.min + stepC)
+                  const twoC = Math.floor(allSizes[sizeIndex + 1].cintura.min + stepC + stepC)
+                  const cinturaRanges = [allSizes[sizeIndex + 1].cintura.min, oneC, twoC, allSizes[sizeIndex + 1].cintura.max]
+
+                  cinturaRanges.forEach((v, i, arr) => {
+                    if (i !== arr.length) {
+                      if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
+                        console.log('inside a valid range of cintura')
+                        setCinturaDescription(allDescriptions[i + 2])
+                        setCinturaColor(allColors[i + 2])
+                        return
+                      }
+
+                    }
+                  })
+                  //setting quadril to drop-2
+                  const stepQ = Math.floor((size.quadril.max - size.quadril.min) / 4)
+                  const oneQ = Math.floor(size.quadril.min + stepQ)
+                  const twoQ = Math.floor(size.quadril.min + stepQ + stepQ)
+                  const quadrilRanges = [size.quadril.min, oneQ, twoQ, size.quadril.max]
+                  quadrilRanges.forEach((v, i, arr) => {
+                    if (i !== arr.length) {
+                      if (quadrilCm < size.quadril.min) {
+                        console.log('quadril size should be loose.')
+                        setQuadrilDescription(allDescriptions[1])
+                        setQuadrilColor(allColors[1])
+                        return
+                      }
+                      if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
+                        console.log('inside a valid range of quadril')
+                        setQuadrilDescription(allDescriptions[i])
+                        setQuadrilColor(allColors[i])
+                        return
+                      }
+                      if (quadrilCm > size.quadril.max) {
+                        console.log('quadril size description should be tight apertado')
+                        setQuadrilDescription(allDescriptions[6])
+                        setQuadrilColor(allColors[6])
+                        return
+                      }
+                    }
+                  })
+                }
+              }
+            })
+
+            console.log('cintura is larger than busto, but its ok')
+
+
+          }
+          else {
+            return null
+          }
+        }
       }
-    } else if (busto >= M.busto.min && busto <= M.busto.max) {
-      tamanhos.sizeTop = "M";
-      if (busto > M.busto.med) {
-        tamanhos.bustoDescription = "Levemente justo";
-        tamanhos.bustoColor = "stroke-green-500"
-      } else {tamanhos.bustoDescription = "Levemente Folgado";
-      tamanhos.bustoColor = "stroke-yellow-500"}
-    } else if (busto >= G.busto.min && busto <= G.busto.max) {
-      tamanhos.sizeTop = "G";
-      if (busto > G.busto.med) {
-        tamanhos.bustoDescription = "Levemente justo";
-        tamanhos.bustoColor = "stroke-green-500"
-      } else {tamanhos.bustoDescription = "Levemente Folgado";
-      tamanhos.bustoColor = "stroke-yellow-500"}
-    } else if (busto >= GG.busto.min && busto <= GG.busto.max) {
-      tamanhos.sizeTop = "GG";
-      if (busto > GG.busto.med) {
-        tamanhos.bustoDescription = "Levemente justo";
-        tamanhos.bustoColor = "stroke-green-500"
-      } else {tamanhos.bustoDescription = "Levemente Folgado";
-      tamanhos.bustoColor = "stroke-yellow-500"}
-    } else if (busto >= XG.busto.min && busto <= XG.busto.max) {
-      tamanhos.sizeTop = "XG";
-      if (busto > XG.busto.med) {
-        tamanhos.bustoDescription = "Levemente justo";
-        tamanhos.bustoColor = "stroke-green-500"
-      } else {tamanhos.bustoDescription = "Levemente Folgado";
-      tamanhos.bustoColor = "stroke-yellow-500"}
-    }
+    })
+  }
+  const setCalçaEdit = () => {
+    allSizes.forEach((size, sizeIndex, allSizes) => {
+      if (quadrilCm >= size.quadril.min && quadrilCm <= size.quadril.max && quadrilCm > cinturaCm) {
+        const stepQ = ((size.quadril.max - size.quadril.min) / 4)
+        const oneQ = (size.quadril.min + stepQ)
+        const twoQ = (size.quadril.min + stepQ + stepQ)
+        const quadrilRanges = [size.quadril.min, oneQ, twoQ, size.quadril.max]
+        quadrilRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
+              console.log('this entered the range of quadril', arr[i], quadrilCm, arr[i + 1])
+              setSizeBottom(allSizesNames[sizeIndex])
+              setQuadrilDescription(allDescriptions[i + 2])
+              setQuadrilColor(allColors[i + 2])
+            }
+          }
+        })
+        //then set the other stuff   
+        const stepC = Math.floor((size.cintura.max - size.cintura.min) / 4)
+        const oneC = Math.floor(size.cintura.min + stepC)
+        const twoC = Math.floor(size.cintura.min + stepC + stepC)
+        const cinturaRanges = [size.cintura.min, oneC, twoC, size.cintura.max]
+        cinturaRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing cintura:', cinturaCm)
+            if (cinturaCm <= size.cintura.min && cinturaCm >= size.cintura.min - 6) {
+              console.log('cintura size should be loose. index now', i)
+              setCinturaDescription(allDescriptions[1])
+              setCinturaColor(allColors[1])
+              return
+            }
+            if (cinturaCm < size.cintura.min - 6) return eraseStates()
+
+            if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
+              console.log('inside a valid range of cintura')
+              setCinturaDescription(allDescriptions[i + 2])
+              setCinturaColor(allColors[i + 2])
+              return
+            }
+            if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
+              console.log('cintura size description should be tight apertado')
+              setCinturaDescription(allDescriptions[6])
+              setCinturaColor(allColors[6])
+              return
+            }
+            if (cinturaCm > size.cintura.max + 6) return eraseStates()
+
+          }
+        })
+        const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
+        const oneB = Math.floor(size.busto.min + stepC)
+        const twoB = Math.floor(size.busto.min + stepC + stepC)
+        const bustoRanges = [size.busto.min, oneC, twoC, size.busto.max]
+        bustoRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing busto:', bustoCm)
+            if (bustoCm <= size.busto.min && bustoCm >= size.busto.min - 6) {
+              console.log('busto size should be loose. index now', i)
+              setBustoDescription(allDescriptions[1])
+              setBustoColor(allColors[1])
+              return
+            }
+            if (bustoCm < size.busto.min - 6) return eraseStates()
+
+            if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
+              console.log('inside a valid range of busto')
+              setBustoDescription(allDescriptions[i + 2])
+              setBustoColor(allColors[i + 2])
+              return
+            }
+            if (bustoCm > size.busto.max && bustoCm <= size.busto.max + 6) {
+              console.log('busto size description should be tight apertado')
+              setBustoDescription(allDescriptions[6])
+              setBustoColor(allColors[6])
+              return
+            }
+            if (bustoCm > size.busto.max + 6) return eraseStates()
+
+          }
+        })
 
 
-    //sizeBottom
-    if (quadril >= PP.quadril.min && quadril <= PP.quadril.max) {
-      tamanhos.sizeBottom = "PP";
-      if (quadril > PP.quadril.med) {
-        tamanhos.quadrilDescription = "Levemente justo";
-        tamanhos.quadrilColor = "stroke-green-500"
-      } else{
 
-        tamanhos.quadrilDescription = "Levemente Folgado";
-        tamanhos.quadrilColor = "stroke-yellow-500"
       }
-    } else if (quadril >= P.quadril.min && quadril <= P.quadril.max) {
-      tamanhos.sizeBottom = "P";
-      if (quadril > P.quadril.med) {
-        tamanhos.quadrilDescription = "Levemente justo";
-        tamanhos.quadrilColor = "stroke-green-500"
-      } else{
-        tamanhos.quadrilDescription = "Levemente Folgado";
-        tamanhos.quadrilColor = "stroke-yellow-500"
+      if (quadrilCm < cinturaCm) {
+        return console.warn('quadriCm<cinturaCM')
       }
-    } else if (quadril >= M.quadril.min && quadril <= M.quadril.max) {
-      tamanhos.sizeBottom = "M";
-      if (quadril > M.quadril.med) {
-        tamanhos.quadrilDescription = "Levemente justo";
-        tamanhos.quadrilColor = "stroke-green-500"
-      } else {
+    })
 
-        tamanhos.quadrilDescription = "Levemente Folgado";
-        tamanhos.quadrilColor = "stroke-yellow-500"
-      } 
-    } else if (quadril >= G.quadril.min && quadril <= G.quadril.max) {
-      tamanhos.sizeBottom = "G";
-      if (quadril > G.quadril.med) {
-        tamanhos.quadrilDescription = "Levemente justo";
-        tamanhos.quadrilColor = "stroke-green-500"
-      } else {
+  }
+  const setVestidoEdit = () => {
+    allSizes.forEach((size, sizeIndex, allSizes) => {
+      if (quadrilCm >= size.quadril.min && quadrilCm <= size.quadril.max && quadrilCm > cinturaCm) {
+        const stepQ = ((size.quadril.max - size.quadril.min) / 4)
+        const oneQ = (size.quadril.min + stepQ)
+        const twoQ = (size.quadril.min + stepQ + stepQ)
+        const quadrilRanges = [size.quadril.min, oneQ, twoQ, size.quadril.max]
+        quadrilRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
+              console.log('this entered the range of quadril', arr[i], quadrilCm, arr[i + 1])
+              setSizeWhole(allSizesNames[sizeIndex])
+              setQuadrilDescription(allDescriptions[i + 2])
+              setQuadrilColor(allColors[i + 2])
+            }
+          }
+        })
+        //then set the other stuff   
+        const stepC = Math.floor((size.cintura.max - size.cintura.min) / 4)
+        const oneC = Math.floor(size.cintura.min + stepC)
+        const twoC = Math.floor(size.cintura.min + stepC + stepC)
+        const cinturaRanges = [size.cintura.min, oneC, twoC, size.cintura.max]
+        cinturaRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing cintura:', cinturaCm)
+            if (cinturaCm <= size.cintura.min && cinturaCm >= size.cintura.min - 6) {
+              console.log('cintura size should be loose. index now', i)
+              setCinturaDescription(allDescriptions[1])
+              setCinturaColor(allColors[1])
+              return
+            }
+            if (cinturaCm < size.cintura.min - 6) return eraseStates()
 
-        tamanhos.quadrilDescription = "Levemente Folgado";
-        tamanhos.quadrilColor = "stroke-yellow-500"
-      } 
-    } else if (quadril >= GG.quadril.min && quadril <= GG.quadril.max) {
-      tamanhos.sizeBottom = "GG";
-      if (quadril > GG.quadril.med) {
-        tamanhos.quadrilDescription = "Levemente justo";
-        tamanhos.quadrilColor = "stroke-green-500"
-      } else{
-        tamanhos.quadrilColor = "stroke-yellow-500"
-        tamanhos.quadrilDescription = "Levemente Folgado";
-      } 
-    } else if (quadril >= XG.quadril.min && quadril <= XG.quadril.max) {
-      tamanhos.sizeBottom = "XG";
-      if (quadril > XG.quadril.med) {
-        tamanhos.quadrilDescription = "Levemente justo";
-        tamanhos.quadrilColor = "stroke-green-500"
-      } else {
-      tamanhos.quadrilDescription = "Levemente Folgado";
-      tamanhos.quadrilColor = "stroke-yellow-500"
+            if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
+              console.log('inside a valid range of cintura')
+              setCinturaDescription(allDescriptions[i + 2])
+              setCinturaColor(allColors[i + 2])
+              return
+            }
+            if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
+              console.log('cintura size description should be tight apertado')
+              setCinturaDescription(allDescriptions[6])
+              setCinturaColor(allColors[6])
+              return
+            }
+            if (cinturaCm > size.cintura.max + 6) return eraseStates()
+
+          }
+        })
+        const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
+        const oneB = Math.floor(size.busto.min + stepC)
+        const twoB = Math.floor(size.busto.min + stepC + stepC)
+        const bustoRanges = [size.busto.min, oneC, twoC, size.busto.max]
+        bustoRanges.forEach((v, i, arr) => {
+          if (i !== arr.length) {
+            console.log('testing busto:', bustoCm)
+            if (bustoCm <= size.busto.min && bustoCm >= size.busto.min - 6) {
+              console.log('busto size should be loose. index now', i)
+              setBustoDescription(allDescriptions[1])
+              setBustoColor(allColors[1])
+              return
+            }
+            if (bustoCm < size.busto.min - 6) return eraseStates()
+
+            if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
+              console.log('inside a valid range of busto')
+              setBustoDescription(allDescriptions[i + 2])
+              setBustoColor(allColors[i + 2])
+              return
+            }
+            if (bustoCm > size.busto.max && bustoCm <= size.busto.max + 6) {
+              console.log('busto size description should be tight apertado')
+              setBustoDescription(allDescriptions[6])
+              setBustoColor(allColors[6])
+              return
+            }
+            if (bustoCm > size.busto.max + 6) return eraseStates()
+
+          }
+        })
+
+
+
       }
-    }
-
-    //cintura sugar stuff
-    if (cintura >= PP.cintura.min && cintura <= PP.cintura.max) {
-      if (cintura > PP.cintura.med) {
-        tamanhos.cinturaDescription = "Levemente justo";
-        tamanhos.cinturaColor = "stroke-green-500"
-      } else{
-
-        tamanhos.cinturaDescription = "Levemente Folgado";
-        tamanhos.cinturaColor = 'stroke-yellow-500'
-      } 
-    } else if (cintura >= P.cintura.min && cintura <= P.cintura.max) {
-      if (cintura > P.cintura.med) {
-        tamanhos.cinturaDescription = "Levemente justo";
-        tamanhos.cinturaColor = "stroke-green-500"
-      } else {
-      tamanhos.cinturaDescription = "Levemente Folgado";
-      tamanhos.cinturaColor = 'stroke-yellow-500'
+      if (quadrilCm < cinturaCm) {
+        return console.warn('quadriCm<cinturaCM')
       }
-    } else if (cintura >= M.cintura.min && cintura <= M.cintura.max) {
-      if (cintura > M.cintura.med) {
-        tamanhos.cinturaDescription = "Levemente justo";
-        tamanhos.cinturaColor = "stroke-green-500"
-      } else {
+    })
 
-        tamanhos.cinturaColor = 'stroke-yellow-500'
-      tamanhos.cinturaDescription = "Levemente Folgado";
-    }
-      } else if (cintura >= G.cintura.min && cintura <= G.cintura.max) {
-      if (cintura > G.cintura.med) {
-        tamanhos.cinturaDescription = "Levemente justo";
-        tamanhos.cinturaColor = "stroke-green-500"
-      } else {tamanhos.cinturaDescription = "Levemente Folgado";
-      tamanhos.cinturaColor = 'stroke-yellow-500'}
-    } else if (cintura >= GG.cintura.min && cintura <= GG.cintura.max) {
-      if (cintura > GG.cintura.med) {
-        tamanhos.cinturaDescription = "Levemente justo";
-        tamanhos.cinturaColor = "stroke-green-500"
-      } else {
-        tamanhos.cinturaDescription = "Levemente Folgado";
-        tamanhos.cinturaColor = 'stroke-yellow-500'
+
+
+  }
+
+
+
+  const checkMeasures = () => {
+    const editFunctions = [() => { setCamisaEdit() }, () => { setCalçaEdit() }, () => { setVestidoEdit() }]
+    allPossibleCategorias.forEach((v, i, arr) => {
+      if (categoria === v) {
+        return editFunctions[i]()
       }
-    } else if (cintura >= XG.cintura.min && cintura <= XG.cintura.max) {
-      if (cintura > XG.cintura.med) {
-        tamanhos.cinturaDescription = "Levemente justo";
-        tamanhos.cinturaColor = "stroke-green-500"
-      } else {tamanhos.cinturaDescription = "Levemente Folgado";
-      tamanhos.cinturaColor = 'stroke-yellow-500'}
-    }
-
-    // Find the appropriate size for the 'sizeBottom' based on the hip size
-    // if (quadril >= PP.quadril.min && quadril <= PP.quadril.max) {
-    //   tamanhos.sizeBottom = "PP";
-    // } else if (quadril >= P.quadril.min && quadril <= P.quadril.max) {
-    //   tamanhos.sizeBottom = "P";
-    // } else if (quadril >= M.quadril.min && quadril <= M.quadril.max) {
-    //   tamanhos.sizeBottom = "M";
-    // } else if (quadril >= G.quadril.min && quadril <= G.quadril.max) {
-    //   tamanhos.sizeBottom = "G";
-    // } else if (quadril >= GG.quadril.min && quadril <= GG.quadril.max) {
-    //   tamanhos.sizeBottom = "GG";
-    // } else if (quadril >= XG.quadril.min && quadril <= XG.quadril.max) {
-    //   tamanhos.sizeBottom = "XG";
-    // }
-
-    // Find the appropriate size for the 'sizeWhole' based on the bust and hip sizes
-    if (
-      busto >= PP.busto.min &&
-      busto <= PP.busto.max &&
-      quadril >= PP.quadril.min &&
-      quadril <= PP.quadril.max
-    ) {
-      tamanhos.sizeWhole = "PP";
-    } else if (
-      busto >= P.busto.min &&
-      busto <= P.busto.max &&
-      quadril >= P.quadril.min &&
-      quadril <= P.quadril.max
-    ) {
-      tamanhos.sizeWhole = "P";
-    } else if (
-      busto >= M.busto.min &&
-      busto <= M.busto.max &&
-      quadril >= M.quadril.min &&
-      quadril <= M.quadril.max
-    ) {
-      tamanhos.sizeWhole = "M";
-    } else if (
-      busto >= G.busto.min &&
-      busto <= G.busto.max &&
-      quadril >= G.quadril.min &&
-      quadril <= G.quadril.max
-    ) {
-      tamanhos.sizeWhole = "G";
-    } else if (
-      busto >= GG.busto.min &&
-      busto <= GG.busto.max &&
-      quadril >= GG.quadril.min &&
-      quadril <= GG.quadril.max
-    ) {
-      tamanhos.sizeWhole = "GG";
-    } else if (
-      busto >= XG.busto.min &&
-      busto <= XG.busto.max &&
-      quadril >= XG.quadril.min &&
-      quadril <= XG.quadril.max
-    ) {
-      tamanhos.sizeWhole = "XG";
-    }
-    // console.warn(tamanhos, "tamanhos inside checkMeasures function", {
-    //   bustoCm,
-    //   cinturaCm,
-    //   quadrilCm,
-    // });
-    setSizeTop(tamanhos.sizeTop);
-    setSizeBottom(tamanhos.sizeBottom);
-    setSizeWhole(tamanhos.sizeWhole);
-    setBustoDescription(tamanhos.bustoDescription)
-    setBustoColor(tamanhos.bustoColor)
-    setCinturaDescription(tamanhos.cinturaDescription)
-    setCinturaColor(tamanhos.cinturaColor)
-    setQuadrilDescription(tamanhos.quadrilDescription)
-    setQuadrilColor(tamanhos.quadrilColor)
-    if (!tamanhos.sizeWhole) {
-      setSizeWhole(tamanhos.sizeBottom);
-    }
-  };
+    })
+  }
   useEffect(() => {
-    if (bustoCm && cinturaCm && quadrilCm)
-      checkMeasures(+bustoCm, +cinturaCm, +quadrilCm);
+    checkMeasures();
   }, [bustoCm, cinturaCm, quadrilCm]);
 
   const submitFunc = () => {
-    // checkMeasures(bustoCm,cinturaCm,quadrilCm)
 
-    if (sizeWhole && sizeTop && sizeBottom && bustoDescription && cinturaDescription && quadrilDescription ) {
-      console.log("we had a valid sizeWhole");
+    if (sizeWhole || sizeTop || sizeBottom && (bustoDescription && cinturaDescription && quadrilDescription)) {
+      console.log("submitting", { sizeTop, sizeWhole, sizeBottom, bustoDescription, cinturaDescription, quadrilDescription, cinturaColor });
 
       router.push({
         pathname: `/result/resultPage`,
@@ -356,144 +428,147 @@ export default function EditarMedidas() {
           bustoCm: bustoCm,
           cinturaCm: cinturaCm,
           quadrilCm: quadrilCm,
-          bustoDescription:bustoDescription,
-          bustoColor: bustoColor , 
-          cinturaDescription:cinturaDescription,
-          cinturaColor: cinturaColor, 
-          quadrilDescription:quadrilDescription,
+          bustoDescription: bustoDescription,
+          bustoColor: bustoColor,
+          cinturaDescription: cinturaDescription,
+          cinturaColor: cinturaColor,
+          quadrilDescription: quadrilDescription,
           quadrilColor: quadrilColor,
-          categoria:categoria
+          categoria: categoria
         },
       });
     } else {
-      console.log("we dont have a valid sizeWhole");
+      console.log("we dont have a valid size");
       router.push({
         pathname: "/medidas/NotFound",
-        query: { encodedImgUrl: encodedImgUrl, categoria:categoria },
+        query: { encodedImgUrl: encodedImgUrl, categoria: categoria },
       });
     }
   };
 
-  return (
-    <div className="flex flex-col p-4 m-2 rounded-sm justify-between items-center max-w-lg">
-      <h1>Minhas Medidas</h1>
-      <p>Insira os valores exatos</p>
-      <div className="flex py-10">
-        <div className="mr-1">
-          <img alt={dollImg} src={dollImg} />
+  return (<div className={`${roboto.className} flex flex-col bg-white m-0 p-0`}>
+    <div className="bg-white flex flex-col rounded-sm justify-between items-center">
+      <h1 className="text-black text-center text-3xl mt-4 px-6">Insira suas medidas exatas para uma experiência ainda mais concreta !</h1>
+
+      <div className="flex flex-col bg-white">
+        <div className="flex items-center  justify-center">
+          <div className=" flex w-[100%] p-1">
+            <div className="w-[100%] m-1">
+              <Image width={400} height={400} alt={dollImg} src={dollImg} />
+            </div>
+          </div>
+
+          <div className="flex justify-center items-center bg-white shadow-xl rounded-lg flex-col m-6  p-2">
+          {categoria!=='Calça'?<div className="inline-block  min-w-fit m-4">
+              <label className="text-lg text-black my-3">
+                Busto<span className="text-sm text-black ml-3">(cm)</span>
+              </label>
+              <input
+                type="range"
+                className="mx-4 max-w-[7rem]"
+                min={70}
+                max={150}
+                onChange={(e) => setBustoCm(Number(e.target.value))}
+                onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
+                value={bustoCm}
+              />
+              <input
+                className="text-black pl-2 max-w-[3.525rem]"
+                type="number"
+                min={70}
+                max={170}
+                onChange={(e) => setBustoCm(Number(e.target.value))}
+                onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
+                value={bustoCm}
+              />
+            </div> : null}
+            <div className="m-4">
+              <label className="text-lg text-black my-3">
+                Cintura<span className="text-sm text-black"> (cm)</span>
+              </label>
+              <input
+                type="range"
+                className=" mx-4 max-w-[7rem]"
+                min={50}
+                max={160}
+                onChange={(e) => setCinturaCm(Number(e.target.value))}
+                onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
+                value={cinturaCm}
+              />
+              <input
+                type="number"
+                className="text-black pl-2 max-w-[3.125rem]"
+                min={50}
+                max={160}
+                onChange={(e) => setCinturaCm(Number(e.target.value))}
+                onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
+                value={cinturaCm}
+              />
+            </div>
+            <div className="m-4">
+              <label className="text-lg text-black my-3">
+                Quadril<span className="text-sm text-black"> (cm)</span>
+              </label>
+              <input
+                type="range"
+                className=" mx-4 max-w-[7rem]"
+                min={70}
+                max={151}
+                onChange={(e) => setQuadrilCm(Number(e.target.value))}
+                onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
+                value={quadrilCm}
+              />
+              <input
+                type="number"
+                className="text-black pl-2 max-w-[3.125rem]"
+                min={70}
+                max={151}
+                onChange={(e) => setQuadrilCm(Number(e.target.value))}
+                onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
+                value={quadrilCm}
+              />
+
+            </div>
+            <div className="flex flex-col justify-center bg-white mx-10 my-2">
+
+              <button
+                className=" rounded-lg bg-white text-black py-2 shadow-lg "
+                onClick={() => submitFunc()}
+              >
+                Ver Recomedação
+              </button>
+              <p className="text-black text-center text-xs mx-5 pt-1">Não sabe suas medidas? A gente te ajuda ! Clicando no botão abaixo voce pode imprimir e usar nossa fita métrica </p>
+              <a
+                className="rounded-lg bg-black text-white shadow-xl py-2 my-2 text-center"
+                href="/files/fita-metrica-eufloria.pdf"
+                target={"_blank"}
+                rel="noopener noreferrer"
+              >
+                Fita Metrica
+              </a>
+              <button
+                className="rounded-lg bg-white text-black my-2 py-2 shadow-lg "
+                onClick={() => {
+                  if (encodedImgUrl) {
+                    router.push({
+                      pathname: `${window.location.origin}/${encodeURIComponent(
+                        encodedImgUrl
+                      )}`, query: { categoria: categoria }
+                    });
+                  }
+                }}
+              >
+                Reiniciar
+              </button>
+            </div>
+
+
+          </div>
         </div>
-        <div className="flex flex-col ml-2">
-          <label className="text-lg">
-            Busto<span className="text-sm"> (cm)</span>
-          </label>
 
-          <label className="text-lg">
-            Cintura<span className="text-sm"> (cm)</span>
-          </label>
-          <label className="text-lg">
-            Quadril<span className="text-sm"> (cm)</span>
-          </label>
-        </div>
-        <div className=" flex pl-3 flex-col">
-          <div className="flex my-4">
-            <input
-              type="range"
-              min={70}
-              max={150}
-              onChange={(e) => setBustoCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
-              value={bustoCm}
-            />
-            <input
-              className="appearance-none"
-              type="number"
-              min={70}
-              max={170}
-              onChange={(e) => setBustoCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
-              value={bustoCm}
-            />
-          </div>
-
-          <div className="flex my-4">
-            <input
-              type="range"
-              min={50}
-              max={160}
-              onChange={(e) => setCinturaCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
-              value={cinturaCm}
-            />
-            <input
-              type="number"
-              min={50}
-              max={160}
-              onChange={(e) => setCinturaCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
-              value={cinturaCm}
-            />
-          </div>
-
-          <div className="my-4 flex">
-            <input
-              type="range"
-              min={70}
-              max={151}
-              onChange={(e) => setQuadrilCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
-              value={quadrilCm}
-            />
-            <input
-              type="number"
-              min={70}
-              max={151}
-              onChange={(e) => setQuadrilCm(Number(e.target.value))}
-              onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
-              value={quadrilCm}
-            />
-          </div>
-
-          <div className="flex mt-2 flex-col">
-            <button
-              className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
-              onClick={() => submitFunc()}
-            >
-              Ver Recomedação
-            </button>
-            <button
-              className="my-2 rounded-lg bg-gray-50 py-2 shadow-lg "
-              onClick={() => {
-                if (encodedImgUrl) {
-                  router.push({
-                    pathname: `${window.location.origin}/${encodeURIComponent(
-                      encodedImgUrl
-                    )}`, query:{categoria:categoria}
-                  });
-                }
-              }}
-            >
-              Reiniciar
-            </button>
-            <a
-              className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 text-center"
-              href="/files/fita-metrica-eufloria.pdf"
-              target={"_blank"}
-              rel="noopener noreferrer"
-            >
-              Fita Metrica
-            </a>
-            {/* <button
-            onClick={() => {
-              if (bustoCm && cinturaCm && quadrilCm) {
-                checkMeasures(+bustoCm, +cinturaCm, +quadrilCm);
-              }
-            }}
-          >
-            Console.log
-          </button> */}
-          </div>
-        </div>
       </div>
     </div>
+
+  </div>
   );
 }

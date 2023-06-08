@@ -41,13 +41,13 @@ export default function ChangeSizeButtons (props:any){
     }
 
 
-return(<div className="flex">
+return(<div className="flex my-4">
    
     {allSizesNames.map((v,i,arr)=>{
       if(size===v){
-        return <button key={i} className="rounded-lg bg-gray-50 shadow-lg py-2 mx-2">{v}</button>
+        return <button key={i} className="rounded-lg bg-black text-white shadow-lg py-2 mx-2 px-2">{v}</button>
       }
-         else return <button key={i} className="rounded-lg bg-gray-200 shadow-lg py-2 mx-2" onClick={()=>changeSize(i)}>{v}</button>
+         else return <button key={i} className="rounded-lg bg-white shadow-lg py-2 mx-2 text-black px-2" onClick={()=>changeSize(i)}>{v}</button>
       })}
 
 </div>) 
