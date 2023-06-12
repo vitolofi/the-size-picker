@@ -51,7 +51,7 @@ export default Home;
 //<iframe src="http://localhost:3000/https%3A%2F%2Fimages.tcdn.com.br%2Fimg%2Fimg_prod%2F1133807%2Fcamisao_nada_basico_preto_409_1_4ea43f5cad399b6da0f8d6bc5d9a58a0_20230404150510.jpg" width="662" height="600"></iframe>
 {/* <script>
   let urlLocal = 'http://localhost:3000/'
-  let ulrDev = 'https://the-size-picker-costa-vitor-fernandes.vercel.app/'
+  let urlDev = 'https://the-size-picker-costa-vitor-fernandes.vercel.app/'
   let url = 'https://the-size-picker.vercel.app/'
   let productPhoto = encodeURIComponent(document.querySelector('.zoomImg').src)
   let categoria = '?categoria='
