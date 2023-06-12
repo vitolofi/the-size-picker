@@ -331,10 +331,10 @@ export default function ResultPage(){
                }
                if (quadril >= 1 && quadril<=3 ) {
                    //levemente folgado
-                   setQuadrilDescription(allDescriptions[busto+1])
-                   setQuadrilColor(allColors[busto+1])
+                   setQuadrilDescription(allDescriptions[quadril+1])
+                   setQuadrilColor(allColors[quadril+1])
                    setSizeBottom(defaultSize)
-                   setEditQuadril(bustos[busto])
+                   setEditQuadril(quadris[quadril])
                }           
                if (quadril == 4) {
                    
@@ -461,10 +461,10 @@ export default function ResultPage(){
                }
                if (quadril >= 1 && quadril<=3 ) {
                    //levemente folgado
-                   setQuadrilDescription(allDescriptions[busto+1])
-                   setQuadrilColor(allColors[busto+1])
+                   setQuadrilDescription(allDescriptions[quadril+1])
+                   setQuadrilColor(allColors[quadril+1])
                    setSizeWhole(defaultSize)
-                   setEditQuadril(bustos[busto])
+                   setEditQuadril(quadris[quadril])
                }           
                if (quadril == 4) {
                    
