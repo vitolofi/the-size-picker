@@ -23,6 +23,8 @@ export default function ResultPage(){
     const [sizeBottom, setSizeBottom] = useState<string>('')
     const [sizeWhole, setSizeWhole] = useState<string>('')
 
+    const [preferedSize,setPreferedSize] = useState<string>('')
+
 
 
 
@@ -600,7 +602,8 @@ const factory = () =>{
     //wiping the original object to an
     // console.log(factoryResult,'this is factory restul')
     factoryResult[allSizesNames.indexOf(originalSize)] = [factoryInfo.sizeTop,factoryInfo.sizeBottom,factoryInfo.sizeWhole, factoryInfo.editBusto,factoryInfo.editCintura,factoryInfo.editQuadril, allDescriptions[factoryInfo.bustoDescription], allColors[factoryInfo.bustoDescription], allDescriptions[factoryInfo.cinturaDescription], allColors[factoryInfo.cinturaDescription], allDescriptions[factoryInfo.quadrilDescription],allColors[factoryInfo.quadrilDescription]]
-    console.log(factoryResult,'this is factory restul after orignial value changes')
+    console.log(factoryResult,'this is factory restul after orignial value changes', originalSize, 'originalSize')
+    setPreferedSize(originalSize)
     setFactoryResultState(Object.assign({},factoryResult))
     
 
@@ -624,7 +627,6 @@ if(!router.isFallback){
 
 // console.log({bustoColor,cinturaColor,quadrilColor,sizeTop,sizeWhole,sizeBottom}, 'entrou')
     return (<div className={` ${roboto.className} p-1 flex justify-start outline-1 bg-white rounded-lg shadow-md items-center`}>
-
         <div className='max-w-[19rem] min-w-[19rem] bg-white  self-start'>
         {/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}
         {bustoColor || cinturaColor || quadrilColor  ? <>
@@ -637,12 +639,18 @@ if(!router.isFallback){
 
          {/* configurar isso pra ser gerado tbm */}
 
-        <Image width={200} unoptimized height={200}  alt={'doll std img'} className="object-cover object-top h-[32rem] w-96" src='/imgs_lela/030303.jpeg'/>
-        <ChangeSizeButtons baseSize={{sizeTop,sizeBottom,sizeWhole}} changeSize={(i:number)=>changeSize(i)}></ChangeSizeButtons>
+        <Image width={200} unoptimized height={200}  alt={'doll std img'} className="object-cover object-top h-[30.5rem] w-96" src='/imgs_lela/030303.jpeg'/>
+        <div className=' flex mx-4 mt-6 h-1 justify-between bg-gradient-to-r from-green-500 via-yellow-300 to-red-500'>
+            <p className='relative bottom-6'>Ideal</p>
+            <p className='relative bottom-6'>Apertado/Folgado</p>
+            
+        </div>
+        <ChangeSizeButtons preferedSize={preferedSize} baseSize={{sizeTop,sizeBottom,sizeWhole}} changeSize={(i:number)=>changeSize(i)}></ChangeSizeButtons>
         {/* <OtherSizesFactoryR baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactoryR> */}
 
     </div>
     <div className='flex flex-col bg-white shadow-2xl rounded-xl px-4 py-4 justify-between my-2 '>
+
         <h1 className='text-gray-800 font font-medium text-3xl py-22'> Você está provando {categoria} tamanho: 
         <div className='flex justify-center'>
         <p className="flex bg-black rounded-lg self-center p-2 my-5 max-w-[50%] text-white">{sizeTop || sizeBottom || sizeWhole}</p>
