@@ -264,37 +264,37 @@ export default function EditarMedidas() {
 
           }
         })
-        const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
-        const oneB = Math.floor(size.busto.min + stepC)
-        const twoB = Math.floor(size.busto.min + stepC + stepC)
-        const bustoRanges = [size.busto.min, oneC, twoC, size.busto.max]
-        bustoRanges.forEach((v, i, arr) => {
-          if (i !== arr.length) {
-            console.log('testing busto:', bustoCm)
-            if (bustoCm <= size.busto.min && bustoCm >= size.busto.min - 6) {
-              console.log('busto size should be loose. index now', i)
-              setBustoDescription(allDescriptions[1])
-              setBustoColor(allColors[1])
-              return
-            }
-            if (bustoCm < size.busto.min - 6) return eraseStates()
+        // const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
+        // const oneB = Math.floor(size.busto.min + stepB)
+        // const twoB = Math.floor(size.busto.min + stepB + stepB)
+        // const bustoRanges = [size.busto.min, oneB, twoB, size.busto.max]
+        // bustoRanges.forEach((v, i, arr) => {
+        //   if (i !== arr.length) {
+        //     console.log('testing busto:', bustoCm)
+        //     if (bustoCm <= size.busto.min && bustoCm >= size.busto.min - 6) {
+        //       console.log('busto size should be loose. index now', i)
+        //       setBustoDescription(allDescriptions[1])
+        //       setBustoColor(allColors[1])
+        //       return
+        //     }
+        //     if (bustoCm < size.busto.min - 6) return eraseStates()
 
-            if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
-              console.log('inside a valid range of busto')
-              setBustoDescription(allDescriptions[i + 2])
-              setBustoColor(allColors[i + 2])
-              return
-            }
-            if (bustoCm > size.busto.max && bustoCm <= size.busto.max + 6) {
-              console.log('busto size description should be tight apertado')
-              setBustoDescription(allDescriptions[6])
-              setBustoColor(allColors[6])
-              return
-            }
-            if (bustoCm > size.busto.max + 6) return eraseStates()
+        //     if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
+        //       console.log('inside a valid range of busto')
+        //       setBustoDescription(allDescriptions[i + 2])
+        //       setBustoColor(allColors[i + 2])
+        //       return
+        //     }
+        //     if (bustoCm > size.busto.max && bustoCm <= size.busto.max + 6) {
+        //       console.log('busto size description should be tight apertado')
+        //       setBustoDescription(allDescriptions[6])
+        //       setBustoColor(allColors[6])
+        //       return
+        //     }
+        //     if (bustoCm > size.busto.max + 6) return eraseStates()
 
-          }
-        })
+        //   }
+        // })
 
 
 
@@ -414,7 +414,7 @@ export default function EditarMedidas() {
 
   const submitFunc = () => {
 
-    if (sizeWhole || sizeTop || sizeBottom && (bustoDescription && cinturaDescription && quadrilDescription)) {
+    if (sizeWhole || sizeTop || sizeBottom && (bustoDescription ||  cinturaDescription && quadrilDescription)) {
       console.log("submitting", { sizeTop, sizeWhole, sizeBottom, bustoDescription, cinturaDescription, quadrilDescription, cinturaColor });
 
       router.push({
