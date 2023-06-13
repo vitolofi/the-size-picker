@@ -5,7 +5,8 @@ export const inter = Inter({ subsets: ['latin'] })
 export const roboto = Roboto({ subsets:['latin'], weight:'100'})
 
 export default function Home() { 
-  return (
+  return (<>
+  <title>Testes</title>
     <main
       className={`flex-col  items-center justify-between p-24`}>
  
@@ -41,5 +42,6 @@ export default function Home() {
       </div>
       
     </main>
+        </>
   )
 }

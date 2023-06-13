@@ -32,7 +32,9 @@ export default function DollPage(){
         setDollImgName(`/imgs_lela/0${busto+1}0${cintura+1}0${quadril+1}.jpeg`) 
     }
 
-    return (<main className={`${roboto.className} flex w-[100%] rounded-lg items-center bg-white`}>
+    return (<><title>Ajuste</title>
+    
+    <main className={`${roboto.className} flex w-[100%] rounded-lg items-center bg-white`}>
         <div className="flex justify-center w-[100%] shadow-none ">
             <div className='flex min-w-[13rem] justify-center max-w-[39%]'>
         <img alt={'a manequin that changes its sizes'} src={dollImgName}/>
@@ -59,5 +61,6 @@ export default function DollPage(){
     </div>
             
         </div>
-    </main>)
+    </main>
+    </>)
 }

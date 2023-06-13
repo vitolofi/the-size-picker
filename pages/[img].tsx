@@ -22,7 +22,7 @@ const Home: NextPage = (props:any) => {
   return (
     <>
       <Head>
-        <title>Seu Tamanho - Eufloria</title>
+        <title>Bem Vindo/IMC</title>
         <meta name="description" content="app to find your size in this store" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -626,7 +626,11 @@ const changeSize = (index:number) =>{
 if(!router.isFallback){
 
 // console.log({bustoColor,cinturaColor,quadrilColor,sizeTop,sizeWhole,sizeBottom}, 'entrou')
-    return (<div className={` ${roboto.className} p-1 flex justify-start outline-1 bg-white rounded-lg shadow-md items-center`}>
+    return (
+        <>
+        <title>Resultado</title>
+        
+        <div className={` ${roboto.className} p-1 flex justify-start outline-1 bg-white rounded-lg shadow-md items-center`}>
         <div className='max-w-[19rem] min-w-[19rem] bg-white  self-start'>
         {/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}
         {bustoColor || cinturaColor || quadrilColor  ? <>
@@ -674,7 +678,8 @@ if(!router.isFallback){
         </div>
 
     </div>
-</div>)
+</div>
+</>)
 }
 else return <div>loading...</div>
 }

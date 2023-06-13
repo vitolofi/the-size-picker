@@ -7,7 +7,9 @@ export default function NotFound(){
     const categoria = String(router.query.categoria)
     console.log('your size wasnot found page', router.query)
     // const encoded: string = encodedImgUrl as string
-    return(<div className={`${roboto.className} flex flex-col w-[100%] bg-white`}>
+    return(<>
+    <title>Tamanho Não Encontrado</title>
+    <div className={`${roboto.className} flex flex-col w-[100%] bg-white`}>
         
 
         <h1 className='text-center text-black text-3xl my-5 px-10'>Ainda não temos um tamanho que vai te vestir legal :{'('}</h1>
@@ -19,5 +21,6 @@ export default function NotFound(){
         {/* <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 mx-2 ">Fita Metrica</button> */}
         </div>
         </div>
+    </>
         )
 }

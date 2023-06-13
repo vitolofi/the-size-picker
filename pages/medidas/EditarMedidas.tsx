@@ -446,7 +446,11 @@ export default function EditarMedidas() {
     }
   };
 
-  return (<div className={`${roboto.className} flex flex-col bg-white m-0 p-0`}>
+  return (
+  <>
+  <title>Editar Medidas</title>
+ 
+  <div className={`${roboto.className} flex flex-col bg-white m-0 p-0`}>
     <div className="bg-white flex flex-col rounded-sm justify-between items-center">
       <h1 className="text-black text-center text-3xl mt-4 px-6">Insira suas medidas exatas para uma experiência ainda mais concreta !</h1>
 
@@ -570,5 +574,6 @@ export default function EditarMedidas() {
     </div>
 
   </div>
+  </>
   );
 }
