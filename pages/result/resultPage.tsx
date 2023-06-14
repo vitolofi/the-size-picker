@@ -630,7 +630,7 @@ if(!router.isFallback){
         <>
         <title>Resultado</title>
         
-        <div className={` ${roboto.className} flex outline-1 bg-white rounded-lg shadow-md items-center`}>
+        <div className={` ${roboto.className} flex outline-1 bg-white  items-center`}>
         <div className='max-w-[19rem] min-w-[19rem] bg-white  self-start'>
       
         {/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}

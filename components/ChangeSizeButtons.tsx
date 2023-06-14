@@ -41,7 +41,7 @@ export default function ChangeSizeButtons (props:any){
     }
 
 
-return(<div className="flex my-4">
+return(<div className="flex my-4 ml-1">
    
     {allSizesNames.map((v,i,arr)=>{
       if(selectedSize===v){
