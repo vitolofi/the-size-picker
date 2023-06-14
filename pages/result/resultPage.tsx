@@ -630,8 +630,9 @@ if(!router.isFallback){
         <>
         <title>Resultado</title>
         
-        <div className={` ${roboto.className} p-1 flex justify-start outline-1 bg-white rounded-lg shadow-md items-center`}>
+        <div className={` ${roboto.className} flex outline-1 bg-white rounded-lg shadow-md items-center`}>
         <div className='max-w-[19rem] min-w-[19rem] bg-white  self-start'>
+      
         {/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}
         {bustoColor || cinturaColor || quadrilColor  ? <>
         {sizeTop || sizeWhole ? <SugarBustoSVG bustoColor={bustoColor} description={bustoDescription} /> : null}
@@ -640,15 +641,16 @@ if(!router.isFallback){
         </>
          : 
          null}
+           <div className=' flex mx-4 mt-8 h-1 justify-between bg-gradient-to-r from-green-500 via-yellow-300 to-red-500'>
+            <p className='relative bottom-6 text-black'>Ideal</p>
+            <p className='relative bottom-6 text-black'>Apertado/Folgado</p>
+            
+        </div>
 
          {/* configurar isso pra ser gerado tbm */}
 
         <Image width={200} unoptimized height={200}  alt={'doll std img'} className="object-cover object-top h-[30.5rem] w-96" src='/imgs_lela/030303.jpeg'/>
-        <div className=' flex mx-4 mt-6 h-1 justify-between bg-gradient-to-r from-green-500 via-yellow-300 to-red-500'>
-            <p className='relative bottom-6'>Ideal</p>
-            <p className='relative bottom-6'>Apertado/Folgado</p>
-            
-        </div>
+
         <ChangeSizeButtons preferedSize={preferedSize} baseSize={{sizeTop,sizeBottom,sizeWhole}} changeSize={(i:number)=>changeSize(i)}></ChangeSizeButtons>
         {/* <OtherSizesFactoryR baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactoryR> */}
 

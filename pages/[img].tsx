@@ -21,15 +21,12 @@ const Home: NextPage = (props:any) => {
 
   return (
     <>
-      <Head>
+    
         <title>Bem Vindo/IMC</title>
-        <meta name="description" content="app to find your size in this store" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="flex" >
-      <div className="bg-gray-50 p-4 flex rounded-sm justify-between  items-center ">
+      <main className="" >
+      <div className="bg-gray-50 p-4 flex rounded-sm justify-between items-center max-h-[600px] ">
         {/* maybe this div needs a max-width */}
-        <div className="flex max-w-[50%]">
+        <div className="flex max-w-[50%] max-h-[100%]">
           {img? <Image loader={()=>img} priority unoptimized alt={img} width={662} height={1000} className="rounded-md" src={img}/>:null}
         </div>
           <div>

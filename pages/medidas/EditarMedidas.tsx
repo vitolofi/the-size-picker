@@ -452,17 +452,17 @@ export default function EditarMedidas() {
  
   <div className={`${roboto.className} flex flex-col bg-white m-0 p-0`}>
     <div className="bg-white flex flex-col rounded-sm justify-between items-center">
-      <h1 className="text-black text-center text-3xl mt-4 px-6">Insira suas medidas exatas para uma experiência ainda mais concreta !</h1>
+      <h1 className="text-black text-center text-3xl mt-4 px-6 z-10">Insira suas medidas exatas para uma experiência ainda mais concreta !</h1>
 
       <div className="flex flex-col bg-white">
-        <div className="flex items-center  justify-center">
-          <div className=" flex w-[100%] p-1">
-            <div className="w-[100%] m-1">
-              <Image width={400} height={400} unoptimized alt={dollImg} src={dollImg} />
+        <div className="flex">
+          <div className=" flex justify-center items-center z-0 h-[30.5rem] bg-white">
+            <div className="flex max-w-[200%]">
+              <Image  className="object-contain object-center" width={350} height={350} unoptimized alt={dollImg} src={dollImg} />
             </div>
           </div>
 
-          <div className="flex justify-center items-center bg-white shadow-xl rounded-lg flex-col m-6  p-2">
+          <div className="flex justify-center items-center bg-white shadow-xl rounded-lg flex-col m-4  p-2">
           {categoria!=='Calça'?<div className="inline-block  min-w-fit m-4">
               <label className="text-lg text-black my-3">
                 Busto<span className="text-sm text-black ml-3">(cm)</span>
@@ -472,7 +472,7 @@ export default function EditarMedidas() {
                 className="mx-4 max-w-[7rem]"
                 min={70}
                 max={150}
-                onChange={(e) => setBustoCm(Number(e.target.value))}
+                onChange={(e) => {setBustoCm(Number(e.target.value)); setDollImg('/imgs_lela/chest.jpeg')}}
                 onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
                 value={bustoCm}
               />
@@ -495,7 +495,7 @@ export default function EditarMedidas() {
                 className=" mx-4 max-w-[7rem]"
                 min={50}
                 max={160}
-                onChange={(e) => setCinturaCm(Number(e.target.value))}
+                onChange={(e) => {setCinturaCm(Number(e.target.value)); setDollImg("/imgs_lela/waist.jpeg")}}
                 onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
                 value={cinturaCm}
               />
@@ -518,7 +518,7 @@ export default function EditarMedidas() {
                 className=" mx-4 max-w-[7rem]"
                 min={70}
                 max={151}
-                onChange={(e) => setQuadrilCm(Number(e.target.value))}
+                onChange={(e) => {setQuadrilCm(Number(e.target.value)); setDollImg('/imgs_lela/hip.jpeg')}}
                 onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
                 value={quadrilCm}
               />
@@ -533,7 +533,7 @@ export default function EditarMedidas() {
               />
 
             </div>
-            <div className="flex flex-col justify-center bg-white mx-10 my-2">
+            <div className="flex flex-col justify-center bg-white mx-2 my-2">
 
               <button
                 className=" rounded-lg bg-white text-black py-2 shadow-lg "
