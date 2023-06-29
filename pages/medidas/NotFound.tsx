@@ -16,7 +16,7 @@ export default function NotFound(){
         <p className='text-center text-black text-sm'>Infelizmente os valores inseridos não são compatíveis com a nossa tabela de medidas</p>
         <p className='text-end text-black text-xs mb-20 mx-6'>ou algo errado aconteceu...</p>
     <div className="flex flex-col">
-        <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 mx-6 text-black " onClick={()=>router.push({pathname:`/${encodeURIComponent(encodedImgUrl)}`, query:{categoria:categoria}})}>Reiniciar</button>
+        <button id="reiniciar_not_found" className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 mx-6 text-black " onClick={()=>router.push({pathname:`/${encodeURIComponent(encodedImgUrl)}`, query:{categoria:categoria}})}>Reiniciar</button>
         
         {/* <button className="rounded-lg bg-gray-50 shadow-lg py-2 my-2 mx-2 ">Fita Metrica</button> */}
         </div>

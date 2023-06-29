@@ -54,7 +54,7 @@ export default function ResultPage(){
 
 
 
-    const allPossibleCategorias = ['Camisa', 'Calça', 'Vestidos']
+    const allPossibleCategorias = ['Blusa', 'Calça', 'Vestido']
     const resultNameCategorias = ['sizeTop', 'sizeBottom', 'sizeWhole']
     const sizes = [sizeTop,sizeBottom,sizeWhole]
     const functionsDollObj = [(imc: number,busto: number,cintura: number,quadril: number)=> chooseBestCamisaDoll(imc,busto,cintura,quadril), (imc: number,busto: number,cintura: number,quadril: number)=> chooseBestCalçaDoll(imc,busto,cintura,quadril), (imc: number,busto: number,cintura: number,quadril: number)=>chooseBestVestidoDoll(imc,busto,cintura,quadril) ]
@@ -649,7 +649,7 @@ if(!router.isFallback){
 
          {/* configurar isso pra ser gerado tbm */}
 
-        <Image width={200} unoptimized height={200}  alt={'doll std img'} className="object-cover object-top h-[30.5rem] w-96" src='/imgs_lela/030303.jpeg'/>
+        <Image width={200} unoptimized height={200}  alt={'doll std img'} className="object-cover object-top h-[29.5rem] brightness-110 z-0 w-96" src='/doll_imgs/a222.png'/>
 
         <ChangeSizeButtons preferedSize={preferedSize} baseSize={{sizeTop,sizeBottom,sizeWhole}} changeSize={(i:number)=>changeSize(i)}></ChangeSizeButtons>
         {/* <OtherSizesFactoryR baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactoryR> */}
@@ -660,8 +660,12 @@ if(!router.isFallback){
         <h1 className='text-gray-800 font font-medium text-3xl py-22'> Você está provando {categoria} tamanho: 
         <div className='flex justify-center'>
         <p className="flex bg-black rounded-lg self-center p-2 my-5 max-w-[50%] text-white">{sizeTop || sizeBottom || sizeWhole}</p>
-        </div>
         
+        </div>
+        <div className="absolute h-[1rem] ml-1 ">
+            <img className="bg-white rounded-full relative  h-[0.725rem]" src="/1008958.png"/>
+            </div>
+            <p className="text-xs ml-4">= Tamanho Recomendado</p>
         </h1>
         
         {/* {sizeTop || sizeWhole?<div className='mt-16 text-black'>Busto:{bustoDescription}</div> :<div className="mt-10">-</div>} 
@@ -669,12 +673,12 @@ if(!router.isFallback){
         <div className='mt-16 text-black'>Quadril:{quadrilDescription}</div> */}
 
     <div className='flex flex-col justify-start mt-0'>
-         <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2  " onClick={() => router.push({ pathname: `${window.location.origin}/${encodeURIComponent(encodedImgUrl)}`, query:{categoria:categoria}})}>Reiniciar</button>
-        {doll ? <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2  " onClick={() => router.push({ pathname: `${window.location.origin}/doll/DollPage`, query: { imc: imc, encodedImgUrl: encodedImgUrl, categoria:categoria } })}>Voltar</button> : null}
+         <button id="reiniciar" className="rounded-lg bg-white text-black shadow-lg py-2 my-2  " onClick={() => router.push({ pathname: `${window.location.origin}/${encodeURIComponent(encodedImgUrl)}`, query:{categoria:categoria}})}>Reiniciar</button>
+        {doll ? <button id="voltar" className="rounded-lg bg-white text-black shadow-lg py-2 my-2  " onClick={() => router.push({ pathname: `${window.location.origin}/doll/DollPage`, query: { imc: imc, encodedImgUrl: encodedImgUrl, categoria:categoria } })}>Voltar</button> : null}
         {doll? <p className="text-xs text-black pt-10">Ficou em dúvida? Com a nossa fita métrica é possível ser ainda mais assertivo ! Clique nos botões abaixo e experimente !</p>:null}
-        <button className="rounded-lg bg-black text-white shadow-lg py-2 my-2  " onClick={() => {router.push({ pathname: `${window.location.origin}/medidas/EditarMedidas`, query: { imc: imc, editBusto: editBusto, editCintura: editCintura, editQuadril: editQuadril, encodedImgUrl: encodedImgUrl, categoria:categoria}})}}>Inserir Medidas Exatas</button>
+        <button id="goto_medidas_exatas" className="rounded-lg bg-black text-white shadow-lg py-2 my-2  " onClick={() => {router.push({ pathname: `${window.location.origin}/medidas/EditarMedidas`, query: { imc: imc, editBusto: editBusto, editCintura: editCintura, editQuadril: editQuadril, encodedImgUrl: encodedImgUrl, categoria:categoria}})}}>Inserir Medidas Exatas</button>
          {/* <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2 " onClick={()=>router.push({pathname:'/medidas/NotFound', query:{imc:imc, encodedImgUrl:encodedImgUrl}})}>NotFound</button> */}
-         <a className='rounded-lg bg-white text-black shadow-lg py-2 my-2 text-center ' href='/files/fita-metrica-eufloria.pdf' target={"_blank"} rel='noopener noreferrer'>
+         <a id="fita_metrica" className='rounded-lg bg-white text-black shadow-lg py-2 my-2 text-center ' href='/files/fita-metrica-eufloria.pdf' target={"_blank"} rel='noopener noreferrer'>
            Fita Metrica
             </a>
         </div>

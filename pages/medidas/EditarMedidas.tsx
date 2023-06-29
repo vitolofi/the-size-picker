@@ -27,7 +27,7 @@ export default function EditarMedidas() {
   const [sizeBottom, setSizeBottom] = useState("");
   const [sizeWhole, setSizeWhole] = useState("");
 
-  const allPossibleCategorias = ['Camisa', 'Calça', 'Vestidos']
+  const allPossibleCategorias = ['Blusa', 'Calça', 'Vestido']
   const allSizesNames = ['PP', 'P', 'M', 'G', 'GG', 'XG']
   const allDescriptions = ['Largo', 'Folgado', 'Levemente folgado', 'Ideal', 'Levemente Justo', 'Justo', 'Apertado']
   const allColors = ['-red-500', '-yellow-500', '-green-300', '-green-500', '-green-300', '-yellow-500', '-red-500']
@@ -79,7 +79,7 @@ export default function EditarMedidas() {
         cinturaRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
             console.log('testing cintura:', cinturaCm)
-            if (cinturaCm <= size.cintura.min && cinturaCm >= size.cintura.min - 6) {
+            if (cinturaCm < size.cintura.min && cinturaCm >= size.cintura.min - 6) {
               console.log('cintura size should be loose. index now', i)
               setCinturaDescription(allDescriptions[1])
               setCinturaColor(allColors[1])
@@ -110,7 +110,7 @@ export default function EditarMedidas() {
         const quadrilRanges = [size.quadril.min, oneQ, twoQ, size.quadril.max]
         quadrilRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
-            if (quadrilCm <= size.quadril.min && quadrilCm >= size.quadril.min - 6) {
+            if (quadrilCm < size.quadril.min && quadrilCm > size.quadril.min - 6) {
               console.log('quadril size should be loose.')
               setQuadrilDescription(allDescriptions[1])
               setQuadrilColor(allColors[1])
@@ -240,7 +240,7 @@ export default function EditarMedidas() {
         cinturaRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
             console.log('testing cintura:', cinturaCm)
-            if (cinturaCm <= size.cintura.min && cinturaCm >= size.cintura.min - 6) {
+            if (cinturaCm < size.cintura.min && cinturaCm > size.cintura.min - 6) {
               console.log('cintura size should be loose. index now', i)
               setCinturaDescription(allDescriptions[1])
               setCinturaColor(allColors[1])
@@ -264,40 +264,6 @@ export default function EditarMedidas() {
 
           }
         })
-        // const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
-        // const oneB = Math.floor(size.busto.min + stepB)
-        // const twoB = Math.floor(size.busto.min + stepB + stepB)
-        // const bustoRanges = [size.busto.min, oneB, twoB, size.busto.max]
-        // bustoRanges.forEach((v, i, arr) => {
-        //   if (i !== arr.length) {
-        //     console.log('testing busto:', bustoCm)
-        //     if (bustoCm <= size.busto.min && bustoCm >= size.busto.min - 6) {
-        //       console.log('busto size should be loose. index now', i)
-        //       setBustoDescription(allDescriptions[1])
-        //       setBustoColor(allColors[1])
-        //       return
-        //     }
-        //     if (bustoCm < size.busto.min - 6) return eraseStates()
-
-        //     if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
-        //       console.log('inside a valid range of busto')
-        //       setBustoDescription(allDescriptions[i + 2])
-        //       setBustoColor(allColors[i + 2])
-        //       return
-        //     }
-        //     if (bustoCm > size.busto.max && bustoCm <= size.busto.max + 6) {
-        //       console.log('busto size description should be tight apertado')
-        //       setBustoDescription(allDescriptions[6])
-        //       setBustoColor(allColors[6])
-        //       return
-        //     }
-        //     if (bustoCm > size.busto.max + 6) return eraseStates()
-
-        //   }
-        // })
-
-
-
       }
       if (quadrilCm < cinturaCm) {
         return console.warn('quadriCm<cinturaCM')
@@ -330,7 +296,7 @@ export default function EditarMedidas() {
         cinturaRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
             console.log('testing cintura:', cinturaCm)
-            if (cinturaCm <= size.cintura.min && cinturaCm >= size.cintura.min - 6) {
+            if (cinturaCm < size.cintura.min && cinturaCm > size.cintura.min - 6) {
               console.log('cintura size should be loose. index now', i)
               setCinturaDescription(allDescriptions[1])
               setCinturaColor(allColors[1])
@@ -355,13 +321,13 @@ export default function EditarMedidas() {
           }
         })
         const stepB = Math.floor((size.busto.max - size.busto.min) / 4)
-        const oneB = Math.floor(size.busto.min + stepC)
-        const twoB = Math.floor(size.busto.min + stepC + stepC)
-        const bustoRanges = [size.busto.min, oneC, twoC, size.busto.max]
+        const oneB = Math.floor(size.busto.min + stepB)
+        const twoB = Math.floor(size.busto.min + stepB + stepB)
+        const bustoRanges = [size.busto.min, oneB, twoB, size.busto.max]
         bustoRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
             console.log('testing busto:', bustoCm)
-            if (bustoCm <= size.busto.min && bustoCm >= size.busto.min - 6) {
+            if (bustoCm < size.busto.min && bustoCm > size.busto.min - 6) {
               console.log('busto size should be loose. index now', i)
               setBustoDescription(allDescriptions[1])
               setBustoColor(allColors[1])
@@ -536,13 +502,14 @@ export default function EditarMedidas() {
             <div className="flex flex-col justify-center bg-white mx-2 my-2">
 
               <button
+              id="medidas_exatas_submit"
                 className=" rounded-lg bg-white text-black py-2 shadow-lg "
                 onClick={() => submitFunc()}
               >
                 Ver Recomedação
               </button>
               <p className="text-black text-center text-xs mx-5 pt-1">Não sabe suas medidas? A gente te ajuda ! Clicando no botão abaixo voce pode imprimir e usar nossa fita métrica </p>
-              <a
+              <a id="fita_metrica"
                 className="rounded-lg bg-black text-white shadow-xl py-2 my-2 text-center"
                 href="/files/fita-metrica-eufloria.pdf"
                 target={"_blank"}
@@ -550,7 +517,7 @@ export default function EditarMedidas() {
               >
                 Fita Metrica
               </a>
-              <button
+              <button id="reiniciar"
                 className="rounded-lg bg-white text-black my-2 py-2 shadow-lg "
                 onClick={() => {
                   if (encodedImgUrl) {
