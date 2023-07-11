@@ -2,9 +2,14 @@
 import {useRouter} from 'next/router'
 import { useEffect, useState} from 'react'
 import { roboto } from '@/pages'
+import { useSettings } from '../Context/SettingsProvider'
 
 export default function Imc(props: { img: string}){
     
+    const settings = useSettings()
+
+    const {alturaMin,alturaMax,pesoMax,pesoMin,idadeMax,idadeMin} = settings
+
     const router = useRouter()
     const categoria = router.query.categoria
     const [altura,setAltura] = useState<number>(0)
@@ -27,13 +32,6 @@ export default function Imc(props: { img: string}){
         // console.log('o resultado do imc calc é', result)
         return result
       }
-
-    const alturaMin = 100
-    const alturaMax = 250
-    const pesoMin = 40
-    const pesoMax = 300
-    const idadeMin = 14
-    const idadeMax = 118
 
       const submitFunction = () =>{
         console.log(altura,peso,idade)
