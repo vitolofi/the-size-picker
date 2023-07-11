@@ -50,21 +50,21 @@ export default function FaderView(props:any){
         return(
         <div className={` flex flex-col`}>
     
-        <h1 className="p-2 text-black">{props.title}</h1>
-    <hr className="relative ml-[85px] mr-[89px] top-[29px] shadow-md border-black"></hr>
+        <h1 className="p-1 mt-1 text-black">{props.title}</h1>
+        <hr className="relative w-[108px] self-center top-[24px] shadow-md border-black"></hr>
 
-    <div className="flex justify-around p-2 bg-gray-100 rounded-md shadow-md">
-    <div className="absolute">
+        <div className="flex justify-around p-1 bg-gray-100 rounded-md shadow-md">
+        <div className="absolute">
         <div id="thumb" className={buttonAnimation}></div>
         </div>
 
-        <button className="p-2 px-4 mx-2 rounded-lg shadow-lg bg-white text-black"onClick={()=>{
+        <button className="py-2 w-10  rounded-lg shadow-lg bg-white text-black"onClick={()=>{
             if(faderVal === 0) return
             
             props.setFaderValue(props.faderValue-1)
             animateThumb(faderVal,faderVal-1)}}>-</button>
 
-        <div className="flex items-center px-2">
+        <div className="flex items-center">
 
       
         <button className=" text-black px-3" onClick={()=>{
@@ -91,7 +91,7 @@ export default function FaderView(props:any){
              setFaderVal(4)
             }}>|</button>
             </div>
-        <button className="p-2 px-4 rounded-lg shadow-lg bg-white mx-2 text-black" onClick={()=>{
+        <button className="py-2 w-10 rounded-lg shadow-lg bg-white  text-black" onClick={()=>{
             if(faderVal === 4) return
             setFaderVal(faderVal+1)
             animateThumb(faderVal,faderVal+1)

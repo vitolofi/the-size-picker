@@ -30,7 +30,7 @@ export default function EditarMedidas() {
   const allPossibleCategorias = ['Blusa', 'Calça', 'Vestido']
   const allSizesNames = ['PP', 'P', 'M', 'G', 'GG', 'XG']
   const allDescriptions = ['Largo', 'Folgado', 'Levemente folgado', 'Ideal', 'Levemente Justo', 'Justo', 'Apertado']
-  const allColors = ['-red-500', '-yellow-500', '-green-300', '-green-500', '-green-300', '-yellow-500', '-red-500']
+  const allColors = ['-red-500', '-yellow-500', '-[#a7d047]', '-green-500','-[#e9d941]', '-yellow-500','-red-500']
 
   const PP = { busto: { min: 75, med: 80.5, max: 86 }, cintura: { min: 65, med: 67.5, max: 70 }, quadril: { min: 92, med: 95, max: 98 } }
   const P = { busto: { min: 87, med: 91.5, max: 96 }, cintura: { min: 70, med: 73, max: 76 }, quadril: { min: 99, med: 102, max: 105 } }
@@ -95,8 +95,8 @@ export default function EditarMedidas() {
             }
             if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
               console.log('cintura size description should be tight apertado')
-              setCinturaDescription(allDescriptions[6])
-              setCinturaColor(allColors[6])
+              setCinturaDescription(allDescriptions[5])
+              setCinturaColor(allColors[5])
               return
             }
             if (cinturaCm > size.cintura.max + 6) return eraseStates()
@@ -125,8 +125,8 @@ export default function EditarMedidas() {
             }
             if (quadrilCm > size.quadril.max && quadrilCm <= size.quadril.max + 6) {
               console.log('quadril size description should be tight apertado')
-              setQuadrilDescription(allDescriptions[6])
-              setQuadrilColor(allColors[6])
+              setQuadrilDescription(allDescriptions[5])
+              setQuadrilColor(allColors[5])
               return
             }
             if (quadrilCm > size.quadril.max + 7) return eraseStates()
@@ -445,6 +445,7 @@ export default function EditarMedidas() {
               <input
                 className="text-black pl-2 max-w-[3.525rem]"
                 type="number"
+                inputMode="numeric"
                 min={70}
                 max={170}
                 onChange={(e) => setBustoCm(Number(e.target.value))}
@@ -468,6 +469,7 @@ export default function EditarMedidas() {
               <input
                 type="number"
                 className="text-black pl-2 max-w-[3.125rem]"
+                inputMode="numeric"
                 min={50}
                 max={160}
                 onChange={(e) => setCinturaCm(Number(e.target.value))}
@@ -482,6 +484,7 @@ export default function EditarMedidas() {
               <input
                 type="range"
                 className=" mx-4 max-w-[7rem]"
+                
                 min={70}
                 max={151}
                 onChange={(e) => {setQuadrilCm(Number(e.target.value)); setDollImg('/imgs_lela/hip.jpeg')}}
@@ -490,6 +493,7 @@ export default function EditarMedidas() {
               />
               <input
                 type="number"
+                inputMode="numeric"
                 className="text-black pl-2 max-w-[3.125rem]"
                 min={70}
                 max={151}

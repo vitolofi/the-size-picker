@@ -4,8 +4,8 @@ import Script from 'next/script'
 
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <>
-
+  return <div className='flex flex-col'>
+     <meta name='viewport' content="width=device-width, initial-scale=0.5"></meta>
   <Script id='google_analytics0'async src="https://www.googletagmanager.com/gtag/js?id=G-4R1WETXQ5E"></Script>
 <Script id='google_analytics1'>{`
   window.dataLayer = window.dataLayer || [];
@@ -23,6 +23,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-5WQ8DS8'); console.warn('tagmanagerrr');`}</Script>
 {/* <!-- End Google Tag Manager --> */}
   <Component {...pageProps} />
-  </>
+  </div>
 
 }

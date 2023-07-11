@@ -8,8 +8,6 @@ import Imc from "../components/imc/IMC";
 
 const Home: NextPage = (props:any) => {
   const router:any = useRouter()
-
-
   const img:string = router.query.img
   //console.log(window.location.pathname.split("/")) to get tipo
   // foo lets you trigger another thing inside the same query object by putting ?foo=something on url
@@ -20,13 +18,13 @@ const Home: NextPage = (props:any) => {
 
 
   return (
-    <>
+    <div className="bg-white text-black justify-center ">
             <title>Bem Vindo/IMC</title>
     
-      <div className="bg-gray-50 p-4 flex rounded-sm justify-between items-center min-h-[600px] ">
-        {/* maybe this div needs a max-width */}
-        <div className="flex max-w-[50%] max-h-[100%]">
-          {img? <Image loader={()=>img} priority unoptimized alt={img} width={662} height={1000} className="rounded-md" src={img}/>:null}
+      <div className="bg-gray-50 p-4 flex rounded-sm justify-between items-center  ">
+    
+        <div className="flex flex-col max-w-[50%]">
+          {img? <Image loader={()=>img} priority unoptimized alt={img} width={500} height={500} className="rounded-md" src={img}/>:null}
         </div>
           <div>
             {/* this should change name */}
@@ -34,7 +32,7 @@ const Home: NextPage = (props:any) => {
           </div>  
       </div>
       
-    </>
+    </div>
   );
 };
 
