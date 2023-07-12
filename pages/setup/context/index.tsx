@@ -1,13 +1,34 @@
 import { useState } from "react";
 export default function Contexto(){
 
-    const [input1,setInput1]  = useState('')
+  
+    async function hashReturn(value:string){
+      try{
+        const valued = {value:value}
+        const response = await fetch('/api/hash', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(valued),
+        });
+    
+        if (!response.ok) {
+          throw new Error('Request failed');
+        }
+        const responseData = await response.json();
+        console.log(responseData);
+      }
+     catch (error) {
+      console.error(error);
+    }
+  }
+    
 
-
-    async function postData() {
+    async function comparehashed() {
         try {
-          const data = { value: '123456'};
-          const response = await fetch('/api/hash', {
+          const data = { value: '123456', hashedValue: input};
+          const response = await fetch('/api/compare', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -18,7 +39,7 @@ export default function Contexto(){
           if (!response.ok) {
             throw new Error('Request failed');
           }
-      
+          
           const responseData = await response.json();
           console.log(responseData);
         } catch (error) {
@@ -29,14 +50,20 @@ export default function Contexto(){
       
       
       
-
-
+      
+      
+      const [input,setInput]  = useState('')
 
     return(<div>a
-        <input placeholder="hashed" onChange={(e) => setInput1(e.target.value)}></input>
+        
         <button className="bg-red-500" onClick={()=> {
-             postData()
+             hashReturn('123456')
 } 
 }>Hash</button>
-    </div>)
-}
+<div>b
+<input placeholder="hashed" className="text-black" onChange={(e) => setInput(e.target.value)}></input>
+<button className="bg-green-200" onClick={()=> comparehashed()}>Check for Hash</button>
+</div>
+    </div>
+    )
+    }
