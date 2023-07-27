@@ -748,7 +748,7 @@ export default function ResultPage() {
     quadrilDescription: string,
     quadrilColor: string
   ) => {
-    console.log("edit setter starts");
+    // console.log("edit setter starts");
     setSizeTop(sizeTop);
     setSizeBottom(sizeBottom);
     setSizeWhole(sizeWhole);
@@ -895,12 +895,12 @@ export default function ResultPage() {
         allDescriptions[factoryInfo.quadrilDescription],
         allColors[factoryInfo.quadrilDescription],
       ];
-      console.log(
-        factoryResult,
-        "this is factory restul after orignial value changes",
-        originalSize,
-        "originalSize"
-      );
+      // console.log(
+      //   factoryResult,
+      //   "this is factory restul after orignial value changes",
+      //   originalSize,
+      //   "originalSize"
+      // );
       setPreferedSize(originalSize);
       setFactoryResultState(Object.assign({}, factoryResult));
     }
