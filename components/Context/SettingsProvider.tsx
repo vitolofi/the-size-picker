@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 // Define the type for your settings object
 export type SizeRange = {
@@ -28,7 +28,6 @@ export type Settings = {
     allSizesNames: string[];
     allDescriptions: string[];
     allColors: string[];
-    selfD: boolean;
     allSizes: Sizes;
     alturaMin:number;
     alturaMax:number;
@@ -36,6 +35,7 @@ export type Settings = {
     pesoMax:number;
     idadeMin:number;
     idadeMax:number;
+    
 };
 
 
@@ -47,31 +47,92 @@ export type Settings = {
 
 
 
-// Create the context
-const SettingsContext = createContext<Settings | undefined>(undefined);
+export const SettingsContext = createContext<{
+  settings: Settings;
+  setSettings: React.Dispatch<React.SetStateAction<Settings>>;
+} | undefined>(undefined);
 
 // Create a custom hook for accessing the settings context
-export const useSettings = (): Settings => {
-  const settings = useContext(SettingsContext);
-  if (!settings) {
+export const useSettings = (): [Settings, React.Dispatch<React.SetStateAction<Settings>>] => {
+  const context = useContext(SettingsContext);
+  if (!context) {
     throw new Error('useSettings must be used within a SettingsProvider');
   }
-  return settings;
+  return [context.settings, context.setSettings];
 };
 
-// Create the provider component
 type SettingsProviderProps = {
   children: React.ReactNode;
-  settings: Settings;
+  initialSettings: Settings;
 };
 
-export const SettingsProvider: React.FC<SettingsProviderProps> = ({
-  children,
-  settings,
-}) => {
+export const SettingsProvider: React.FC<SettingsProviderProps> = ({ children, initialSettings }) => {
+  const [settings, setSettings] = useState<Settings>(initialSettings);
+
   return (
-    <SettingsContext.Provider value={settings}>
+    <SettingsContext.Provider value={{ settings, setSettings }}>
       {children}
     </SettingsContext.Provider>
   );
 };
+
+// Create the provider component
+// type SettingsProviderProps = {
+//   children: React.ReactNode;
+//   settings: Settings;
+//   setSettings: React.Dispatch<React.SetStateAction<Settings>>
+// };
+
+// export const SettingsProvider: React.FC<SettingsProviderProps> = ({
+//   children,
+//   settings,
+//   setSettings
+// }) => {
+//   return (
+//     <SettingsContext.Provider value={{settings, setSettings}}>
+//       {children}
+//     </SettingsContext.Provider>
+//   );
+// };
+
+
+// const SettingsContext = createContext<{
+//   settings: Settings;
+//   toggleSelfD: () => void;
+// } | undefined>(undefined);
+
+// export const useSettings = (): {
+//   settings: Settings;
+//   toggleSelfD: () => void;
+// } => {
+//   const context = useContext(SettingsContext);
+//   if (!context) {
+//     throw new Error('useSettings must be used within a SettingsProvider');
+//   }
+//   return context;
+// };
+
+// type SettingsProviderProps = {
+//   children: React.ReactNode;
+//   initialSettings: Settings;
+// };
+
+// export const SettingsProvider: React.FC<SettingsProviderProps> = ({
+//   children,
+//   initialSettings,
+// }) => {
+//   const [settings, setSettings] = useState<Settings>(initialSettings);
+
+//   const toggleSelfD = () => {
+//     setSettings((prevSettings) => ({
+//       ...prevSettings,
+//       selfD: !prevSettings.selfD,
+//     }));
+//   };
+
+//   return (
+//     <SettingsContext.Provider value={{ settings, toggleSelfD }}>
+//       {children}
+//     </SettingsContext.Provider>
+//   );
+// };
