@@ -5,7 +5,7 @@ export default function NotFound(){
     const router = useRouter()
     const encodedImgUrl = String(router.query.encodedImgUrl)
     const categoria = String(router.query.categoria)
-    console.log('your size wasnot found page', router.query)
+    // console.log('your size wasnot found page', router.query)
     // const encoded: string = encodedImgUrl as string
     return(<>
     <title>Tamanho Não Encontrado</title>

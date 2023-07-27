@@ -20,8 +20,8 @@ export default function DollPage(){
     const imc = router.query.imc
     const categoria = router.query.categoria
     const encodedImgUrl = router.query.encodedImgUrl
-    console.log('imc inside doll page', imc)
-    console.log(encodedImgUrl, 'encoded inside doll page', categoria,'categoria')
+    // console.log('imc inside doll page', imc)
+    // console.log(encodedImgUrl, 'encoded inside doll page', categoria,'categoria')
 
 
     useEffect(()=>{

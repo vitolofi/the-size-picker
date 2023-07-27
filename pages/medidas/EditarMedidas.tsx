@@ -29,7 +29,7 @@ export default function EditarMedidas() {
   const [sizeBottom, setSizeBottom] = useState("");
   const [sizeWhole, setSizeWhole] = useState("");
 
-  const settings = useSettings()
+  const [settings] = useSettings()
   const {allColors,allDescriptions,allPossibleCategories,allSizesNames} = settings
   const allSizes:SizeInfo[] = [settings.allSizes.PP,settings.allSizes.P,settings.allSizes.M,settings.allSizes.G,settings.allSizes.GG,settings.allSizes.XG]
 
@@ -56,14 +56,14 @@ export default function EditarMedidas() {
         bustoRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
             if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
-              console.log('this entered the range of busto', arr[i], bustoCm, arr[i + 1])
+              // console.log('this entered the range of busto', arr[i], bustoCm, arr[i + 1])
               setSizeTop(allSizesNames[sizeIndex])
               setBustoDescription(allDescriptions[i + 2])
               setBustoColor(allColors[i + 2])
             }
           }
         })
-        console.log('setting cintura and quadril inside camisa')
+        // console.log('setting cintura and quadril inside camisa')
         //then set the other stuff   
         const stepC = Math.floor((size.cintura.max - size.cintura.min) / 4)
         const oneC = Math.floor(size.cintura.min + stepC)
@@ -71,9 +71,9 @@ export default function EditarMedidas() {
         const cinturaRanges = [size.cintura.min, oneC, twoC, size.cintura.max]
         cinturaRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
-            console.log('testing cintura:', cinturaCm)
+            // console.log('testing cintura:', cinturaCm)
             if (cinturaCm < size.cintura.min && cinturaCm >= size.cintura.min - 6) {
-              console.log('cintura size should be loose. index now', i)
+              // console.log('cintura size should be loose. index now', i)
               setCinturaDescription(allDescriptions[1])
               setCinturaColor(allColors[1])
               return
@@ -81,13 +81,13 @@ export default function EditarMedidas() {
             if (cinturaCm < size.cintura.min - 6) return eraseStates()
 
             if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
-              console.log('inside a valid range of cintura')
+              // console.log('inside a valid range of cintura')
               setCinturaDescription(allDescriptions[i + 2])
               setCinturaColor(allColors[i + 2])
               return
             }
             if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
-              console.log('cintura size description should be tight apertado')
+              // console.log('cintura size description should be tight apertado')
               setCinturaDescription(allDescriptions[5])
               setCinturaColor(allColors[5])
               return
@@ -104,20 +104,20 @@ export default function EditarMedidas() {
         quadrilRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
             if (quadrilCm < size.quadril.min && quadrilCm > size.quadril.min - 6) {
-              console.log('quadril size should be loose.')
+              // console.log('quadril size should be loose.')
               setQuadrilDescription(allDescriptions[1])
               setQuadrilColor(allColors[1])
               return
             }
             if (quadrilCm < size.quadril.min - 7) return eraseStates()
             if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
-              console.log('inside a valid range of quadril')
+              // console.log('inside a valid range of quadril')
               setQuadrilDescription(allDescriptions[i + 2])
               setQuadrilColor(allColors[i + 2])
               return
             }
             if (quadrilCm > size.quadril.max && quadrilCm <= size.quadril.max + 6) {
-              console.log('quadril size description should be tight apertado')
+              // console.log('quadril size description should be tight apertado')
               setQuadrilDescription(allDescriptions[5])
               setQuadrilColor(allColors[5])
               return
@@ -128,7 +128,7 @@ export default function EditarMedidas() {
 
       }
       if (cinturaCm > bustoCm) {
-        console.warn('cintura is bigger than busto')
+        // console.warn('cintura is bigger than busto')
         if (sizeIndex + 1 < allSizes.length) {
           //console.log('i have a valid next size')
           if (cinturaCm < allSizes[sizeIndex + 1].cintura.max && quadrilCm < allSizes[sizeIndex + 1].quadril.max) {
@@ -143,7 +143,7 @@ export default function EditarMedidas() {
               if (i !== arr.length) {
                 //console.log('im about to define the correct(sizeMinusOne of) busto)
                 if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
-                  console.log('this entered the range of busto', arr[i], bustoCm, arr[i + 1])
+                  // console.log('this entered the range of busto', arr[i], bustoCm, arr[i + 1])
                   setSizeTop(allSizesNames[sizeIndex + 1])
                   setBustoDescription(allDescriptions[i])
                   setBustoColor(allColors[i])
@@ -158,7 +158,7 @@ export default function EditarMedidas() {
                   cinturaRanges.forEach((v, i, arr) => {
                     if (i !== arr.length) {
                       if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
-                        console.log('inside a valid range of cintura')
+                        // console.log('inside a valid range of cintura')
                         setCinturaDescription(allDescriptions[i + 2])
                         setCinturaColor(allColors[i + 2])
                         return
@@ -174,19 +174,19 @@ export default function EditarMedidas() {
                   quadrilRanges.forEach((v, i, arr) => {
                     if (i !== arr.length) {
                       if (quadrilCm < size.quadril.min) {
-                        console.log('quadril size should be loose.')
+                        // console.log('quadril size should be loose.')
                         setQuadrilDescription(allDescriptions[1])
                         setQuadrilColor(allColors[1])
                         return
                       }
                       if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
-                        console.log('inside a valid range of quadril')
+                        // console.log('inside a valid range of quadril')
                         setQuadrilDescription(allDescriptions[i])
                         setQuadrilColor(allColors[i])
                         return
                       }
                       if (quadrilCm > size.quadril.max) {
-                        console.log('quadril size description should be tight apertado')
+                        // console.log('quadril size description should be tight apertado')
                         setQuadrilDescription(allDescriptions[6])
                         setQuadrilColor(allColors[6])
                         return
@@ -197,7 +197,7 @@ export default function EditarMedidas() {
               }
             })
 
-            console.log('cintura is larger than busto, but its ok')
+            // console.log('cintura is larger than busto, but its ok')
 
 
           }
@@ -218,7 +218,7 @@ export default function EditarMedidas() {
         quadrilRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
             if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
-              console.log('this entered the range of quadril', arr[i], quadrilCm, arr[i + 1])
+              // console.log('this entered the range of quadril', arr[i], quadrilCm, arr[i + 1])
               setSizeBottom(allSizesNames[sizeIndex])
               setQuadrilDescription(allDescriptions[i + 2])
               setQuadrilColor(allColors[i + 2])
@@ -232,9 +232,9 @@ export default function EditarMedidas() {
         const cinturaRanges = [size.cintura.min, oneC, twoC, size.cintura.max]
         cinturaRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
-            console.log('testing cintura:', cinturaCm)
+            // console.log('testing cintura:', cinturaCm)
             if (cinturaCm < size.cintura.min && cinturaCm > size.cintura.min - 6) {
-              console.log('cintura size should be loose. index now', i)
+              // console.log('cintura size should be loose. index now', i)
               setCinturaDescription(allDescriptions[1])
               setCinturaColor(allColors[1])
               return
@@ -242,13 +242,13 @@ export default function EditarMedidas() {
             if (cinturaCm < size.cintura.min - 6) return eraseStates()
 
             if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
-              console.log('inside a valid range of cintura')
+              // console.log('inside a valid range of cintura')
               setCinturaDescription(allDescriptions[i + 2])
               setCinturaColor(allColors[i + 2])
               return
             }
             if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
-              console.log('cintura size description should be tight apertado')
+              // console.log('cintura size description should be tight apertado')
               setCinturaDescription(allDescriptions[6])
               setCinturaColor(allColors[6])
               return
@@ -274,7 +274,7 @@ export default function EditarMedidas() {
         quadrilRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
             if (quadrilCm >= arr[i] && quadrilCm <= arr[i + 1]) {
-              console.log('this entered the range of quadril', arr[i], quadrilCm, arr[i + 1])
+              // console.log('this entered the range of quadril', arr[i], quadrilCm, arr[i + 1])
               setSizeWhole(allSizesNames[sizeIndex])
               setQuadrilDescription(allDescriptions[i + 2])
               setQuadrilColor(allColors[i + 2])
@@ -288,9 +288,9 @@ export default function EditarMedidas() {
         const cinturaRanges = [size.cintura.min, oneC, twoC, size.cintura.max]
         cinturaRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
-            console.log('testing cintura:', cinturaCm)
+            // console.log('testing cintura:', cinturaCm)
             if (cinturaCm < size.cintura.min && cinturaCm > size.cintura.min - 6) {
-              console.log('cintura size should be loose. index now', i)
+              // console.log('cintura size should be loose. index now', i)
               setCinturaDescription(allDescriptions[1])
               setCinturaColor(allColors[1])
               return
@@ -298,13 +298,13 @@ export default function EditarMedidas() {
             if (cinturaCm < size.cintura.min - 6) return eraseStates()
 
             if (cinturaCm >= arr[i] && cinturaCm <= arr[i + 1]) {
-              console.log('inside a valid range of cintura')
+              // console.log('inside a valid range of cintura')
               setCinturaDescription(allDescriptions[i + 2])
               setCinturaColor(allColors[i + 2])
               return
             }
             if (cinturaCm > size.cintura.max && cinturaCm <= size.cintura.max + 6) {
-              console.log('cintura size description should be tight apertado')
+              // console.log('cintura size description should be tight apertado')
               setCinturaDescription(allDescriptions[6])
               setCinturaColor(allColors[6])
               return
@@ -319,9 +319,9 @@ export default function EditarMedidas() {
         const bustoRanges = [size.busto.min, oneB, twoB, size.busto.max]
         bustoRanges.forEach((v, i, arr) => {
           if (i !== arr.length) {
-            console.log('testing busto:', bustoCm)
+            // console.log('testing busto:', bustoCm)
             if (bustoCm < size.busto.min && bustoCm > size.busto.min - 6) {
-              console.log('busto size should be loose. index now', i)
+              // console.log('busto size should be loose. index now', i)
               setBustoDescription(allDescriptions[1])
               setBustoColor(allColors[1])
               return
@@ -329,13 +329,13 @@ export default function EditarMedidas() {
             if (bustoCm < size.busto.min - 6) return eraseStates()
 
             if (bustoCm >= arr[i] && bustoCm <= arr[i + 1]) {
-              console.log('inside a valid range of busto')
+              // console.log('inside a valid range of busto')
               setBustoDescription(allDescriptions[i + 2])
               setBustoColor(allColors[i + 2])
               return
             }
             if (bustoCm > size.busto.max && bustoCm <= size.busto.max + 6) {
-              console.log('busto size description should be tight apertado')
+              // console.log('busto size description should be tight apertado')
               setBustoDescription(allDescriptions[6])
               setBustoColor(allColors[6])
               return
@@ -374,7 +374,7 @@ export default function EditarMedidas() {
   const submitFunc = () => {
 
     if (sizeWhole || sizeTop || sizeBottom && (bustoDescription ||  cinturaDescription && quadrilDescription)) {
-      console.log("submitting", { sizeTop, sizeWhole, sizeBottom, bustoDescription, cinturaDescription, quadrilDescription, cinturaColor });
+      // console.log("submitting", { sizeTop, sizeWhole, sizeBottom, bustoDescription, cinturaDescription, quadrilDescription, cinturaColor });
 
       router.push({
         pathname: `/result/resultPage`,
@@ -397,7 +397,7 @@ export default function EditarMedidas() {
         },
       });
     } else {
-      console.log("we dont have a valid size");
+      // console.log("we dont have a valid size");
       router.push({
         pathname: "/medidas/NotFound",
         query: { encodedImgUrl: encodedImgUrl, categoria: categoria },
