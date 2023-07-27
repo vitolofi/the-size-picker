@@ -7,6 +7,7 @@ import SugarQuadrilSVG from "../../components/sugar/SugarQuadril";
 import ChangeSizeButtons from "../../components/ChangeSizeButtons";
 import { roboto } from "..";
 import { useSettings, Sizes, SizeInfo, SizeRange } from "@/components/Context/SettingsProvider";
+import PopUp from "@/components/PopUp/Popup";
 
 export default function ResultPage() {
   const router = useRouter();
@@ -32,6 +33,9 @@ export default function ResultPage() {
   const [editQuadril, setEditQuadril] = useState<string | number>("");
   const [quadrilColor, setQuadrilColor] = useState<string>("");
 
+  const [popUpToggle,setPopUpToggle] = useState('')
+
+
   const [factoryResultState, setFactoryResultState] = useState<any>();
 
   const imc = Number(router.query.imc);
@@ -42,7 +46,7 @@ export default function ResultPage() {
 
 
 
-  const settings = useSettings()
+  const [settings] = useSettings()
   const {allColors,allDescriptions,allPossibleCategories,allSizesNames, imcRanges} = settings
   const allSizes:SizeInfo[] = [settings.allSizes.PP,settings.allSizes.P,settings.allSizes.M,settings.allSizes.G,settings.allSizes.GG,settings.allSizes.XG]
 
@@ -928,7 +932,6 @@ export default function ResultPage() {
     }
   };
   // console.log({bustoColor,cinturaColor,quadrilColor,sizeTop,sizeWhole,sizeBottom})
-
   if (!router.isFallback) {
     // console.log({bustoColor,cinturaColor,quadrilColor,sizeTop,sizeWhole,sizeBottom}, 'entrou')
     return (
@@ -939,6 +942,7 @@ export default function ResultPage() {
           className={` ${roboto.className} flex outline-1 bg-white  items-center`}
         >
           <div className="max-w-[12rem] min-w-[12rem] bg-white  self-start">
+
             {/* configurar isso pra ser gerado tbm, exemplo, calça nao precisa de busto */}
             {bustoColor || cinturaColor || quadrilColor ? (
               <>
@@ -958,12 +962,15 @@ export default function ResultPage() {
                 />
               </>
             ) : null}
+            {/* configurar isso pra ser gerado tbm */}
             <div className=" flex mx-4 mt-8 h-1 justify-between bg-gradient-to-r from-green-500 via-yellow-300 to-red-500">
               <p className="relative bottom-6 text-sm text-black">Ideal</p>
               <p className="relative bottom-6 text-sm text-black">Apertado/Folgado</p>
             </div>
 
-            {/* configurar isso pra ser gerado tbm */}
+                  <div className="absolute">
+            <button className="bg-white rounded-lg shadow-xl z-10 relative top-64 left-32 py-2 mx-2 my-4  text-black px-4" onClick={()=>setPopUpToggle('')}>?</button>
+                  </div>
 
             <Image
               width={200}
@@ -973,15 +980,20 @@ export default function ResultPage() {
               className="object-cover object-top h-[25.5rem] brightness-110 z-0"
               src="/doll_imgs/w222.png"
             />
+            
 
+            
             <ChangeSizeButtons
               preferedSize={preferedSize}
               baseSize={{ sizeTop, sizeBottom, sizeWhole }}
               changeSize={(i: number) => changeSize(i)}
+          
             ></ChangeSizeButtons>
             {/* <OtherSizesFactoryR baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactoryR> */}
           </div>
+          {/* <button className="bg-yellow-500" onClick={()=> console.log({settings})}>CheckSettings</button> */}
           <div className="flex flex-col bg-white shadow-2xl rounded-xl px-4 py-4 justify-between my-2 ">
+          <PopUp state={popUpToggle} toggle={(e:string)=>setPopUpToggle(e)} bustoDescription={bustoDescription} bustoColor={bustoColor} cinturaDescription={cinturaDescription} cinturaColor={cinturaColor} quadrilDescription={quadrilDescription} quadrilColor={quadrilColor}></PopUp>
             <h1 className="text-gray-800 font font-medium text-3xl py-22">
               {" "}
               Você está provando {categoria} tamanho:

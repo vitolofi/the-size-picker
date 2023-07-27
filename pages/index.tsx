@@ -10,14 +10,14 @@ export const roboto = Roboto({ subsets:['latin'], weight:'100'})
 export default function Home() { 
 
   const allColors = ['-red-500', '-yellow-500', '-[#a7d047]', '-green-500','-[#e9d941]', '-yellow-500','-red-500']
-  return (<div className='bg-red-500'>
+  return (<div className=''>
 
   <title>Testes</title>
     <main
       className={`flex-col  items-center justify-between p-24`}>
         
 
-    <div className={`${roboto.className} text-[3rem]`}>THE SIZE PICKER</div> 
+    <div className={`${roboto.className} text-[3rem] text-black`}>THE SIZE PICKER</div> 
       <div className={`${roboto.className} mb-20`}> This one Works ! with size factory!</div>
 
      

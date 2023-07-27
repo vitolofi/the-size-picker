@@ -6,7 +6,7 @@ import { useSettings } from '../Context/SettingsProvider'
 
 export default function Imc(props: { img: string}){
     
-    const settings = useSettings()
+    const [settings] = useSettings()
 
     const {alturaMin,alturaMax,pesoMax,pesoMin,idadeMax,idadeMin} = settings
 
@@ -25,7 +25,7 @@ export default function Imc(props: { img: string}){
     },[altura,peso,idade])
 
     const imcCalc = (alt:number, p:number) =>{
-        console.log(alt,'altura', p,'peso')
+        // console.log(alt,'altura', p,'peso')
         const CmtoM = alt/100
         const altResult = CmtoM*CmtoM
         const result = p/altResult
@@ -34,7 +34,7 @@ export default function Imc(props: { img: string}){
       }
 
       const submitFunction = () =>{
-        console.log(altura,peso,idade)
+        // console.log(altura,peso,idade)
         if(altura === 0 || peso === 0 || idade === 0){
         return  setColorAnimation('bg-red-500 animate-pulse')
         }
@@ -66,7 +66,7 @@ export default function Imc(props: { img: string}){
             setPeso(Number(e.target.value))
             }}></input>
         <label className='text-black'>Idade*</label>
-        <input className="py-1 px-2 w-32 bg-gray-100 text-black" min={16} max={120} type='text' pattern='\d*' inputMode='numeric' maxLength={3} onChange={(e)=>{ console.log(e)
+        <input className="py-1 px-2 w-32 bg-gray-100 text-black" min={16} max={120} type='text' pattern='\d*' inputMode='numeric' maxLength={3} onChange={(e)=>{ 
 ;            setIdade(Number(e.target.value))
             }}></input>
         {/* <div>A idade influencia no formato do corpo</div>

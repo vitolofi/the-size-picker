@@ -5,11 +5,11 @@ import { useSettings } from "./Context/SettingsProvider";
 ;
 export default function ChangeSizeButtons (props:any){
 
-    const settings = useSettings()
-
-
+    
+    
     const [selectedSize,setSelectedSize]=useState<any>()
-
+    
+    const [settings] = useSettings()
     const {allPossibleCategories, allSizesNames} = settings
     const resultNameCategorias = ['sizeTop', 'sizeBottom', 'sizeWhole']
     const allPossibleSizes = [props.baseSize.sizeTop, props.baseSize.sizeBottom, props.baseSize.sizeWhole]
@@ -40,6 +40,7 @@ export default function ChangeSizeButtons (props:any){
         // console.log(index)
         setSelectedSize(allSizesNames[index])
         props.changeSize(index)
+        
     }
 
 
@@ -70,7 +71,7 @@ return(<div className="grid grid-cols-3 gap-2 ml-1 p-1 ">
             </div>
          }
          
-         else return <div   key={i} className="flex flex-col"><button id="non_recomended" className="rounded-lg bg-white shadow-lg py-2 mx-2 text-black px-2" onClick={()=>changeSize(i)}>{v}</button></div>
+         else return <div  key={i} className="flex flex-col"><button id="non_recomended" className="rounded-lg bg-white shadow-lg py-2 mx-2 text-black px-2" onClick={()=>changeSize(i)}>{v}</button></div>
       })}
 
 </div>) 
