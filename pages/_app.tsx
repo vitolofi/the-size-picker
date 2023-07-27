@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Script from "next/script";
 
-import { SettingsProvider, Settings } from "@/components/Context/SettingsProvider";
+import { SettingsProvider, Settings, useSettings } from "@/components/Context/SettingsProvider";
 
 const settings: Settings = {
   allPossibleCategories: ['Blusa', 'Calca', 'Vestido'],
@@ -26,7 +26,6 @@ const settings: Settings = {
     "-yellow-500",
     "-red-500",
   ],
-  selfD: false,
   allSizes: {
     PP: {
       busto: { min: 75, med: 80.5, max: 86 },
@@ -69,6 +68,7 @@ const settings: Settings = {
 
 
 export default function App({ Component, pageProps }: AppProps) {
+
   return (
     <div className="flex flex-col">
       <meta
@@ -95,8 +95,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5WQ8DS8'); console.warn('tagmanagerrr');`}</Script>
       {/* <!-- End Google Tag Manager --> */}
-      <SettingsProvider settings={settings}>
-        <Component {...pageProps} />
+      <SettingsProvider initialSettings={settings}>
+       <Component {...pageProps} />
       </SettingsProvider>
     </div>
   );
