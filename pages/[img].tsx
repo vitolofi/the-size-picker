@@ -8,8 +8,6 @@ import Imc from "../components/imc/IMC";
 
 const Home: NextPage = (props:any) => {
   const router:any = useRouter()
-
-
   const img:string = router.query.img
   //console.log(window.location.pathname.split("/")) to get tipo
   // foo lets you trigger another thing inside the same query object by putting ?foo=something on url
@@ -20,25 +18,21 @@ const Home: NextPage = (props:any) => {
 
 
   return (
-    <>
-      <Head>
-        <title>Seu Tamanho - Eufloria</title>
-        <meta name="description" content="app to find your size in this store" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="flex" >
-      <div className="bg-gray-50 p-4 flex rounded-sm justify-between  items-center ">
-        {/* maybe this div needs a max-width */}
-        <div className="flex max-w-[50%]">
-          {img? <Image loader={()=>img} priority unoptimized alt={img} width={662} height={1000} className="rounded-md" src={img}/>:null}
+    <div className="bg-white text-black justify-center ">
+            <title>Bem Vindo/IMC</title>
+    
+      <div className="bg-gray-50 p-4 flex rounded-sm justify-between items-center  ">
+    
+        <div className="flex flex-col max-w-[50%]">
+          {img? <Image loader={()=>img} priority unoptimized alt={img} width={500} height={500} className="rounded-md" src={img}/>:null}
         </div>
           <div>
             {/* this should change name */}
             <Imc img={img}></Imc>
           </div>  
       </div>
-      </main>
-    </>
+      
+    </div>
   );
 };
 

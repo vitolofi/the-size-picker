@@ -1,14 +1,16 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-
+import { useSettings } from "./Context/SettingsProvider";
 
 ;
 export default function ChangeSizeButtons (props:any){
 
-    const [size,setSize]=useState<any>()
-
-    const allSizesNames = ['PP', 'P', 'M', 'G', 'GG', 'XG']
-    const allPossibleCategorias = ['Camisa', 'Calça', 'Vestidos']
+    
+    
+    const [selectedSize,setSelectedSize]=useState<any>()
+    
+    const [settings] = useSettings()
+    const {allPossibleCategories, allSizesNames} = settings
     const resultNameCategorias = ['sizeTop', 'sizeBottom', 'sizeWhole']
     const allPossibleSizes = [props.baseSize.sizeTop, props.baseSize.sizeBottom, props.baseSize.sizeWhole]
 
@@ -17,12 +19,12 @@ export default function ChangeSizeButtons (props:any){
     const categoria = router.query.categoria
 
     useEffect(()=>{
-        if(!size){
+        if(!selectedSize){
             //set correct size to category
             const detectCategoria = () =>{
-                allPossibleCategorias.forEach((v,i,arr)=>{
+                allPossibleCategories.forEach((v,i,arr)=>{
                     if(categoria===v){
-                        setSize(allPossibleSizes[i])
+                        setSelectedSize(allPossibleSizes[i])
                       
                     }
                 })
@@ -36,18 +38,40 @@ export default function ChangeSizeButtons (props:any){
 
     const changeSize = (index:number) =>{
         // console.log(index)
-        setSize(allSizesNames[index])
+        setSelectedSize(allSizesNames[index])
         props.changeSize(index)
+        
     }
 
 
-return(<div className="flex my-4">
+return(<div className="grid grid-cols-3 gap-2 ml-1 p-1 ">
    
     {allSizesNames.map((v,i,arr)=>{
-      if(size===v){
-        return <button key={i} className="rounded-lg bg-black text-white shadow-lg py-2 mx-2 px-2">{v}</button>
+      if(selectedSize===v){
+        if(props.preferedSize === v){
+        return <div key={i} className="flex flex-col">
+            <div className="absolute h-[1rem] ">
+            <img className="bg-white rounded-full relative  h-[1rem]" src="/1008958.png" alt='checkmark'/>
+            </div>
+            
+        <button id="recommended"  className="rounded-lg bg-black text-white shadow-lg py-2 mx-2 px-2">{v}</button>
+        </div>
+        // ! é o recomendado 
+            }
+        else
+        return <div key={i} className="flex flex-col"><button id="non_recomended"  className="rounded-lg bg-black text-white shadow-lg py-2 mx-2 px-2">{v}</button></div>
       }
-         else return <button key={i} className="rounded-lg bg-white shadow-lg py-2 mx-2 text-black px-2" onClick={()=>changeSize(i)}>{v}</button>
+         else if(props.preferedSize === v){
+            return <div key={i} className="flex flex-col" >
+                <div className="absolute h-[1rem]">
+                <img className="bg-white rounded-full relative  h-[1rem]" src="/1008958.png" alt='checkmark'/>
+                </div>
+                
+            <button  id="back_to_recommended" className="rounded-lg bg-white shadow-lg py-2 mx-2 text-black px-2" onClick={()=>changeSize(i)}>{v}</button>
+            </div>
+         }
+         
+         else return <div  key={i} className="flex flex-col"><button id="non_recomended" className="rounded-lg bg-white shadow-lg py-2 mx-2 text-black px-2" onClick={()=>changeSize(i)}>{v}</button></div>
       })}
 
 </div>) 

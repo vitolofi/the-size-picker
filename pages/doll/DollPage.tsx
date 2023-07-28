@@ -10,7 +10,7 @@ import {roboto} from '..'
 export default function DollPage(){
 
     
-    const [dollImgName, setDollImgName] = useState('/imgs_lela/010101.jpeg')
+    const [dollImgName, setDollImgName] = useState('/doll_imgs/a222.png')
     
     const [busto,setBusto] = useState(2)
     const [cintura,setCintura] = useState(2)
@@ -20,8 +20,8 @@ export default function DollPage(){
     const imc = router.query.imc
     const categoria = router.query.categoria
     const encodedImgUrl = router.query.encodedImgUrl
-    console.log('imc inside doll page', imc)
-    console.log(encodedImgUrl, 'encoded inside doll page', categoria,'categoria')
+    // console.log('imc inside doll page', imc)
+    // console.log(encodedImgUrl, 'encoded inside doll page', categoria,'categoria')
 
 
     useEffect(()=>{
@@ -29,22 +29,25 @@ export default function DollPage(){
     },[busto,cintura,quadril])
    
     const changeDollImg = (busto: number, cintura: number, quadril: number) =>{
-        setDollImgName(`/imgs_lela/0${busto+1}0${cintura+1}0${quadril+1}.jpeg`) 
+        setDollImgName(`/doll_imgs/w${busto}${cintura}${quadril}.png`) 
     }
 
-    return (<main className={`${roboto.className} flex w-[100%] rounded-lg items-center bg-white`}>
-        <div className="flex justify-center w-[100%] shadow-none ">
-            <div className='flex min-w-[13rem] justify-center max-w-[39%]'>
-        <img alt={'a manequin that changes its sizes'} src={dollImgName}/>
+    return (<><title>Ajuste</title>
+    
+    <main className={`${roboto.className} flex rounded-lg  bg-white`}>
+        
+        <div className=" flex-col ">
+            <div className=' brightness-110 justify-startobject-contain object-center'>
+        <Image className="object-cover object-top h-[29.5rem] mt-6" width={500} height={500} alt={'a manequin that changes its sizes'} src={dollImgName}/>
             </div>
     
         </div>
-        <div className='flex w-[100%] mr-2 justify-end'>
-        <div className='flex flex-col min-w-[20.125rem] max-w-[50%] p-5 bg-white rounded-lg shadow-md m-2'>
-        <h1 className="text-gray-800 pl-3 pt-5 text-2xl font-medium">
+        <div className='flex'>
+        <div className='flex flex-col max-w-[17.125rem] p-2 rounded-lg shadow-md bg-opacity-100  '>
+        <h1 className="text-gray-800 pl-2 pt-3 text-2xl font-medium">
             Ajuste conforme o formato do seu corpo
         </h1>
-        <p className='text-sm text-black px-3 pb-5'>Esta será uma representação aproximada do seu corpo, ajuste se necessário</p>
+        <p className='text-sm text-black px-2 pb-2'>Esta será uma representação aproximada do seu corpo, ajuste se necessário</p>
         {/* we can do some logic here to define what can i pass through */}
         {categoria!=='Calça'?
         <FaderView title='Busto' faderValue={busto} setFaderValue={(a:any)=>setBusto(a)} 
@@ -54,10 +57,11 @@ export default function DollPage(){
         ></FaderView>
         <FaderView title='Quadril' faderValue={quadril} setFaderValue={(c:any)=>setQuadril(c)}
         ></FaderView>
-        <button className="rounded-lg bg-black shadow-lg py-2 my-4 mt-10 text-white  " onClick={()=>router.push({pathname:'/result/resultPage', query:{dollImg:dollImgName, encodedImgUrl:encodedImgUrl,doll:true, imc:imc, busto:busto, cintura:cintura, quadril:quadril, categoria:categoria}})}>PRÓXIMO</button>
+        <button id='doll_submit' className="rounded-lg bg-black shadow-lg py-2 my-4 text-white  " onClick={()=>router.push({pathname:'/result/resultPage', query:{dollImg:dollImgName, encodedImgUrl:encodedImgUrl,doll:true, imc:imc, busto:busto, cintura:cintura, quadril:quadril, categoria:categoria}})}>PRÓXIMO</button>
 
     </div>
             
         </div>
-    </main>)
+    </main>
+    </>)
 }
