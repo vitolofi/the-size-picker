@@ -967,11 +967,9 @@ export default function ResultPage() {
               <p className="relative bottom-6 text-sm text-black">Ideal</p>
               <p className="relative bottom-6 text-sm text-black">Apertado/Folgado</p>
             </div>
-
                   <div className="absolute">
             <button className="bg-white rounded-lg shadow-xl z-10 relative top-64 left-32 py-2 mx-2 my-4  text-black px-4" onClick={()=>setPopUpToggle('')}>?</button>
                   </div>
-
             <Image
               width={200}
               unoptimized
@@ -980,18 +978,12 @@ export default function ResultPage() {
               className="object-cover object-top h-[25.5rem] brightness-110 z-0"
               src="/doll_imgs/w222.png"
             />
-            
-
-            
             <ChangeSizeButtons
               preferedSize={preferedSize}
               baseSize={{ sizeTop, sizeBottom, sizeWhole }}
               changeSize={(i: number) => changeSize(i)}
-          
             ></ChangeSizeButtons>
-            {/* <OtherSizesFactoryR baseSize={factoryInfo} setter={(a: string,b: string,c: string,d: number,e: number,f: number,g: string,h: string,i: string,j: string,k: string,l: string)=>{fromEditSetter(a,b,c,d,e,f,g,h,i,j,k,l)}}></OtherSizesFactoryR> */}
           </div>
-          {/* <button className="bg-yellow-500" onClick={()=> console.log({settings})}>CheckSettings</button> */}
           <div className="flex flex-col bg-white shadow-2xl rounded-xl px-4 py-4 justify-between my-2 ">
           <PopUp sizeTop={sizeTop} sizeWhole={sizeWhole} state={popUpToggle} toggle={(e:string)=>setPopUpToggle(e)} bustoDescription={bustoDescription} bustoColor={bustoColor} cinturaDescription={cinturaDescription} cinturaColor={cinturaColor} quadrilDescription={quadrilDescription} quadrilColor={quadrilColor}></PopUp>
             <h1 className="text-gray-800 font font-medium text-3xl py-22">
@@ -1010,10 +1002,6 @@ export default function ResultPage() {
               </div>
               <p className="text-xs ml-4">= Tamanho Recomendado</p>
             </h1>
-
-            {/* {sizeTop || sizeWhole?<div className='mt-16 text-black'>Busto:{bustoDescription}</div> :<div className="mt-10">-</div>} 
-        <div className='mt-8 text-black'>Cintura:{cinturaDescription}</div>
-        <div className='mt-16 text-black'>Quadril:{quadrilDescription}</div> */}
 
             <div className="flex flex-col justify-start mt-0">
               <button
@@ -1073,7 +1061,6 @@ export default function ResultPage() {
               >
                 Inserir Medidas Exatas
               </button>
-              {/* <button className="rounded-lg bg-white text-black shadow-lg py-2 my-2 " onClick={()=>router.push({pathname:'/medidas/NotFound', query:{imc:imc, encodedImgUrl:encodedImgUrl}})}>NotFound</button> */}
               <a
                 id="fita_metrica"
                 className="rounded-lg bg-white text-black shadow-lg py-2 my-2 text-center "
