@@ -5,7 +5,7 @@ export default function PopUp
 
   return (
     <div
-      className={`absolute ${props.state} self-center bg-white drop-shadow-[0_50px_50px_rgba(0,0,0,0.75)] rounded-xl px-2 py-4 my-8 justify-between z-20`}
+      className={`absolute ${props.state} self-center bg-white drop-shadow-[0_50px_50px_rgba(0,0,0,0.75)] left-12 rounded-xl px-2 py-4 my-8 justify-between z-20`}
     >
       <div>
         <div className="flex justify-between text-black ">
@@ -65,24 +65,24 @@ export default function PopUp
       </div> */}
       <div className="flex pl-12 my-4 text-black">
         <div>
-        <div>Busto:</div>
+        {props.sizeTop || props.sizeWhole && <div>Busto:</div> }
         <div>Cintura:</div>
         <div>Quadril:</div>
         </div>
 
         <div className="self-center pl-2">
-        <div className={`bg${props.bustoColor} h-5 w-5 rounded-full`}></div>
+        {props.sizeTop || props.sizeWhole && <div className={`bg${props.bustoColor} h-5 w-5 rounded-full`}></div> }
         <div className={`bg${props.cinturaColor} h-5 w-5 rounded-full my-1`}></div>
         <div className={`bg${props.quadrilColor} h-5 w-5 rounded-full`}></div>
         </div>
         <div className="pl-2">
-        <div>{props.bustoDescription}</div>
+       {props.sizeTop || props.sizeWhole && <div>{props.bustoDescription}</div>}
         <div>{props.cinturaDescription}</div>
         <div>{props.quadrilDescription}</div>
         </div>        
       </div>
-      <h1 className="text-black text-center">Descrição das cores :</h1>
-        <div className="grid grid-col-2  pl-24  self-center">
+      <h1 className="text-black">Descrição das cores :</h1>
+        <div className="grid grid-col-2  self-center">
 
         {settings.allDescriptions.map((v, i, arr) => (
           

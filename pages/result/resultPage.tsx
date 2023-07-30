@@ -993,7 +993,7 @@ export default function ResultPage() {
           </div>
           {/* <button className="bg-yellow-500" onClick={()=> console.log({settings})}>CheckSettings</button> */}
           <div className="flex flex-col bg-white shadow-2xl rounded-xl px-4 py-4 justify-between my-2 ">
-          <PopUp state={popUpToggle} toggle={(e:string)=>setPopUpToggle(e)} bustoDescription={bustoDescription} bustoColor={bustoColor} cinturaDescription={cinturaDescription} cinturaColor={cinturaColor} quadrilDescription={quadrilDescription} quadrilColor={quadrilColor}></PopUp>
+          <PopUp sizeTop={sizeTop} sizeWhole={sizeWhole} state={popUpToggle} toggle={(e:string)=>setPopUpToggle(e)} bustoDescription={bustoDescription} bustoColor={bustoColor} cinturaDescription={cinturaDescription} cinturaColor={cinturaColor} quadrilDescription={quadrilDescription} quadrilColor={quadrilColor}></PopUp>
             <h1 className="text-gray-800 font font-medium text-3xl py-22">
               {" "}
               Você está provando {categoria} tamanho:
