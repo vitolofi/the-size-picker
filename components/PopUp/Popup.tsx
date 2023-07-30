@@ -65,18 +65,18 @@ export default function PopUp
       </div> */}
       <div className="flex pl-12 my-4 text-black">
         <div>
-        {props.sizeTop || props.sizeWhole && <div>Busto:</div> }
+        {props.sizeTop || props.sizeWhole ? <div>Busto:</div> : null }
         <div>Cintura:</div>
         <div>Quadril:</div>
         </div>
 
         <div className="self-center pl-2">
-        {props.sizeTop || props.sizeWhole && <div className={`bg${props.bustoColor} h-5 w-5 rounded-full`}></div> }
+        {props.sizeTop || props.sizeWhole ? <div className={`bg${props.bustoColor} h-5 w-5 rounded-full`}></div> : null }
         <div className={`bg${props.cinturaColor} h-5 w-5 rounded-full my-1`}></div>
         <div className={`bg${props.quadrilColor} h-5 w-5 rounded-full`}></div>
         </div>
         <div className="pl-2">
-       {props.sizeTop || props.sizeWhole && <div>{props.bustoDescription}</div>}
+       {props.sizeTop || props.sizeWhole ? <div>{props.bustoDescription}</div> : null}
         <div>{props.cinturaDescription}</div>
         <div>{props.quadrilDescription}</div>
         </div>        
