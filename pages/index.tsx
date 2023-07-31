@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Inter,Roboto } from 'next/font/google'
+import Image from 'next/image'
 
 
 
@@ -22,10 +23,10 @@ export default function Home() {
   <title>Testes</title>
     <main
       className={`flex-col  items-center justify-between p-24`}>
+    <Image className=' relative object-cover object-center h-[14rem]' width={300} height={300} alt="logo" src="iSizeSymbol.jpg"></Image>
+    <h1 className={`${robotoBold.className} relative bottom-16 right-5  text-[4rem] text-black text-center`}>iSize</h1> 
         
-
-    <div className={`${robotoBold.className} text-[8rem] text-black`}>iSize</div> 
-      <div className={`${roboto.className} mb-20`}> This one Works ! with size factory!</div>
+     {/* <div className={`${roboto.className} text-black mb-20`}> This one Works ! with size factory!</div> */}
 
      
     <input className='text-black' type='text' placeholder='photoLink' onChange={(e)=>{photoLinkEncode(e.target.value)}}></input>
@@ -33,15 +34,15 @@ export default function Home() {
 <a className="text-black p-2" href={`/${photoLink}?categoria=Blusa`}>Blusa</a>
 <a className="text-black p-2" href={`/${photoLink}?categoria=Cal%C3%A7a`} >Calça</a>
 <a className="text-black p-2" href={`/${photoLink}?categoria=Vestido`}>Vestido</a>
-      <div>color testing
+      <div className='mt-96'>color testing
         {/* <div className='bg-green-300'>Camisa ta top</div> */}
         <div className='bg-green-500'>green500</div>
         <div className="bg-[#a7d047]">a</div>
         <div className="bg-[#e9d941]">b</div>
-        <div className='bg-yellow-500'>ajustar as main divs</div>
-        <div className='bg-red-500'>editar medidas mobile ta ruim</div>
-        <div className='bg-yellow-400'>ajustar as main divs</div>
-        <div className='bg-red-400'>editar medidas mobile ta ruim</div>
+        <div className='bg-yellow-500'>c</div>
+        <div className='bg-red-500'>d</div>
+        <div className='bg-yellow-400'>e</div>
+        <div className='bg-red-400'>f</div>
 
 
         <div> 
