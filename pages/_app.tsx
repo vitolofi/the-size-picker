@@ -73,7 +73,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div className="flex flex-col">
 
     <meta id="myViewport" name="viewport" content="width=380"/>
-<Script>{`
+<Script id="viewportFunction">{`
   window.onload = function () {
     var mvp = document.getElementById('myViewport');
     mvp.setAttribute('content','width=580');

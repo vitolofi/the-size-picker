@@ -30,8 +30,8 @@ export default function Home() {
      
     <input className='text-black' type='text' placeholder='photoLink' onChange={(e)=>{photoLinkEncode(e.target.value)}}></input>
 
-<a className="text-black p-2" href={`/${photoLink}?categoria=Cal%C3%A7a`} >Calça</a>
 <a className="text-black p-2" href={`/${photoLink}?categoria=Blusa`}>Blusa</a>
+<a className="text-black p-2" href={`/${photoLink}?categoria=Cal%C3%A7a`} >Calça</a>
 <a className="text-black p-2" href={`/${photoLink}?categoria=Vestido`}>Vestido</a>
       <div>color testing
         {/* <div className='bg-green-300'>Camisa ta top</div> */}

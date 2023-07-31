@@ -995,8 +995,8 @@ export default function ResultPage() {
                 </p>
               </div>
               <div className="absolute h-[1rem] ml-1 ">
-                <img
-                  className="bg-white rounded-full relative  h-[0.725rem]"
+                <Image width={12} height={11}
+                  className="bg-white rounded-full relative  h-[0.725rem]" alt="check_mark_symbol"
                   src="/1008958.png"
                 />
               </div>
