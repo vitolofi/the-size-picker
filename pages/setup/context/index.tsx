@@ -6,7 +6,7 @@ import { useSettings } from "@/components/Context/SettingsProvider";
 
 export default function Contexto() {
 
-  const [settings,setSettings] = useSettings()
+  // const [settings,setSettings] = useSettings()
   async function hashReturn(value: string) {
     try {
       const valued = { value: value }
@@ -48,11 +48,14 @@ export default function Contexto() {
       const responseData = await response.json();
       console.log(responseData);
       if (responseData.isMatch) {
-        console.log({settings})
-        // const handleClick = () => {
-        //   setSettings({ ...settings, selfD: !settings.selfD });
-        // };
-        // handleClick()
+        const reqToFeatureFlag = await fetch('/api/ff/on',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+      })
+        console.log({reqToFeatureFlag})
       }
     } catch (error) {
       console.error(error);
@@ -75,7 +78,7 @@ export default function Contexto() {
     <div>b
       <input placeholder="hashed" className="text-black" onChange={(e) => setInput(e.target.value)}></input>
       <button className="bg-green-200" onClick={() => comparehashed()}>Check for Hash</button>
-      <button className="bg-yellow-500" onClick={()=> console.log({settings})}>CheckSettings</button>
+      <button className="bg-yellow-500" onClick={()=> console.log('disabled by now')}>CheckSettings</button>
     </div>
   </div>
   )
