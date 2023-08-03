@@ -5,14 +5,14 @@ export default function PopUp
 
   return (
     <div
-      className={`absolute ${props.state} self-center bg-white drop-shadow-[0_50px_50px_rgba(0,0,0,0.75)] left-12 rounded-xl px-2 py-4 my-8 justify-between z-20`}
+      className={`${props.state} absolute self-center bg-white shadow-[0_0.225rem_3rem_rgba(0,0,0,0.75)] rounded-xl px-2 py-4 my-8 justify-between z-20`}
     >
       <div>
         <div className="flex justify-between text-black ">
           <h1 className="px-4 text-3xl">Guia de Tamanhos</h1>
           <button
             className="text-3xl px-2"
-            onClick={() => props.toggle("hidden")}
+            onClick={() => props.toggle("hidden_css")}
           >
             X
           </button>
