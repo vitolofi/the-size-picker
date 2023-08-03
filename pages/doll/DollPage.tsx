@@ -38,7 +38,7 @@ export default function DollPage(){
         
         <div className=" flex-col ">
             <div className=' brightness-110 justify-startobject-contain object-center'>
-        <Image className="object-cover object-top h-[29.5rem] mt-6" width={500} height={500} alt={'a manequin that changes its sizes'} src={dollImgName}/>
+        <Image className="object-cover object-top h-[27.5rem] mt-2" width={500} height={500} alt={'a manequin that changes its sizes'} src={dollImgName}/>
             </div>
     
         </div>

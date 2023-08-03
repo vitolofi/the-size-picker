@@ -33,7 +33,7 @@ export default async function handler(
           console.error(error);
         });
 
-      res.status(200).json({ message: env.SENDGRID_API_KEY });
+      res.status(200).json({ message: 'Email Sent' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal Server Error" });

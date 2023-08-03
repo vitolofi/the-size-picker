@@ -12,7 +12,7 @@ const prefixKey = (key: string) => `featureFlagsAppleStore_${key}`
 
 
 export const config = {
-  matcher: '/result/:path*',
+  matcher: '/:path*',
 }
 
 export async function middleware(req: NextRequest) {
@@ -35,11 +35,11 @@ export async function middleware(req: NextRequest) {
 
   try {
     // console.log('test value ' , await get('storeClosed'))
-    if (await get('storeClosed') === "true" ) {
-        // console.log('test value inside if ' , await get('storeClosed'))
-        
-      req.nextUrl.pathname = `/medidas/NotFound`
-      return NextResponse.redirect(req.nextUrl)
+    if (await get('storeClosed') === "true" && !req.nextUrl.pathname.startsWith('/api')) {
+
+        req.nextUrl.pathname = `/medidas/NotFound`
+        return NextResponse.redirect(req.nextUrl)
+      
     }
   } catch (error) {
     console.error(error)

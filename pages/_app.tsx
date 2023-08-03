@@ -5,7 +5,7 @@ import Script from "next/script";
 import { SettingsProvider, Settings, useSettings } from "@/components/Context/SettingsProvider";
 
 const settings: Settings = {
-  allPossibleCategories: ['Blusa', 'Calca', 'Vestido'],
+  allPossibleCategories: ['Blusa', 'Calça', 'Vestido'],
   imcRanges: [14, 20, 23.5, 28.7, 30, 32.5, 35.5],
   allSizesNames: ["PP", "P", "M", "G", "GG", "XG"],
   allDescriptions: [
@@ -18,8 +18,8 @@ const settings: Settings = {
     "Apertado",
   ],
   allColors: [
-    "-red-500",
-    "-yellow-500",
+    "-red-400",
+    "-yellow-400",
     "-[#a7d047]",
     "-green-500",
     "-[#e9d941]",
@@ -71,10 +71,15 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <div className="flex flex-col">
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=0.5"
-      ></meta>
+
+    <meta id="myViewport" name="viewport" content="width=380"/>
+<Script id="viewportFunction">{`
+  window.onload = function () {
+    var mvp = document.getElementById('myViewport');
+    mvp.setAttribute('content','width=580');
+}
+  `}
+</Script> 
       <Script
         id="google_analytics0"
         async

@@ -2,12 +2,14 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
+      if(req.method === 'PATCH'){
+
         const updateEdgeConfig = await fetch(
-          'https://api.vercel.com/v1/edge-config/ecfg_cq97bvi3bmpdkdqusbyza4mx9dwk/items',
+        `https://api.vercel.com/v1/edge-config/ecfg_cq97bvi3bmpdkdqusbyza4mx9dwk/items`,
           {
             method: 'PATCH',
             headers: {
-              Authorization: `Bearer xNDx8S3AQxm7DJKy6E0trJCO`,
+              Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -20,13 +22,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               ],
             }),
           },
-        );
-        const result = await updateEdgeConfig.json();
-        console.log(result);
-        res.status(200).json({result})
+          );
+          const result = await updateEdgeConfig.json();
+          console.log(result);
+          // res.status(200).json({result})
+          return res.status(200).json({message:'status on'})
+        }
       } catch (error) {
         console.log(error);
       }
 
-    return res.status(200).json({message:'status on'})
+    
 }
