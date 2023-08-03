@@ -23,7 +23,11 @@ export default function EditarMedidas() {
   const [cinturaCm, setCinturaCm] = useState(editCintura);
   const [quadrilCm, setQuadrilCm] = useState(editQuadril);
 
-  const [dollImg, setDollImg] = useState("/imgs_lela/chest.jpeg");
+  //trocar essas imagens
+  const [dollImg, setDollImg] = useState("/busto.png");
+  const helperDescriptions = ["Para medir o busto voce deve nananan", "A cintura deve ser medida dessa forma lalala", "A medida do seu quadril esta a dois nananas de 3 lalalas"]
+  const [imgDescription,setImageDescription] = useState(helperDescriptions[0])
+
 
   const [sizeTop, setSizeTop] = useState("");
   const [sizeBottom, setSizeBottom] = useState("");
@@ -373,7 +377,7 @@ export default function EditarMedidas() {
 
   const submitFunc = () => {
 
-    if (sizeWhole || sizeTop || sizeBottom && (bustoDescription ||  cinturaDescription && quadrilDescription)) {
+    if (sizeWhole || sizeTop || sizeBottom && (bustoDescription || cinturaDescription && quadrilDescription)) {
       // console.log("submitting", { sizeTop, sizeWhole, sizeBottom, bustoDescription, cinturaDescription, quadrilDescription, cinturaColor });
 
       router.push({
@@ -413,90 +417,91 @@ export default function EditarMedidas() {
     <div className="bg-white flex flex-col rounded-sm justify-between items-center">
       <h1 className="text-black text-center text-3xl mt-4 px-6 z-10">Insira suas medidas exatas para uma experiência ainda mais concreta !</h1>
 
-      <div className="flex flex-col bg-white">
+      <div className="flex flex-col z-0 bg-white">
         <div className="flex">
-          <div className=" flex justify-center items-center z-0 h-[30.5rem] bg-white">
-            <div className="flex max-w-[200%]">
-              <Image  className="object-contain object-center" width={350} height={350} unoptimized alt={dollImg} src={dollImg} />
+          <div className="flex flex-col items-center min-w-[35%] max-w-[50%]  ">
+            <div className=" flex ">
+              <Image  className="object-cover h-[22rem] object-center brightness-110 " width={500} height={500} unoptimized alt={dollImg} src={dollImg} />
             </div>
+          <p className="flex max-w-[8rem] min-h-[6rem] mt-2 text-black nowrap">{imgDescription}</p>
           </div>
 
-          <div className="flex justify-center items-center bg-white shadow-xl rounded-lg flex-col m-4  p-2">
-          {categoria!=='Calça'?<div className="inline-block  min-w-fit m-4">
+          <div className="flex justify-center items-center bg-white shadow-xl rounded-lg flex-col m-1  p-2 z-10">
+          {categoria!=='Calça'?<div className="inline-block  min-w-[13.5rem] ">
               <label className="text-lg text-black my-3">
                 Busto<span className="text-sm text-black ml-3">(cm)</span>
               </label>
               <input
                 type="range"
-                className="mx-4 max-w-[7rem]"
+                className="mx-2 max-w-[5rem]"
                 min={70}
                 max={150}
-                onChange={(e) => {setBustoCm(Number(e.target.value)); setDollImg('/imgs_lela/chest.jpeg')}}
-                onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
+                onChange={(e) => {setBustoCm(Number(e.target.value)); setDollImg('/busto.png'); setImageDescription(helperDescriptions[0])}}
+                onMouseOver={() => {setDollImg("/busto.png"); setImageDescription(helperDescriptions[0])} }
                 value={bustoCm}
               />
               <input
-                className="text-black pl-2 max-w-[3.525rem]"
+                className="text-black pl-1 max-w-[2rem]"
                 type="number"
                 inputMode="numeric"
                 min={70}
                 max={170}
                 onChange={(e) => setBustoCm(Number(e.target.value))}
-                onMouseOver={() => setDollImg("/imgs_lela/chest.jpeg")}
+                onMouseOver={() => {setDollImg("/busto.png") ; setImageDescription(helperDescriptions[0])}}
                 value={bustoCm}
               />
             </div> : null}
-            <div className="m-4">
+            <div className="min-w-[13.5rem]">
               <label className="text-lg text-black my-3">
                 Cintura<span className="text-sm text-black"> (cm)</span>
               </label>
               <input
                 type="range"
-                className=" mx-4 max-w-[7rem]"
+                className=" mx-2 max-w-[5rem]"
                 min={50}
                 max={160}
-                onChange={(e) => {setCinturaCm(Number(e.target.value)); setDollImg("/imgs_lela/waist.jpeg")}}
-                onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
+                onChange={(e) => {setCinturaCm(Number(e.target.value)); setDollImg("/cintura.png");setImageDescription(helperDescriptions[1])}}
+                onMouseOver={() => {setDollImg("/cintura.png"); setImageDescription(helperDescriptions[1])}}
                 value={cinturaCm}
               />
               <input
                 type="number"
-                className="text-black pl-2 max-w-[3.125rem]"
+                className="text-black pl-1 max-w-[2rem]"
                 inputMode="numeric"
                 min={50}
                 max={160}
                 onChange={(e) => setCinturaCm(Number(e.target.value))}
-                onMouseOver={() => setDollImg("/imgs_lela/waist.jpeg")}
+                onMouseOver={() => {setDollImg("/cintura.png"); setImageDescription(helperDescriptions[1])}}
                 value={cinturaCm}
               />
             </div>
-            <div className="m-4">
+            <div className=" min-w-[13.5rem]">
               <label className="text-lg text-black my-3">
                 Quadril<span className="text-sm text-black"> (cm)</span>
               </label>
               <input
                 type="range"
-                className=" mx-4 max-w-[7rem]"
+                className=" mx-2 max-w-[5rem]"
                 
                 min={70}
                 max={151}
-                onChange={(e) => {setQuadrilCm(Number(e.target.value)); setDollImg('/imgs_lela/hip.jpeg')}}
-                onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
+                onChange={(e) => {setQuadrilCm(Number(e.target.value)); setDollImg('/quadril.png'); setImageDescription(helperDescriptions[2])}}
+                onMouseOver={() => {setDollImg("/quadril.png");setImageDescription(helperDescriptions[2])}}
                 value={quadrilCm}
               />
               <input
                 type="number"
                 inputMode="numeric"
-                className="text-black pl-2 max-w-[3.125rem]"
+                className="text-black pl-1 max-w-[2rem]"
                 min={70}
                 max={151}
                 onChange={(e) => setQuadrilCm(Number(e.target.value))}
-                onMouseOver={() => setDollImg("/imgs_lela/hip.jpeg")}
+                onMouseOver={() => {setDollImg("/quadril.png");setImageDescription(helperDescriptions[2])}}
                 value={quadrilCm}
               />
 
             </div>
-            <div className="flex flex-col justify-center bg-white mx-2 my-2">
+            <div className="flex flex-col justify-center bg-white mx-1 my-3">
 
               <button
               id="medidas_exatas_submit"
