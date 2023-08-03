@@ -25,7 +25,7 @@ export default function EditarMedidas() {
 
   //trocar essas imagens
   const [dollImg, setDollImg] = useState("/busto.png");
-  const helperDescriptions = ["Para medir o busto voce deve nananan", "A cintura deve ser medida dessa forma lalala", "A medida do seu quadril esta a dois nananas de 3 lalalas"]
+  const helperDescriptions = ["Para medir o busto coloque a fita no meio dos seios, na altura do mamilo. Depois, passe por trás das costas até encontrar a ponta ao centro.", "A cintura é a medida localizada entre a ultima costela e o osso do quadril", "A medida do seu quadril deve considerar o ponto mais alto dos seus gluteos, provavelmente na altura média do seu bumbum."]
   const [imgDescription,setImageDescription] = useState(helperDescriptions[0])
 
 
