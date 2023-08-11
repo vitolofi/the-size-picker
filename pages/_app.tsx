@@ -28,8 +28,8 @@ const settings: Settings = {
   ],
   allSizes: {
     PP: {
-      busto: { min: 71, med: 73, max: 75 },
       cintura: { min: 70, med: 72, max: 74 },
+      busto: { min: 71, med: 73, max: 75 },
       quadril: { min: 87, med: 95, max: 91 },
     },
     P: {
@@ -40,22 +40,22 @@ const settings: Settings = {
     M: {
       busto: { min: 81, med: 83, max: 85 },
       cintura: { min: 80, med: 82, max: 84 },
-      quadril: { min: 106, med: 108.5, max: 102 },
+      quadril: { min: 97, med: 99, max: 101 },
     },
     G: {
       busto: { min: 86, med: 88, max: 90 },
       cintura: { min: 85, med: 87, max: 89 },
-      quadril: { min: 97, med: 99, max: 101 },
+      quadril: { min: 102, med: 104, max: 106 },
     },
     GG: {
       busto: { min: 91, med: 93, max: 95 },
       cintura: { min: 90, med: 92, max: 94 },
-      quadril: { min: 102, med: 104, max: 106 },
+      quadril: { min: 107, med: 109, max: 112 },
     },
     XG: {
       busto: { min: 96, med: 98, max: 101 },
       cintura: { min: 95, med: 97.5, max: 100 },
-      quadril: { min: 107, med: 109.5, max: 112 },
+      quadril: { min: 111, med: 113, max: 115 },
     }
   },
   alturaMin: 100,
