@@ -28,9 +28,9 @@ const settings: Settings = {
   ],
   allSizes: {
     PP: {
-      cintura: { min: 70, med: 72, max: 74 },
       busto: { min: 71, med: 73, max: 75 },
-      quadril: { min: 87, med: 95, max: 91 },
+      cintura: { min: 70, med: 72, max: 74 },
+      quadril: { min: 87, med: 89, max: 91 },
     },
     P: {
       busto: { min: 76, med: 78, max: 80 },
@@ -53,7 +53,7 @@ const settings: Settings = {
       quadril: { min: 107, med: 109, max: 112 },
     },
     XG: {
-      busto: { min: 96, med: 98, max: 101 },
+      busto: { min: 96, med: 98.5, max: 101 },
       cintura: { min: 95, med: 97.5, max: 100 },
       quadril: { min: 111, med: 113, max: 115 },
     }
