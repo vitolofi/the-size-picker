@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // console.log('env,',process.env.AUTH_BEARER_TOKEN)
     try {
         const updateEdgeConfig = await fetch(
-          'https://api.vercel.com/v1/edge-config/ecfg_cq97bvi3bmpdkdqusbyza4mx9dwk/items',
+          `https://api.vercel.com/v1/edge-config/${process.env.EDGE_ID}/items`,
           {
             method: 'PATCH',
             headers: {
